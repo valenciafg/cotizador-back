@@ -11,7 +11,7 @@ import {
 import { UserService } from './user.service';
 import { ParseMongoIdPipe } from 'src/common/pipes/parse-mongo-id/parse-mongo-id.pipe';
 import {
-  CreateUserDto,
+  CreateBasicInformationDto,
   CreateUserInformationDto,
   LoginUserDto,
   RegisterUserDto,
@@ -37,7 +37,7 @@ export class UserController {
   }
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
+  create(@Body() createUserDto: CreateBasicInformationDto) {
     return this.userService.create(createUserDto);
   }
 

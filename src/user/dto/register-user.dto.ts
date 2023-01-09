@@ -7,7 +7,7 @@ import {
   Min,
   MinLength,
 } from 'class-validator';
-import { Match } from 'src/decorator';
+import { Match } from '../../common/decorators';
 
 export class RegisterUserDto {
   @IsEmail()

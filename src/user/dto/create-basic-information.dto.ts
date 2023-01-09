@@ -10,7 +10,7 @@ const PERSONAL_TYPES = [
 
 const COMMERCIAL_TYPES = [USER_TYPE.COMPANY, USER_TYPE.CONTRACTOR_SUPPLIER];
 
-export class CreateUserDto {
+export class CreateBasicInformationDto {
   @IsString()
   @ValidateIf((f) => PERSONAL_TYPES.includes(f.userType))
   @Transform((f) => f.value.toLocaleLowerCase())

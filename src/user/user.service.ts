@@ -10,7 +10,7 @@ import { isValidObjectId, Model } from 'mongoose';
 import { handleRegisterExceptions } from 'src/utils';
 import { userStepValidation } from 'src/utils/user-validation';
 import {
-  CreateUserDto,
+  CreateBasicInformationDto,
   CreateUserInformationDto,
   LoginUserDto,
   RegisterUserDto,
@@ -71,9 +71,9 @@ export class UserService {
     return user;
   }
 
-  async create(createUserDto: CreateUserDto) {
+  async create(createBasicInformationDto: CreateBasicInformationDto) {
     try {
-      const user = await this.userModel.create(createUserDto);
+      const user = await this.userModel.create(createBasicInformationDto);
       return user;
     } catch (error) {
       handleRegisterExceptions(error);
