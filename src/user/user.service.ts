@@ -63,6 +63,16 @@ export class UserService {
     };
   }
 
+  async checkAuthStatus(user: User) {
+    const { email, uuid } = user;
+    const token = generateJwtToken({ email, uuid }, this.jwtService);
+    return {
+      email,
+      uuid,
+      token,
+    };
+  }
+
   async getUserById(id: string) {
     const user: User = await this.userModel.findById(id);
     if (!user) {

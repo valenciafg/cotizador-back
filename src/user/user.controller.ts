@@ -1,13 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  UseGuards,
-  SetMetadata,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param } from '@nestjs/common';
 import { UserService } from './user.service';
 import { ParseMongoIdPipe } from 'src/common/pipes/parse-mongo-id/parse-mongo-id.pipe';
 import {
@@ -16,14 +7,10 @@ import {
   LoginUserDto,
   RegisterUserDto,
 } from './dto';
-import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from './decorators/get-user.decorator';
 import { User } from './entities/user.entity';
 import { RawHeaders } from 'src/common/decorators';
-import { UserTypeGuard } from './guards/user-type/user-type.guard';
-import { USER_TYPE } from 'src/constants';
-import { TypeProtected } from './decorators/type-protected.decorator';
-import { AuthAdmin } from './decorators';
+import { Auth, AuthAdmin } from './decorators';
 
 @Controller('user')
 export class UserController {
@@ -37,6 +24,12 @@ export class UserController {
   @Post('login')
   login(@Body() user: LoginUserDto) {
     return this.userService.login(user);
+  }
+
+  @Get('check-auth')
+  @Auth()
+  checkAuthStatus(@GetUser() user: User) {
+    return this.userService.checkAuthStatus(user);
   }
 
   @Post()
