@@ -14,6 +14,8 @@ import { fileFilter, fileNamer } from './helpers';
 import { diskStorage } from 'multer';
 import { Response } from 'express';
 import { ConfigService } from '@nestjs/config';
+import { Auth } from 'src/user/decorators';
+import { USER_TYPE } from 'src/constants';
 
 @Controller('files')
 export class FilesController {
@@ -40,6 +42,7 @@ export class FilesController {
   }
 
   @Post('user')
+  @Auth()
   @UseInterceptors(
     FileInterceptor('file', {
       fileFilter,

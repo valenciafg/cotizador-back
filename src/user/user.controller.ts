@@ -6,7 +6,7 @@ import {
   Patch,
   Param,
   UseGuards,
-  Req,
+  SetMetadata,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { ParseMongoIdPipe } from 'src/common/pipes/parse-mongo-id/parse-mongo-id.pipe';
@@ -17,10 +17,13 @@ import {
   RegisterUserDto,
 } from './dto';
 import { AuthGuard } from '@nestjs/passport';
-import { GetUser } from './decorator/get-user.decorator';
+import { GetUser } from './decorators/get-user.decorator';
 import { User } from './entities/user.entity';
 import { RawHeaders } from 'src/common/decorators';
-import { UserRoleGuard } from './guards/user-role/user-role.guard';
+import { UserTypeGuard } from './guards/user-type/user-type.guard';
+import { USER_TYPE } from 'src/constants';
+import { TypeProtected } from './decorators/type-protected.decorator';
+import { AuthAdmin } from './decorators';
 
 @Controller('user')
 export class UserController {
@@ -56,7 +59,7 @@ export class UserController {
   */
 
   @Get('private')
-  @UseGuards(AuthGuard(), UserRoleGuard)
+  @AuthAdmin()
   testing(
     @GetUser() user: User,
     @GetUser('email') email: string,

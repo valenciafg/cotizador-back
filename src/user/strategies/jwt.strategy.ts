@@ -30,7 +30,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       throw new UnauthorizedException('User inactive');
     }
     //  Se agrega a request
-    console.log(user);
     return user;
   }
 }
