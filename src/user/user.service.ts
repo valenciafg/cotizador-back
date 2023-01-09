@@ -17,6 +17,7 @@ import {
 } from './dto';
 import { User } from './entities/user.entity';
 import { hashPassword, comparePassword, generateJwtToken } from './helpers';
+import { IUserTokenResponse } from './interfaces/user-token-response.interface';
 
 @Injectable()
 export class UserService {
@@ -26,7 +27,7 @@ export class UserService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async register(register: RegisterUserDto) {
+  async register(register: RegisterUserDto): Promise<IUserTokenResponse> {
     const { passwordConfirm, ...data } = register;
     try {
       data.password = hashPassword(data.password);

@@ -11,7 +11,7 @@ import { GetUser } from './decorators/get-user.decorator';
 import { User } from './entities/user.entity';
 import { RawHeaders } from 'src/common/decorators';
 import { Auth, AuthAdmin } from './decorators';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('User')
 @Controller('user')
@@ -19,6 +19,7 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post('register')
+  @ApiResponse({ status: 201, description: 'User was created' })
   register(@Body() register: RegisterUserDto) {
     return this.userService.register(register);
   }
