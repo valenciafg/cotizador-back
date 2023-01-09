@@ -15,8 +15,9 @@ import { diskStorage } from 'multer';
 import { Response } from 'express';
 import { ConfigService } from '@nestjs/config';
 import { Auth } from 'src/user/decorators';
-import { USER_TYPE } from 'src/constants';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Files')
 @Controller('files')
 export class FilesController {
   constructor(
