@@ -2,21 +2,66 @@ import {
   Injectable,
   NotFoundException,
   BadRequestException,
+  UnauthorizedException,
 } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { isValidObjectId, Model } from 'mongoose';
 import { handleRegisterExceptions } from 'src/utils';
-import { CreateUserInformationDto } from './dto/create-user-information.dto';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { userStepValidation } from 'src/utils/user-validation';
+import {
+  CreateUserDto,
+  CreateUserInformationDto,
+  LoginUserDto,
+  RegisterUserDto,
+} from './dto';
 import { User } from './entities/user.entity';
+import { hashPassword, comparePassword, generateJwtToken } from './helpers';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectModel(User.name)
     private readonly userModel: Model<User>,
+    private readonly jwtService: JwtService,
   ) {}
+
+  async register(register: RegisterUserDto) {
+    const { passwordConfirm, ...data } = register;
+    try {
+      data.password = hashPassword(data.password);
+      const user = await this.userModel.create(data);
+      const { email, uuid } = user;
+      const token = generateJwtToken({ email, uuid }, this.jwtService);
+      return {
+        email,
+        uuid,
+        token,
+      };
+    } catch (error) {
+      handleRegisterExceptions(error);
+    }
+  }
+
+  async login(userLogin: LoginUserDto) {
+    const { email, password } = userLogin;
+    const user: User = await this.userModel.findOne({ email });
+    if (!user) {
+      throw new UnauthorizedException('Credentials are not valid (email)');
+    }
+    const isValidPassword = await comparePassword(password, user.password);
+    if (!isValidPassword) {
+      throw new UnauthorizedException('Credentials are not valid (password)');
+    }
+
+    const token = generateJwtToken(
+      { email: user.email, uuid: user.uuid },
+      this.jwtService,
+    );
+    return {
+      token,
+    };
+  }
 
   async getUserById(id: string) {
     const user: User = await this.userModel.findById(id);
@@ -38,9 +83,7 @@ export class UserService {
   async createUserInformation(id, userInformation: CreateUserInformationDto) {
     const user = await this.getUserById(id);
     const { registerStep, userType } = user;
-    if (registerStep !== 1) {
-      throw new BadRequestException('User with invalid register step');
-    }
+    userStepValidation(registerStep, 1);
     try {
       await user.updateOne({
         ...userInformation,

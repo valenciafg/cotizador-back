@@ -16,9 +16,15 @@ export class User extends Document {
     index: true,
   })
   email: string;
+  @Prop()
+  password: string;
+  @Prop()
   name: string;
+  @Prop()
   lastName: string;
+  @Prop()
   businessName: string;
+  @Prop()
   comercialName: string;
   @Prop({
     default: true,
@@ -43,10 +49,15 @@ export class User extends Document {
     index: true,
   })
   ruc: string;
+  @Prop()
   description: string;
+  @Prop()
   cityId: string;
+  @Prop()
   address: string;
+  @Prop()
   latitude: number;
+  @Prop()
   longitude: number;
 }
 

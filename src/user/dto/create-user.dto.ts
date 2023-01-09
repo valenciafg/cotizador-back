@@ -1,12 +1,5 @@
 import { Transform } from 'class-transformer';
-import {
-  IsString,
-  MinLength,
-  Min,
-  IsEmail,
-  IsNumber,
-  ValidateIf,
-} from 'class-validator';
+import { IsString, Min, IsNumber, ValidateIf } from 'class-validator';
 import { USER_TYPE } from '../../constants';
 
 const PERSONAL_TYPES = [
@@ -34,11 +27,4 @@ export class CreateUserDto {
   @ValidateIf((f) => COMMERCIAL_TYPES.includes(f.userType))
   @Transform((f) => f.value.toLocaleLowerCase())
   comercialName: string;
-  @IsEmail()
-  @MinLength(1)
-  @Transform((f) => f.value.toLocaleLowerCase())
-  email: string;
-  @IsNumber()
-  @Min(0)
-  userType: number;
 }
