@@ -2,20 +2,64 @@ import {
   Injectable,
   NotFoundException,
   BadRequestException,
+  Logger,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { isValidObjectId, Model } from 'mongoose';
+import { get } from 'lodash';
 import { handleRegisterExceptions } from 'src/utils';
-import { userStepValidation } from 'src/utils/user-validation';
+import { equalUserTypeValidation, userStepValidation } from './helpers';
 import { CreateBasicInformationDto, CreateUserInformationDto } from './dto';
 import { User } from './entities/user.entity';
+import { REGISTER_STEPS, USER_TYPE } from 'src/constants';
 
 @Injectable()
 export class UserService {
+  private readonly logger = new Logger(UserService.name);
   constructor(
     @InjectModel(User.name)
     private readonly userModel: Model<User>,
   ) {}
+
+  async setType(user: User, userType: number) {
+    const currentUserType = get(user, 'userType', -1);
+    if (currentUserType === 0) {
+      throw new BadRequestException('User already have type');
+    }
+    userStepValidation(user, REGISTER_STEPS.USER_TYPE);
+    const validUserTypes = [
+      USER_TYPE.PROFESSIONAL,
+      USER_TYPE.COMPANY,
+      USER_TYPE.CONTRACTOR_SUPPLIER,
+    ];
+    if (!validUserTypes.includes(userType)) {
+      throw new BadRequestException(`Invalid type ${userType}`);
+    }
+    try {
+      await user.updateOne({
+        userType,
+        registerStep: REGISTER_STEPS.BASIC_INFO,
+      });
+      return { ok: true, message: `User updated with type: ${userType}` };
+    } catch (error) {
+      handleRegisterExceptions(error);
+    }
+  }
+
+  async setBasicInformation(user: User, basicInfo: CreateBasicInformationDto) {
+    equalUserTypeValidation(user, basicInfo.userType);
+    userStepValidation(user, REGISTER_STEPS.BASIC_INFO);
+    delete basicInfo.userType;
+    try {
+      await user.updateOne({
+        ...basicInfo,
+        registerStep: REGISTER_STEPS.USER_INFO,
+      });
+      return { ok: true, message: 'Basic information registered' };
+    } catch (error) {
+      handleRegisterExceptions(error);
+    }
+  }
 
   async getUserById(id: string) {
     const user: User = await this.userModel.findById(id);
@@ -37,7 +81,7 @@ export class UserService {
   async createUserInformation(id, userInformation: CreateUserInformationDto) {
     const user = await this.getUserById(id);
     const { registerStep, userType } = user;
-    userStepValidation(registerStep, 1);
+    // userStepValidation(registerStep, 1);
     try {
       await user.updateOne({
         ...userInformation,

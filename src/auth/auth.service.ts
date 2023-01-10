@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -11,17 +11,21 @@ import { IUserTokenResponse } from './interfaces';
 
 @Injectable()
 export class AuthService {
+  private readonly logger = new Logger(AuthService.name);
+
   constructor(
     @InjectModel(User.name)
     private readonly userModel: Model<User>,
     private readonly jwtService: JwtService,
   ) {}
+
   async register(register: RegisterUserDto): Promise<IUserTokenResponse> {
     const { passwordConfirm, ...data } = register;
     try {
       const userCount = await this.userModel.count();
       if (userCount === 0) {
         data.userType = USER_TYPE.ADMINISTRATOR;
+        this.logger.log(`Will create an admin user with email ${data.email}`);
       }
       data.password = hashPassword(data.password);
       const user = await this.userModel.create(data);
@@ -33,7 +37,6 @@ export class AuthService {
         token,
       };
     } catch (error) {
-      console.log(error);
       handleRegisterExceptions(error);
     }
   }

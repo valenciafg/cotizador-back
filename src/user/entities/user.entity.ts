@@ -73,6 +73,9 @@ export class User extends Document {
   @Prop()
   @ApiProperty()
   longitude: number;
+  @Prop()
+  @ApiProperty()
+  loginAttempts: number;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

@@ -1,0 +1,8 @@
+export const REGISTER_STEPS = {
+  USER_TYPE: 1,
+  BASIC_INFO: 2,
+  USER_INFO: 3,
+  WORK_INFO: 4,
+  PROFILE_INFO: 5,
+  FINSHED: 6,
+};

@@ -1,21 +1,46 @@
-import { Controller, Get, Post, Body, Patch, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Put,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { UserService } from './user.service';
-import { ParseMongoIdPipe } from 'src/common/pipes/parse-mongo-id/parse-mongo-id.pipe';
 import { CreateBasicInformationDto, CreateUserInformationDto } from './dto';
 import { User } from './entities/user.entity';
-import { RawHeaders } from 'src/common/decorators';
 import { ApiTags } from '@nestjs/swagger';
+import { Auth, GetUser } from 'src/auth/decorators';
 
 @ApiTags('User')
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post()
-  create(@Body() createUserDto: CreateBasicInformationDto) {
-    return this.userService.create(createUserDto);
+  @Patch('type/:userType')
+  @Auth()
+  setType(
+    @GetUser() user: User,
+    @Param('userType', ParseIntPipe) userType: number,
+  ) {
+    return this.userService.setType(user, userType);
   }
 
+  @Patch('info/basic')
+  @Auth()
+  setBasicInformation(
+    @GetUser() user: User,
+    @Body() basicInfo: CreateBasicInformationDto,
+  ) {
+    return this.userService.setBasicInformation(user, basicInfo);
+  }
+  // @Post()
+  // create(@Body() createUserDto: CreateBasicInformationDto) {
+  //   return this.userService.create(createUserDto);
+  // }
+  /*
   @Patch('user-information/:id')
   createUserInformation(
     @Body() userInformationDto: CreateUserInformationDto,
@@ -23,4 +48,5 @@ export class UserController {
   ) {
     return this.userService.createUserInformation(id, userInformationDto);
   }
+  */
 }
