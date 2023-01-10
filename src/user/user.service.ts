@@ -61,6 +61,21 @@ export class UserService {
     }
   }
 
+  async setGeneralInformation(user: User, userInfo: CreateUserInformationDto) {
+    equalUserTypeValidation(user, userInfo.userType);
+    userStepValidation(user, REGISTER_STEPS.USER_INFO);
+    delete userInfo.userType;
+    try {
+      await user.updateOne({
+        ...userInfo,
+        registerStep: REGISTER_STEPS.WORK_INFO,
+      });
+      return { ok: true, message: 'General information registered' };
+    } catch (error) {
+      handleRegisterExceptions(error);
+    }
+  }
+
   async getUserById(id: string) {
     const user: User = await this.userModel.findById(id);
     if (!user) {

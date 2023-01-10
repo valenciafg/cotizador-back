@@ -1,18 +1,44 @@
-import { IsString, IsNumber, IsLatitude, IsLongitude } from 'class-validator';
+import {
+  IsString,
+  IsNumber,
+  IsLatitude,
+  IsLongitude,
+  ValidateIf,
+  Min,
+  IsOptional,
+  IsNumberString,
+} from 'class-validator';
+import { USER_TYPE } from '../../constants';
 
 export class CreateUserInformationDto {
-  @IsString()
+  @IsNumberString()
+  @ValidateIf(
+    (f) =>
+      f.userType === USER_TYPE.PROFESSIONAL ||
+      f.userType === USER_TYPE.CONTRACTOR_SUPPLIER,
+  )
   dni: string;
-  @IsString()
+  @IsNumberString()
+  @ValidateIf(
+    (f) =>
+      f.userType === USER_TYPE.COMPANY ||
+      f.userType === USER_TYPE.CONTRACTOR_SUPPLIER,
+  )
   ruc: string;
   @IsString()
   description: string;
   @IsNumber()
   cityId: string;
   @IsString()
-  address: string;
+  @IsOptional()
+  address?: string;
   @IsLongitude()
-  latitude: number;
+  @IsOptional()
+  latitude?: number;
   @IsLatitude()
-  longitude: number;
+  @IsOptional()
+  longitude?: number;
+  @Min(0)
+  @IsNumber()
+  userType: number;
 }

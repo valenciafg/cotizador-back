@@ -1,4 +1,5 @@
 import ICompany from '../interfaces/company-interface';
+import { USER_TYPE } from '../../constants';
 
 export class CreateWorkInformationDto {
   profession: string;

@@ -36,6 +36,14 @@ export class UserController {
   ) {
     return this.userService.setBasicInformation(user, basicInfo);
   }
+  @Patch('info/general')
+  @Auth()
+  setGeneralInformation(
+    @GetUser() user: User,
+    @Body() userInfo: CreateUserInformationDto,
+  ) {
+    return this.userService.setGeneralInformation(user, userInfo);
+  }
   // @Post()
   // create(@Body() createUserDto: CreateBasicInformationDto) {
   //   return this.userService.create(createUserDto);
