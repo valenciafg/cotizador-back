@@ -45,19 +45,16 @@ export class User extends Document {
   @ApiProperty()
   registerStep: number;
   @Prop({
-    required: true,
     enum: Object.values(USER_TYPE),
   })
   @ApiProperty()
   userType: number;
   @Prop({
-    unique: true,
     index: true,
   })
   @ApiProperty()
   dni: string;
   @Prop({
-    unique: true,
     index: true,
   })
   @ApiProperty()

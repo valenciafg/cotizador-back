@@ -1,2 +1,2 @@
 export * from './company-interface';
-export * from './jwt-payload.interface';
+export * from './contact-information.interface';

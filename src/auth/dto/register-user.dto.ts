@@ -1,13 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
-import {
-  IsEmail,
-  IsNumber,
-  IsString,
-  MaxLength,
-  Min,
-  MinLength,
-} from 'class-validator';
+import { IsEmail, IsString, MaxLength, MinLength } from 'class-validator';
 import { Match } from '../../common/decorators';
 
 export class RegisterUserDto {
@@ -31,7 +24,7 @@ export class RegisterUserDto {
   @MaxLength(20)
   @Match('password', { message: 'Both passwords must be the same' })
   passwordConfirm: string;
-  @IsNumber()
-  @Min(0)
-  userType: number;
+  // @IsNumber()
+  // @Min(0)
+  userType?: number;
 }

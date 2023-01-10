@@ -5,6 +5,7 @@ import { UserModule } from './user/user.module';
 import { CommonModule } from './common/common.module';
 import { FilesModule } from './files/files.module';
 import { EnvConfiguration, JoiValidationSchema } from './config';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { EnvConfiguration, JoiValidationSchema } from './config';
     UserModule,
     CommonModule,
     FilesModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
