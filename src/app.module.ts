@@ -19,7 +19,7 @@ import { EnvConfiguration, JoiValidationSchema } from './config';
       load: [EnvConfiguration],
       validationSchema: JoiValidationSchema,
     }),
-    MongooseModule.forRoot('mongodb://localhost:27017/nest-cotizador'),
+    MongooseModule.forRoot(process.env.MONGODB_URI),
     UserModule,
     CommonModule,
     FilesModule,
