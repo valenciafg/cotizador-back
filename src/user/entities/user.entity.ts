@@ -100,6 +100,36 @@ export class User extends Document {
   @Prop()
   @ApiProperty()
   headings: string[];
+  @Prop()
+  @ApiProperty()
+  phone: string;
+  @Prop()
+  @ApiProperty()
+  phoneCode: string;
+  @Prop()
+  @ApiProperty()
+  optionalPhone: string;
+  @Prop()
+  @ApiProperty()
+  optionalPhoneCode: string;
+  @Prop()
+  @ApiProperty()
+  websiteUrl: string;
+  @Prop()
+  @ApiProperty()
+  facebookUrl: string;
+  @Prop()
+  @ApiProperty()
+  instagramUrl: string;
+  @Prop()
+  @ApiProperty()
+  twitterUrl: string;
+  @Prop()
+  @ApiProperty()
+  tiktokUrl: string;
+  @Prop()
+  @ApiProperty()
+  extraInformation: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

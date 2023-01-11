@@ -4,5 +4,5 @@ export const REGISTER_STEPS = {
   USER_INFO: 3,
   WORK_INFO: 4,
   PROFILE_INFO: 5,
-  FINSHED: 6,
+  FINISHED: 6,
 };

@@ -11,6 +11,7 @@ import { handleRegisterExceptions } from 'src/utils';
 import { equalUserTypeValidation, userStepValidation } from './helpers';
 import {
   CreateBasicInformationDto,
+  CreateProfileInformationDto,
   CreateUserInformationDto,
   CreateWorkInformationDto,
 } from './dto';
@@ -90,6 +91,23 @@ export class UserService {
         registerStep: REGISTER_STEPS.PROFILE_INFO,
       });
       return { ok: true, message: 'Work information registered' };
+    } catch (error) {
+      handleRegisterExceptions(error);
+    }
+  }
+  async setProfileInformation(
+    user: User,
+    profileInfo: CreateProfileInformationDto,
+  ) {
+    equalUserTypeValidation(user, profileInfo.userType);
+    userStepValidation(user, REGISTER_STEPS.PROFILE_INFO);
+    delete profileInfo.userType;
+    try {
+      await user.updateOne({
+        ...profileInfo,
+        registerStep: REGISTER_STEPS.FINISHED,
+      });
+      return { ok: true, message: 'Profile information registered' };
     } catch (error) {
       handleRegisterExceptions(error);
     }

@@ -9,7 +9,11 @@ import {
   ParseIntPipe,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { CreateBasicInformationDto, CreateUserInformationDto } from './dto';
+import {
+  CreateBasicInformationDto,
+  CreateProfileInformationDto,
+  CreateUserInformationDto,
+} from './dto';
 import { User } from './entities/user.entity';
 import { ApiTags } from '@nestjs/swagger';
 import { Auth, GetUser } from 'src/auth/decorators';
@@ -52,6 +56,14 @@ export class UserController {
     @Body() workInfo: CreateWorkInformationDto,
   ) {
     return this.userService.setWorkInformation(user, workInfo);
+  }
+  @Patch('info/profile')
+  @Auth()
+  setProfileInformation(
+    @GetUser() user: User,
+    @Body() profileInfo: CreateProfileInformationDto,
+  ) {
+    return this.userService.setProfileInformation(user, profileInfo);
   }
   // @Post()
   // create(@Body() createUserDto: CreateBasicInformationDto) {
