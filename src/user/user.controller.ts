@@ -13,6 +13,7 @@ import { CreateBasicInformationDto, CreateUserInformationDto } from './dto';
 import { User } from './entities/user.entity';
 import { ApiTags } from '@nestjs/swagger';
 import { Auth, GetUser } from 'src/auth/decorators';
+import { CreateWorkInformationDto } from './dto/create-work-information.dto';
 
 @ApiTags('User')
 @Controller('user')
@@ -43,6 +44,14 @@ export class UserController {
     @Body() userInfo: CreateUserInformationDto,
   ) {
     return this.userService.setGeneralInformation(user, userInfo);
+  }
+  @Patch('info/work')
+  @Auth()
+  setWorkInformation(
+    @GetUser() user: User,
+    @Body() workInfo: CreateWorkInformationDto,
+  ) {
+    return this.userService.setWorkInformation(user, workInfo);
   }
   // @Post()
   // create(@Body() createUserDto: CreateBasicInformationDto) {

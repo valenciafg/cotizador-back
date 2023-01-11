@@ -9,7 +9,11 @@ import { isValidObjectId, Model } from 'mongoose';
 import { get } from 'lodash';
 import { handleRegisterExceptions } from 'src/utils';
 import { equalUserTypeValidation, userStepValidation } from './helpers';
-import { CreateBasicInformationDto, CreateUserInformationDto } from './dto';
+import {
+  CreateBasicInformationDto,
+  CreateUserInformationDto,
+  CreateWorkInformationDto,
+} from './dto';
 import { User } from './entities/user.entity';
 import { REGISTER_STEPS, USER_TYPE } from 'src/constants';
 
@@ -76,6 +80,21 @@ export class UserService {
     }
   }
 
+  async setWorkInformation(user: User, workInfo: CreateWorkInformationDto) {
+    equalUserTypeValidation(user, workInfo.userType);
+    userStepValidation(user, REGISTER_STEPS.WORK_INFO);
+    delete workInfo.userType;
+    try {
+      await user.updateOne({
+        ...workInfo,
+        registerStep: REGISTER_STEPS.PROFILE_INFO,
+      });
+      return { ok: true, message: 'Work information registered' };
+    } catch (error) {
+      handleRegisterExceptions(error);
+    }
+  }
+
   async getUserById(id: string) {
     const user: User = await this.userModel.findById(id);
     if (!user) {
@@ -88,21 +107,6 @@ export class UserService {
     try {
       const user = await this.userModel.create(createBasicInformationDto);
       return user;
-    } catch (error) {
-      handleRegisterExceptions(error);
-    }
-  }
-
-  async createUserInformation(id, userInformation: CreateUserInformationDto) {
-    const user = await this.getUserById(id);
-    const { registerStep, userType } = user;
-    // userStepValidation(registerStep, 1);
-    try {
-      await user.updateOne({
-        ...userInformation,
-        registerStep: 2,
-      });
-      return { ...user.toJSON(), ...userInformation };
     } catch (error) {
       handleRegisterExceptions(error);
     }

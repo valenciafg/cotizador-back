@@ -76,6 +76,30 @@ export class User extends Document {
   @Prop()
   @ApiProperty()
   loginAttempts: number;
+  @Prop()
+  @ApiProperty()
+  profession: string;
+  @Prop()
+  @ApiProperty()
+  specialty: string;
+  @Prop()
+  @ApiProperty()
+  knowledge: string[];
+  @Prop()
+  @ApiProperty()
+  currentCompanies: string[];
+  @Prop()
+  @ApiProperty()
+  workedCompanies: string[];
+  @Prop()
+  @ApiProperty()
+  workedProjects: string[];
+  @Prop()
+  @ApiProperty()
+  services: string[];
+  @Prop()
+  @ApiProperty()
+  headings: string[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
