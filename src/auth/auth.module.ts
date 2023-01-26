@@ -9,15 +9,13 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { User, UserSchema } from '../user/entities/user.entity';
 
-
 const passportModule = PassportModule.register({
   defaultStrategy: 'jwt',
 });
 
 @Module({
   controllers: [AuthController],
-  
-   imports: [
+  imports: [
     ConfigModule,
     MongooseModule.forFeature([
       {

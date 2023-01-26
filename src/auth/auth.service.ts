@@ -29,11 +29,13 @@ export class AuthService {
       }
       data.password = hashPassword(data.password);
       const user = await this.userModel.create(data);
-      const { email, uuid } = user;
+      const { email, uuid, userType, registerStep } = user;
       const token = generateJwtToken({ email, uuid }, this.jwtService);
       return {
         email,
         uuid,
+        registerStep,
+        userType,
         token,
       };
     } catch (error) {
@@ -51,23 +53,32 @@ export class AuthService {
     if (!isValidPassword) {
       throw new UnauthorizedException('Credentials are not valid (password)');
     }
+    if (!user.status) {
+      throw new UnauthorizedException('User unauthorized');
+    }
 
     const token = generateJwtToken(
       { email: user.email, uuid: user.uuid },
       this.jwtService,
     );
     return {
+      email,
+      uuid: user.uuid,
+      registerStep: user.registerStep,
+      userType: user.userType,
       token,
     };
   }
 
   async checkAuthStatus(user: User) {
-    const { email, uuid } = user;
+    const { email, uuid, registerStep, userType } = user;
     const token = generateJwtToken({ email, uuid }, this.jwtService);
     return {
       email,
       uuid,
       token,
+      registerStep,
+      userType,
     };
   }
 }

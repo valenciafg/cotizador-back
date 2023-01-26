@@ -33,7 +33,7 @@ export class User extends Document {
   businessName: string;
   @Prop()
   @ApiProperty()
-  comercialName: string;
+  commercialName: string;
   @Prop({
     default: true,
   })
@@ -64,7 +64,7 @@ export class User extends Document {
   description: string;
   @Prop()
   @ApiProperty()
-  cityId: string;
+  cityId: number;
   @Prop()
   @ApiProperty()
   address: string;

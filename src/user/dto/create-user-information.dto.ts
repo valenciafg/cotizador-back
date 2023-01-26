@@ -28,7 +28,7 @@ export class CreateUserInformationDto {
   @IsString()
   description: string;
   @IsNumber()
-  cityId: string;
+  cityId: number;
   @IsString()
   @IsOptional()
   address?: string;

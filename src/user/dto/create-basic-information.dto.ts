@@ -31,7 +31,7 @@ export class CreateBasicInformationDto {
   @IsString()
   @ValidateIf((f) => COMMERCIAL_TYPES.includes(f.userType))
   @Transform((f) => f.value.toLocaleLowerCase())
-  comercialName: string;
+  commercialName: string;
   @Min(0)
   @IsNumber()
   userType: number;
