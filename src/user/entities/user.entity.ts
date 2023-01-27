@@ -130,6 +130,12 @@ export class User extends Document {
   @Prop()
   @ApiProperty()
   extraInformation: string;
+  @Prop()
+  @ApiProperty()
+  authType: string;
+  @Prop()
+  @ApiProperty()
+  authProvider: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

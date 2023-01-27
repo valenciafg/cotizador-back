@@ -4,7 +4,7 @@ import { RawHeaders } from 'src/common/decorators';
 import { User } from 'src/user/entities/user.entity';
 import { AuthService } from './auth.service';
 import { Auth, AuthAdmin, GetUser } from './decorators';
-import { LoginUserDto, RegisterUserDto } from './dto';
+import { LoginUserDto, RegisterOauthUserDto, RegisterUserDto } from './dto';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -15,6 +15,12 @@ export class AuthController {
   @ApiResponse({ status: 201, description: 'User was created' })
   register(@Body() register: RegisterUserDto) {
     return this.authService.register(register);
+  }
+
+  @Post('register-oauth')
+  @ApiResponse({ status: 201, description: 'User was created' })
+  registerOauth(@Body() register: RegisterOauthUserDto) {
+    return this.authService.registerOauth(register);
   }
 
   @Post('login')
