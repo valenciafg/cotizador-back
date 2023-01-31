@@ -22,11 +22,38 @@ type CompanyDto {
   updatedAt: DateTime
 }
 
+type ServiceDto {
+  uuid: String!
+  name: String!
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+type HeadingDto {
+  uuid: String!
+  name: String!
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+type KnowledgeDto {
+  uuid: String!
+  name: String!
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
 type Query {
   cities: [CityDto!]!
   findCity(input: FindCityInput!): CityDto!
   companies: [CompanyDto!]!
   findCompany(input: FindCompanyInput!): CompanyDto!
+  services: [ServiceDto!]!
+  findService(input: FindServiceInput!): ServiceDto!
+  headings: [HeadingDto!]!
+  findHeading(input: FindHeadingInput!): HeadingDto!
+  knowledges: [KnowledgeDto!]!
+  findKnowledge(input: FindKnowledgeInput!): KnowledgeDto!
 }
 
 input FindCityInput {
@@ -40,9 +67,27 @@ input FindCompanyInput {
   name: String
 }
 
+input FindServiceInput {
+  uuid: String
+  name: String
+}
+
+input FindHeadingInput {
+  uuid: String
+  name: String
+}
+
+input FindKnowledgeInput {
+  uuid: String
+  name: String
+}
+
 type Mutation {
   createCity(input: CreateCityInput!): CityDto!
   createCompany(input: CreateCompanyInput!): CompanyDto!
+  createService(input: CreateServiceInput!): ServiceDto!
+  createHeading(input: CreateHeadingInput!): HeadingDto!
+  createKnowledge(input: CreateKnowledgeInput!): KnowledgeDto!
 }
 
 input CreateCityInput {
@@ -51,5 +96,17 @@ input CreateCityInput {
 }
 
 input CreateCompanyInput {
+  name: String!
+}
+
+input CreateServiceInput {
+  name: String!
+}
+
+input CreateHeadingInput {
+  name: String!
+}
+
+input CreateKnowledgeInput {
   name: String!
 }
