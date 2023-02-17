@@ -36,6 +36,13 @@ type HeadingDto {
   updatedAt: DateTime
 }
 
+type ProjectDto {
+  uuid: String!
+  name: String!
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
 type KnowledgeDto {
   uuid: String!
   name: String!
@@ -52,6 +59,8 @@ type Query {
   findService(input: FindServiceInput!): ServiceDto!
   headings: [HeadingDto!]!
   findHeading(input: FindHeadingInput!): HeadingDto!
+  projects: [ProjectDto!]!
+  findProject(input: FindProjectInput!): ProjectDto!
   knowledges: [KnowledgeDto!]!
   findKnowledge(input: FindKnowledgeInput!): KnowledgeDto!
 }
@@ -77,6 +86,11 @@ input FindHeadingInput {
   name: String
 }
 
+input FindProjectInput {
+  uuid: String
+  name: String
+}
+
 input FindKnowledgeInput {
   uuid: String
   name: String
@@ -87,6 +101,7 @@ type Mutation {
   createCompany(input: CreateCompanyInput!): CompanyDto!
   createService(input: CreateServiceInput!): ServiceDto!
   createHeading(input: CreateHeadingInput!): HeadingDto!
+  createProject(input: CreateProjectInput!): ProjectDto!
   createKnowledge(input: CreateKnowledgeInput!): KnowledgeDto!
 }
 
@@ -97,16 +112,25 @@ input CreateCityInput {
 
 input CreateCompanyInput {
   name: String!
+  uuid: String
 }
 
 input CreateServiceInput {
   name: String!
+  uuid: String
 }
 
 input CreateHeadingInput {
   name: String!
+  uuid: String
+}
+
+input CreateProjectInput {
+  name: String!
+  uuid: String
 }
 
 input CreateKnowledgeInput {
   name: String!
+  uuid: String
 }

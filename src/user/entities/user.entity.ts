@@ -49,14 +49,10 @@ export class User extends Document {
   })
   @ApiProperty()
   userType: number;
-  @Prop({
-    index: true,
-  })
+  @Prop()
   @ApiProperty()
   dni: string;
-  @Prop({
-    index: true,
-  })
+  @Prop()
   @ApiProperty()
   ruc: string;
   @Prop()
@@ -64,7 +60,7 @@ export class User extends Document {
   description: string;
   @Prop()
   @ApiProperty()
-  cityId: number;
+  cityId: string;
   @Prop()
   @ApiProperty()
   address: string;

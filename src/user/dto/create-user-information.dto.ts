@@ -7,6 +7,7 @@ import {
   Min,
   IsOptional,
   IsNumberString,
+  IsUUID,
 } from 'class-validator';
 import { USER_TYPE } from '../../constants';
 
@@ -27,8 +28,9 @@ export class CreateUserInformationDto {
   ruc: string;
   @IsString()
   description: string;
-  @IsNumber()
-  cityId: number;
+  @IsString()
+  @IsUUID()
+  cityId: string;
   @IsString()
   @IsOptional()
   address?: string;

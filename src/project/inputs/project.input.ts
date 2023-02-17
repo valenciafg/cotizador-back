@@ -3,7 +3,7 @@ import { Transform } from "class-transformer";
 import { IsOptional, IsString, IsUUID, MaxLength } from "class-validator";
 
 @InputType()
-export class CreateHeadingInput {
+export class CreateProjectInput {
   @MaxLength(100)
   @Transform((f) => f.value.toLocaleLowerCase())
   @Field()
@@ -16,7 +16,7 @@ export class CreateHeadingInput {
 
 
 @InputType()
-export class FindHeadingInput {
+export class FindProjectInput {
   @IsString()
   @IsOptional()
   @IsUUID()

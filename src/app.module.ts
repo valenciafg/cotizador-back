@@ -16,6 +16,7 @@ import { CityModule } from './city/city.module';
 import { CompanyModule } from './company/company.module';
 import { ServiceModule } from './service/service.module';
 import { HeadingModule } from './heading/heading.module';
+import { ProjectModule } from './project/project.module';
 import { KnowledgeModule } from './knowledge/knowledge.module';
 
 @Module({
@@ -48,6 +49,7 @@ import { KnowledgeModule } from './knowledge/knowledge.module';
     CompanyModule,
     ServiceModule,
     HeadingModule,
+    ProjectModule,
     KnowledgeModule,
   ],
   controllers: [],

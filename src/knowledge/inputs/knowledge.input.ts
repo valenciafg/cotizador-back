@@ -8,6 +8,10 @@ export class CreateKnowledgeInput {
   @Transform((f) => f.value.toLocaleLowerCase())
   @Field()
   name: string;
+  @IsOptional()
+  @IsUUID()
+  @Field({ nullable: true })
+  uuid: string;
 }
 
 
