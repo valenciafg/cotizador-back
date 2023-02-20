@@ -17,7 +17,7 @@ export class CreateWorkInformationDto {
   @ValidateIf((f) => f.userType === USER_TYPE.PROFESSIONAL)
   specialty: string;
   @ValidateIf((f) => f.userType === USER_TYPE.PROFESSIONAL)
-  knowledge: string[];
+  knowledges: string[];
   @ArrayNotEmpty()
   @IsArray()
   currentCompanies: string[];

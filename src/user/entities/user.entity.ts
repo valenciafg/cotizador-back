@@ -80,7 +80,7 @@ export class User extends Document {
   specialty: string;
   @Prop()
   @ApiProperty()
-  knowledge: string[];
+  knowledges: string[];
   @Prop()
   @ApiProperty()
   currentCompanies: string[];
