@@ -50,6 +50,19 @@ type KnowledgeDto {
   updatedAt: DateTime
 }
 
+type PostDto {
+  uuid: String!
+  title: String!
+  description: String!
+  content: String!
+  postType: String!
+  mainImageUrl: String!
+  createdBy: String!
+  updatedBy: String!
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
 type Query {
   cities: [CityDto!]!
   findCity(input: FindCityInput!): CityDto!
@@ -63,6 +76,8 @@ type Query {
   findProject(input: FindProjectInput!): ProjectDto!
   knowledges: [KnowledgeDto!]!
   findKnowledge(input: FindKnowledgeInput!): KnowledgeDto!
+  posts: [PostDto!]!
+  findPosts(input: FindPostInput!): PostDto!
 }
 
 input FindCityInput {
@@ -96,6 +111,10 @@ input FindKnowledgeInput {
   name: String
 }
 
+input FindPostInput {
+  uuid: String
+}
+
 type Mutation {
   createCity(input: CreateCityInput!): CityDto!
   createCompany(input: CreateCompanyInput!): CompanyDto!
@@ -103,6 +122,7 @@ type Mutation {
   createHeading(input: CreateHeadingInput!): HeadingDto!
   createProject(input: CreateProjectInput!): ProjectDto!
   createKnowledge(input: CreateKnowledgeInput!): KnowledgeDto!
+  createPost(input: CreatePostInput!): PostDto!
 }
 
 input CreateCityInput {
@@ -133,4 +153,12 @@ input CreateProjectInput {
 input CreateKnowledgeInput {
   name: String!
   uuid: String
+}
+
+input CreatePostInput {
+  title: String!
+  description: String!
+  content: String!
+  postType: String!
+  mainImageUrl: String
 }

@@ -18,6 +18,7 @@ import { ServiceModule } from './service/service.module';
 import { HeadingModule } from './heading/heading.module';
 import { ProjectModule } from './project/project.module';
 import { KnowledgeModule } from './knowledge/knowledge.module';
+import { PostModule } from './post/post.module'
 
 @Module({
   imports: [
@@ -51,6 +52,7 @@ import { KnowledgeModule } from './knowledge/knowledge.module';
     HeadingModule,
     ProjectModule,
     KnowledgeModule,
+    PostModule,
   ],
   controllers: [],
   providers: [],
