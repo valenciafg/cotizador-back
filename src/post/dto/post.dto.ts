@@ -18,7 +18,7 @@ export class PostDto {
   @Field()
   readonly postType: string;
   
-  @Field()
+  @Field({ nullable: true })
   mainImageUrl?: string;
   @Field()
   readonly createdBy: string;

@@ -21,7 +21,7 @@ export class Post extends Document {
   @Prop({ required: true })
   postType: string;
   @Prop()
-  mainImageUrl: string;
+  mainImageUrl?: string;
   @Prop()
   createdBy: string;
   @Prop()

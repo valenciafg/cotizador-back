@@ -56,7 +56,7 @@ type PostDto {
   description: String!
   content: String!
   postType: String!
-  mainImageUrl: String!
+  mainImageUrl: String
   createdBy: String!
   updatedBy: String!
   createdAt: DateTime!
