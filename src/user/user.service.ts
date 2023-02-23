@@ -136,4 +136,8 @@ export class UserService {
     }
     return this.getUserById(id);
   }
+
+  getUserByUUID(uuid: string) {
+    return this.userModel.findOne({ uuid })
+  }
 }

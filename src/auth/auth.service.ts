@@ -116,6 +116,7 @@ export class AuthService {
       { email: user.email, uuid: user.uuid },
       this.jwtService,
     );
+    console.log({ token })
     return {
       email,
       uuid: user.uuid,

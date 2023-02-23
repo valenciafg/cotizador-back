@@ -20,8 +20,25 @@ export class PostService {
     }
   }
   async getPosts(): Promise<Post[]> {
-    const posts = await this.postModel.find()
+    const sortOptions = {
+      createdAt: -1
+    }
+    const posts = await this.postModel.find().sort({ createdAt: -1 })
     return posts
+  }
+
+  async deletePost(uuid: string): Promise<boolean> {
+    try {
+      const response = await this.postModel.deleteOne({ uuid })
+      if (response.deletedCount === 0) {
+        throw new Error(`Post ${uuid} not found`)
+      }
+      return true
+    } catch (error) {
+      this.logger.error(error)
+      console.log(error.message)
+      return false
+    }
   }
   async findPost(findCityInput: FindPostInput): Promise<Post> {
     const post = await this.postModel.findOne({ ...findCityInput })

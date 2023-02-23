@@ -41,3 +41,11 @@ export class FindPostInput {
   @Field({ nullable: true })
   uuid: string;
 }
+
+@InputType()
+export class DeletePostInput {
+  @IsString()
+  @IsUUID()
+  @Field()
+  uuid: string
+}

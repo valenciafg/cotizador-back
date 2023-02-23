@@ -2,6 +2,14 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type UserDto {
+  uuid: String!
+  email: String!
+  status: Boolean!
+  registerStep: Float!
+  userType: Float!
+}
+
 type CityDto {
   uuid: String!
   isoCode: String!
@@ -64,6 +72,7 @@ type PostDto {
 }
 
 type Query {
+  me: UserDto!
   cities: [CityDto!]!
   findCity(input: FindCityInput!): CityDto!
   companies: [CompanyDto!]!
@@ -123,6 +132,7 @@ type Mutation {
   createProject(input: CreateProjectInput!): ProjectDto!
   createKnowledge(input: CreateKnowledgeInput!): KnowledgeDto!
   createPost(input: CreatePostInput!): PostDto!
+  deletePost(input: DeletePostInput!): Boolean!
 }
 
 input CreateCityInput {
@@ -161,4 +171,8 @@ input CreatePostInput {
   content: String!
   postType: String!
   mainImageUrl: String
+}
+
+input DeletePostInput {
+  uuid: String!
 }
