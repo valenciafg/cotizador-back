@@ -13,6 +13,7 @@ import { Knowledge, KnowledgeSchema } from './entities';
         schema: KnowledgeSchema
       }
     ])
-  ]
+  ],
+  exports: [KnowledgeService]
 })
 export class KnowledgeModule {}

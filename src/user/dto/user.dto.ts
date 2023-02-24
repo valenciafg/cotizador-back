@@ -1,4 +1,5 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql";
+import { CompanyDto } from "src/company/dto";
 
 
 @ObjectType()
@@ -17,4 +18,51 @@ export class UserDto {
   
   @Field()
   readonly userType: number;
+
+  @Field()
+  readonly businessName: string;
+
+  @Field()
+  readonly commercialName: string;
+
+  @Field()
+  readonly lastName: string;
+
+  @Field()
+  readonly name: string;
+
+  @Field()
+  readonly address: string;
+
+  @Field()
+  readonly description: string;
+
+  @Field()
+  readonly phone: string;
+
+  @Field()
+  readonly phoneCode: string;
+
+  @Field()
+  readonly optionalPhone: string;
+
+  @Field()
+  readonly optionalPhoneCode: string;
+
+
+  @Field(() => [String], { nullable: true })
+  readonly currentCompanies: string[];
+
+  @Field(() => [String], { nullable: true })
+  readonly workedCompanies: string[];
+
+  @Field(() => [String], { nullable: true })
+  readonly services: string[];
+
+  @Field(() => [String], { nullable: true })
+  readonly headings: string[];
+
+  @Field(() => [String], { nullable: true })
+  readonly knowledges: string[];
+
 }

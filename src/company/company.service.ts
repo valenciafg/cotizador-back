@@ -20,9 +20,15 @@ export class CompanyService {
       handleRegisterExceptions(error);
     }
   }
-  async getCompanies(): Promise<Company[]> {
-    const companies = await this.companyModel.find()
-    return companies
+  async getCompanies(uuidList?: string[]): Promise<Company[]> {
+    if (!uuidList) {
+      const companies = await this.companyModel.find()
+      return companies
+    }
+    const companies = await this.companyModel.find({ uuid: {
+      "$in": uuidList
+    }})
+    return companies;
   }
   async findCompany(findCompanyInput: FindCompanyInput): Promise<Company> {
     const company = await this.companyModel.findOne({ ...findCompanyInput })

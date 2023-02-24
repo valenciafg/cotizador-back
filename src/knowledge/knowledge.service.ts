@@ -20,9 +20,15 @@ export class KnowledgeService {
       handleRegisterExceptions(error);
     }
   }
-  async getKnowledges(): Promise<Knowledge[]> {
-    const knowledges = await this.knowledgeModel.find()
-    return knowledges
+  async getKnowledges(uuidList?: string[]): Promise<Knowledge[]> {
+    if(!uuidList) {
+      const knowledges = await this.knowledgeModel.find()
+      return knowledges
+    }
+    const knowledges = await this.knowledgeModel.find({ uuid: {
+      "$in": uuidList
+    }})
+      return knowledges
   }
   async findKnowledge(findKnowledgeInput: FindKnowledgeInput): Promise<Knowledge> {
     const knowledge = await this.knowledgeModel.findOne({ ...findKnowledgeInput })

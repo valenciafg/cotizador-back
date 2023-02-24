@@ -13,6 +13,7 @@ import { Heading, HeadingSchema } from './entities';
         schema: HeadingSchema
       }
     ])
-  ]
+  ],
+  exports: [HeadingService]
 })
 export class HeadingModule {}

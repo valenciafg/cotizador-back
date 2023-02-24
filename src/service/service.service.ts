@@ -20,9 +20,15 @@ export class ServiceService {
       handleRegisterExceptions(error);
     }
   }
-  async getServices(): Promise<Service[]> {
-    const services = await this.serviceModel.find()
-    return services
+  async getServices(uuidList?: string[]): Promise<Service[]> {
+    if(!uuidList) {
+      const services = await this.serviceModel.find()
+      return services
+    }
+    const services = await this.serviceModel.find({ uuid: {
+      "$in": uuidList
+    }})
+    return services;
   }
   async findService(findServiceInput: FindServiceInput): Promise<Service> {
     const service = await this.serviceModel.findOne({ ...findServiceInput })

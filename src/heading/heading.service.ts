@@ -20,9 +20,15 @@ export class HeadingService {
       handleRegisterExceptions(error);
     }
   }
-  async getHeadings(): Promise<Heading[]> {
-    const headings = await this.headingModel.find()
-    return headings
+  async getHeadings(uuidList?: string[]): Promise<Heading[]> {
+    if (!uuidList) {
+      const headings = await this.headingModel.find()
+      return headings
+    }
+    const headings = await this.headingModel.find({ uuid: {
+      "$in": uuidList
+    }})
+      return headings
   }
   async findHeading(findHeadingInput: FindHeadingInput): Promise<Heading> {
     const heading = await this.headingModel.findOne({ ...findHeadingInput })

@@ -8,11 +8,25 @@ type UserDto {
   status: Boolean!
   registerStep: Float!
   userType: Float!
+  businessName: String!
+  commercialName: String!
+  lastName: String!
+  name: String!
+  address: String!
+  description: String!
+  phone: String!
+  phoneCode: String!
+  optionalPhone: String!
+  optionalPhoneCode: String!
+  currentCompanies: [CompanyDto!]!
+  workedCompanies: [CompanyDto!]!
+  services: [CompanyDto!]!
+  headings: [CompanyDto!]!
+  knowledges: [CompanyDto!]!
 }
 
-type CityDto {
+type CompanyDto {
   uuid: String!
-  isoCode: String!
   name: String!
   createdAt: DateTime!
   updatedAt: DateTime
@@ -23,7 +37,7 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
-type CompanyDto {
+type HeadingDto {
   uuid: String!
   name: String!
   createdAt: DateTime!
@@ -37,21 +51,22 @@ type ServiceDto {
   updatedAt: DateTime
 }
 
-type HeadingDto {
+type KnowledgeDto {
   uuid: String!
+  name: String!
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
+type CityDto {
+  uuid: String!
+  isoCode: String!
   name: String!
   createdAt: DateTime!
   updatedAt: DateTime
 }
 
 type ProjectDto {
-  uuid: String!
-  name: String!
-  createdAt: DateTime!
-  updatedAt: DateTime
-}
-
-type KnowledgeDto {
   uuid: String!
   name: String!
   createdAt: DateTime!
@@ -73,34 +88,23 @@ type PostDto {
 
 type Query {
   me: UserDto!
-  cities: [CityDto!]!
-  findCity(input: FindCityInput!): CityDto!
   companies: [CompanyDto!]!
   findCompany(input: FindCompanyInput!): CompanyDto!
-  services: [ServiceDto!]!
-  findService(input: FindServiceInput!): ServiceDto!
   headings: [HeadingDto!]!
   findHeading(input: FindHeadingInput!): HeadingDto!
-  projects: [ProjectDto!]!
-  findProject(input: FindProjectInput!): ProjectDto!
+  services: [ServiceDto!]!
+  findService(input: FindServiceInput!): ServiceDto!
   knowledges: [KnowledgeDto!]!
   findKnowledge(input: FindKnowledgeInput!): KnowledgeDto!
+  cities: [CityDto!]!
+  findCity(input: FindCityInput!): CityDto!
+  projects: [ProjectDto!]!
+  findProject(input: FindProjectInput!): ProjectDto!
   posts: [PostDto!]!
   findPosts(input: FindPostInput!): PostDto!
 }
 
-input FindCityInput {
-  uuid: String
-  isoCode: String
-  name: String
-}
-
 input FindCompanyInput {
-  uuid: String
-  name: String
-}
-
-input FindServiceInput {
   uuid: String
   name: String
 }
@@ -110,7 +114,7 @@ input FindHeadingInput {
   name: String
 }
 
-input FindProjectInput {
+input FindServiceInput {
   uuid: String
   name: String
 }
@@ -120,32 +124,33 @@ input FindKnowledgeInput {
   name: String
 }
 
+input FindCityInput {
+  uuid: String
+  isoCode: String
+  name: String
+}
+
+input FindProjectInput {
+  uuid: String
+  name: String
+}
+
 input FindPostInput {
   uuid: String
 }
 
 type Mutation {
-  createCity(input: CreateCityInput!): CityDto!
   createCompany(input: CreateCompanyInput!): CompanyDto!
-  createService(input: CreateServiceInput!): ServiceDto!
   createHeading(input: CreateHeadingInput!): HeadingDto!
-  createProject(input: CreateProjectInput!): ProjectDto!
+  createService(input: CreateServiceInput!): ServiceDto!
   createKnowledge(input: CreateKnowledgeInput!): KnowledgeDto!
+  createCity(input: CreateCityInput!): CityDto!
+  createProject(input: CreateProjectInput!): ProjectDto!
   createPost(input: CreatePostInput!): PostDto!
   deletePost(input: DeletePostInput!): Boolean!
 }
 
-input CreateCityInput {
-  isoCode: String!
-  name: String!
-}
-
 input CreateCompanyInput {
-  name: String!
-  uuid: String
-}
-
-input CreateServiceInput {
   name: String!
   uuid: String
 }
@@ -155,12 +160,22 @@ input CreateHeadingInput {
   uuid: String
 }
 
-input CreateProjectInput {
+input CreateServiceInput {
   name: String!
   uuid: String
 }
 
 input CreateKnowledgeInput {
+  name: String!
+  uuid: String
+}
+
+input CreateCityInput {
+  isoCode: String!
+  name: String!
+}
+
+input CreateProjectInput {
   name: String!
   uuid: String
 }

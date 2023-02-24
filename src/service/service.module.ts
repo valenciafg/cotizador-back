@@ -13,6 +13,7 @@ import { Service, ServiceSchema } from './entities';
         schema: ServiceSchema
       }
     ])
-  ]
+  ],
+  exports: [ServiceService]
 })
 export class ServiceModule {}
