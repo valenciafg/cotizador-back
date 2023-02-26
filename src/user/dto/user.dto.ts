@@ -57,6 +57,9 @@ export class UserDto {
   readonly workedCompanies: string[];
 
   @Field(() => [String], { nullable: true })
+  readonly workedProjects: string[];
+
+  @Field(() => [String], { nullable: true })
   readonly services: string[];
 
   @Field(() => [String], { nullable: true })

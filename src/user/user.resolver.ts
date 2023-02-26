@@ -6,6 +6,7 @@ import { CompanyService } from 'src/company/company.service';
 import { CompanyDto } from 'src/company/dto';
 import { HeadingService } from 'src/heading/heading.service';
 import { KnowledgeService } from 'src/knowledge/knowledge.service';
+import { ProjectService } from 'src/project/project.service';
 import { ServiceService } from 'src/service/service.service';
 import { UserDto } from './dto';
 import { User } from './entities/user.entity';
@@ -18,7 +19,8 @@ export class UserResolver {
     private companyService: CompanyService,
     private serviceService: ServiceService,
     private knowledgeService: KnowledgeService,
-    private headingService: HeadingService
+    private headingService: HeadingService,
+    private projectService: ProjectService
   ) {}
   @Query(returns => UserDto)
   @UseGuards(GqlAuthGuard)
@@ -37,6 +39,12 @@ export class UserResolver {
   async getWorkedCompanies(@Parent() user: UserDto) {
     const { workedCompanies } = user
     const result = await this.companyService.getCompanies(workedCompanies)
+    return result
+  }
+  @ResolveField('workedProjects', returns => [CompanyDto])
+  async getWorkedProjects(@Parent() user: UserDto) {
+    const { workedProjects } = user
+    const result = await this.projectService.getProjects(workedProjects)
     return result
   }
 

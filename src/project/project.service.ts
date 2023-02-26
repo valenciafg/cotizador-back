@@ -20,9 +20,15 @@ export class ProjectService {
       handleRegisterExceptions(error);
     }
   }
-  async getProjects(): Promise<Project[]> {
-    const projects = await this.projectModel.find()
-    return projects
+  async getProjects(uuidList?: string[]): Promise<Project[]> {
+    if (!uuidList) {
+      const projects = await this.projectModel.find()
+      return projects
+    }
+    const projects = await this.projectModel.find({ uuid: {
+      "$in": uuidList
+    }})
+    return projects;
   }
   async findProject(findProjectInput: FindProjectInput): Promise<Project> {
     const project = await this.projectModel.findOne({ ...findProjectInput })

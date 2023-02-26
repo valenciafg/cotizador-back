@@ -20,6 +20,7 @@ type UserDto {
   optionalPhoneCode: String!
   currentCompanies: [CompanyDto!]!
   workedCompanies: [CompanyDto!]!
+  workedProjects: [CompanyDto!]!
   services: [CompanyDto!]!
   headings: [CompanyDto!]!
   knowledges: [CompanyDto!]!
@@ -58,16 +59,16 @@ type KnowledgeDto {
   updatedAt: DateTime
 }
 
-type CityDto {
+type ProjectDto {
   uuid: String!
-  isoCode: String!
   name: String!
   createdAt: DateTime!
   updatedAt: DateTime
 }
 
-type ProjectDto {
+type CityDto {
   uuid: String!
+  isoCode: String!
   name: String!
   createdAt: DateTime!
   updatedAt: DateTime
@@ -96,10 +97,10 @@ type Query {
   findService(input: FindServiceInput!): ServiceDto!
   knowledges: [KnowledgeDto!]!
   findKnowledge(input: FindKnowledgeInput!): KnowledgeDto!
-  cities: [CityDto!]!
-  findCity(input: FindCityInput!): CityDto!
   projects: [ProjectDto!]!
   findProject(input: FindProjectInput!): ProjectDto!
+  cities: [CityDto!]!
+  findCity(input: FindCityInput!): CityDto!
   posts: [PostDto!]!
   findPosts(input: FindPostInput!): PostDto!
 }
@@ -124,14 +125,14 @@ input FindKnowledgeInput {
   name: String
 }
 
-input FindCityInput {
+input FindProjectInput {
   uuid: String
-  isoCode: String
   name: String
 }
 
-input FindProjectInput {
+input FindCityInput {
   uuid: String
+  isoCode: String
   name: String
 }
 
@@ -144,8 +145,8 @@ type Mutation {
   createHeading(input: CreateHeadingInput!): HeadingDto!
   createService(input: CreateServiceInput!): ServiceDto!
   createKnowledge(input: CreateKnowledgeInput!): KnowledgeDto!
-  createCity(input: CreateCityInput!): CityDto!
   createProject(input: CreateProjectInput!): ProjectDto!
+  createCity(input: CreateCityInput!): CityDto!
   createPost(input: CreatePostInput!): PostDto!
   deletePost(input: DeletePostInput!): Boolean!
 }
@@ -170,14 +171,14 @@ input CreateKnowledgeInput {
   uuid: String
 }
 
-input CreateCityInput {
-  isoCode: String!
-  name: String!
-}
-
 input CreateProjectInput {
   name: String!
   uuid: String
+}
+
+input CreateCityInput {
+  isoCode: String!
+  name: String!
 }
 
 input CreatePostInput {

@@ -9,6 +9,7 @@ import { CompanyModule } from '../company/company.module';
 import { HeadingModule } from 'src/heading/heading.module';
 import { ServiceModule } from 'src/service/service.module';
 import { KnowledgeModule } from 'src/knowledge/knowledge.module';
+import { ProjectModule } from 'src/project/project.module';
 
 @Module({
   controllers: [UserController],
@@ -23,7 +24,8 @@ import { KnowledgeModule } from 'src/knowledge/knowledge.module';
     CompanyModule,
     HeadingModule,
     ServiceModule,
-    KnowledgeModule
+    KnowledgeModule,
+    ProjectModule
   ],
 })
 export class UserModule {}

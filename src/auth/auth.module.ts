@@ -30,7 +30,8 @@ const passportModule = PassportModule.register({
       useFactory: (configService: ConfigService) => ({
         secret: configService.get('JWT_SECRET'),
         signOptions: {
-          expiresIn: configService.get('EXPIRES_IN'),
+          expiresIn: '60d'
+          // expiresIn: configService.get('EXPIRES_IN'),
         },
       }),
     }),

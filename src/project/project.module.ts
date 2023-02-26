@@ -13,6 +13,7 @@ import { Project, ProjectSchema } from './entities';
         schema: ProjectSchema
       }
     ])
-  ]
+  ],
+  exports: [ProjectService]
 })
 export class ProjectModule {}
