@@ -22,12 +22,12 @@ export class CompanyService {
   }
   async getCompanies(uuidList?: string[]): Promise<Company[]> {
     if (!uuidList) {
-      const companies = await this.companyModel.find()
+      const companies = await this.companyModel.find().sort({ createdAt: -1 })
       return companies
     }
     const companies = await this.companyModel.find({ uuid: {
       "$in": uuidList
-    }})
+    }}).sort({ createdAt: -1 })
     return companies;
   }
   async findCompany(findCompanyInput: FindCompanyInput): Promise<Company> {

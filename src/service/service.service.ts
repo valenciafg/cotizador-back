@@ -22,12 +22,12 @@ export class ServiceService {
   }
   async getServices(uuidList?: string[]): Promise<Service[]> {
     if(!uuidList) {
-      const services = await this.serviceModel.find()
+      const services = await this.serviceModel.find().sort({ createdAt: -1 })
       return services
     }
     const services = await this.serviceModel.find({ uuid: {
       "$in": uuidList
-    }})
+    }}).sort({ createdAt: -1 })
     return services;
   }
   async findService(findServiceInput: FindServiceInput): Promise<Service> {

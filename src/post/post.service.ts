@@ -20,9 +20,6 @@ export class PostService {
     }
   }
   async getPosts(): Promise<Post[]> {
-    const sortOptions = {
-      createdAt: -1
-    }
     const posts = await this.postModel.find().sort({ createdAt: -1 })
     return posts
   }

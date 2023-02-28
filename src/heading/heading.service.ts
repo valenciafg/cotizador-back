@@ -22,12 +22,12 @@ export class HeadingService {
   }
   async getHeadings(uuidList?: string[]): Promise<Heading[]> {
     if (!uuidList) {
-      const headings = await this.headingModel.find()
+      const headings = await this.headingModel.find().sort({ createdAt: -1 })
       return headings
     }
     const headings = await this.headingModel.find({ uuid: {
       "$in": uuidList
-    }})
+    }}).sort({ createdAt: -1 })
       return headings
   }
   async findHeading(findHeadingInput: FindHeadingInput): Promise<Heading> {

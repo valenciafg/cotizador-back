@@ -22,12 +22,12 @@ export class KnowledgeService {
   }
   async getKnowledges(uuidList?: string[]): Promise<Knowledge[]> {
     if(!uuidList) {
-      const knowledges = await this.knowledgeModel.find()
+      const knowledges = await this.knowledgeModel.find().sort({ createdAt: -1 })
       return knowledges
     }
     const knowledges = await this.knowledgeModel.find({ uuid: {
       "$in": uuidList
-    }})
+    }}).sort({ createdAt: -1 })
       return knowledges
   }
   async findKnowledge(findKnowledgeInput: FindKnowledgeInput): Promise<Knowledge> {

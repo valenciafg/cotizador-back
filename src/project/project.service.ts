@@ -22,12 +22,12 @@ export class ProjectService {
   }
   async getProjects(uuidList?: string[]): Promise<Project[]> {
     if (!uuidList) {
-      const projects = await this.projectModel.find()
+      const projects = await this.projectModel.find().sort({ createdAt: -1 })
       return projects
     }
     const projects = await this.projectModel.find({ uuid: {
       "$in": uuidList
-    }})
+    }}).sort({ createdAt: -1 })
     return projects;
   }
   async findProject(findProjectInput: FindProjectInput): Promise<Project> {
