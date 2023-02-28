@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { handleRegisterExceptions } from 'src/utils';
+import { handleRegisterExceptions, genUUID } from 'src/utils';
 import { Company } from './entities';
 import { CreateCompanyInput, FindCompanyInput } from './inputs';
 
@@ -33,5 +33,15 @@ export class CompanyService {
   async findCompany(findCompanyInput: FindCompanyInput): Promise<Company> {
     const company = await this.companyModel.findOne({ ...findCompanyInput })
     return company
+  }
+  async findOrCreate(name: string) {
+    const doc = await this.companyModel.findOne({ name: name.toLocaleLowerCase()})
+    if (doc) {
+      return doc;
+    }
+    return this.companyModel.create({
+      uuid: genUUID(),
+      name: name.toLocaleLowerCase(),
+    });
   }
 }

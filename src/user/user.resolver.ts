@@ -1,5 +1,5 @@
 import {  UseGuards } from '@nestjs/common';
-import { Resolver, Query, ResolveField, Parent } from '@nestjs/graphql';
+import { Resolver, Query, ResolveField, Parent, Mutation, Args } from '@nestjs/graphql';
 import {  CurrentUser } from 'src/auth/decorators';
 import { GqlAuthGuard } from 'src/auth/guards/gql-auth.guard';
 import { CompanyService } from 'src/company/company.service';
@@ -64,6 +64,174 @@ export class UserResolver {
   async getHeadings(@Parent() user: UserDto) {
     const { headings } = user
     const result = await this.headingService.getHeadings(headings)
+    return result
+  }
+  @Mutation(returns => UserDto)
+  @UseGuards(GqlAuthGuard)
+  async addUserKnowledge(
+    @CurrentUser() user: User,
+    @Args({
+      name: 'name',
+      type: () => String
+    })
+    name: string,
+  ) {
+    const { uuid } = user
+    const result = await this.userService.addKnowlege(uuid, name)
+    return result
+  }
+  @Mutation(returns => String)
+  @UseGuards(GqlAuthGuard)
+  async deleteUserKnowledge(
+    @CurrentUser() user: User,
+    @Args({
+      name: 'uuid',
+      type: () => String
+    })
+    uuid: string,
+  ) {
+    const { uuid: userUuid } = user
+    const result = await this.userService.deleteKnowledge(userUuid, uuid)
+    return result
+  }
+  @Mutation(returns => UserDto)
+  @UseGuards(GqlAuthGuard)
+  async addUserWorkedProject(
+    @CurrentUser() user: User,
+    @Args({
+      name: 'name',
+      type: () => String
+    })
+    name: string,
+  ) {
+    const { uuid } = user
+    const result = await this.userService.addWorkedProject(uuid, name)
+    return result
+  }
+  @Mutation(returns => String)
+  @UseGuards(GqlAuthGuard)
+  async deleteUserWorkedProject(
+    @CurrentUser() user: User,
+    @Args({
+      name: 'uuid',
+      type: () => String
+    })
+    uuid: string,
+  ) {
+    const { uuid: userUuid } = user
+    const result = await this.userService.deleteWorkedProject(userUuid, uuid)
+    return result
+  }
+  @Mutation(returns => UserDto)
+  @UseGuards(GqlAuthGuard)
+  async addUserCurrentCompany(
+    @CurrentUser() user: User,
+    @Args({
+      name: 'name',
+      type: () => String
+    })
+    name: string,
+  ) {
+    const { uuid } = user
+    const result = await this.userService.addCurrentCompany(uuid, name)
+    return result
+  }
+  @Mutation(returns => String)
+  @UseGuards(GqlAuthGuard)
+  async deleteUserCurrentCompany(
+    @CurrentUser() user: User,
+    @Args({
+      name: 'uuid',
+      type: () => String
+    })
+    uuid: string,
+  ) {
+    const { uuid: userUuid } = user
+    const result = await this.userService.deleteCurrentCompany(userUuid, uuid)
+    return result
+  }
+  @Mutation(returns => UserDto)
+  @UseGuards(GqlAuthGuard)
+  async addUserWorkedCompany(
+    @CurrentUser() user: User,
+    @Args({
+      name: 'name',
+      type: () => String
+    })
+    name: string,
+  ) {
+    const { uuid } = user
+    const result = await this.userService.addWorkedCompany(uuid, name)
+    return result
+  }
+  @Mutation(returns => String)
+  @UseGuards(GqlAuthGuard)
+  async deleteUserWorkedCompany(
+    @CurrentUser() user: User,
+    @Args({
+      name: 'uuid',
+      type: () => String
+    })
+    uuid: string,
+  ) {
+    const { uuid: userUuid } = user
+    const result = await this.userService.deleteWorkedCompany(userUuid, uuid)
+    return result
+  }
+  @Mutation(returns => UserDto)
+  @UseGuards(GqlAuthGuard)
+  async addUserService(
+    @CurrentUser() user: User,
+    @Args({
+      name: 'name',
+      type: () => String
+    })
+    name: string,
+  ) {
+    const { uuid } = user
+    const result = await this.userService.addService(uuid, name)
+    return result
+  }
+  @Mutation(returns => String)
+  @UseGuards(GqlAuthGuard)
+  async deleteUserService(
+    @CurrentUser() user: User,
+    @Args({
+      name: 'uuid',
+      type: () => String
+    })
+    uuid: string,
+  ) {
+    const { uuid: userUuid } = user
+    const result = await this.userService.deleteService(userUuid, uuid)
+    return result
+  }
+  @Mutation(returns => UserDto)
+  @UseGuards(GqlAuthGuard)
+  async addUserHeading(
+    @CurrentUser() user: User,
+    @Args({
+      name: 'name',
+      type: () => String
+    })
+    name: string,
+  ) {
+    const { uuid } = user
+    const result = await this.userService.addHeading(uuid, name)
+    return result
+  }
+  @Mutation(returns => String)
+  @UseGuards(GqlAuthGuard)
+  async deleteUserHeading(
+    @CurrentUser() user: User,
+    @Args({
+      name: 'uuid',
+      type: () => String
+    })
+    uuid: string,
+  ) {
+    const { uuid: userUuid } = user
+    const result = await this.userService.deleteHeading(userUuid, uuid)
     return result
   }
 }

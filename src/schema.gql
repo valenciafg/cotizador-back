@@ -8,10 +8,10 @@ type UserDto {
   status: Boolean!
   registerStep: Float!
   userType: Float!
-  businessName: String!
-  commercialName: String!
-  lastName: String!
-  name: String!
+  businessName: String
+  commercialName: String
+  lastName: String
+  name: String
   address: String!
   description: String!
   phone: String!
@@ -141,6 +141,18 @@ input FindPostInput {
 }
 
 type Mutation {
+  addUserKnowledge(name: String!): UserDto!
+  deleteUserKnowledge(uuid: String!): String!
+  addUserWorkedProject(name: String!): UserDto!
+  deleteUserWorkedProject(uuid: String!): String!
+  addUserCurrentCompany(name: String!): UserDto!
+  deleteUserCurrentCompany(uuid: String!): String!
+  addUserWorkedCompany(name: String!): UserDto!
+  deleteUserWorkedCompany(uuid: String!): String!
+  addUserService(name: String!): UserDto!
+  deleteUserService(uuid: String!): String!
+  addUserHeading(name: String!): UserDto!
+  deleteUserHeading(uuid: String!): String!
   createCompany(input: CreateCompanyInput!): CompanyDto!
   createHeading(input: CreateHeadingInput!): HeadingDto!
   createService(input: CreateServiceInput!): ServiceDto!

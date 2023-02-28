@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { handleRegisterExceptions } from 'src/utils';
+import { handleRegisterExceptions, genUUID } from 'src/utils';
 import { Project } from './entities';
 import { CreateProjectInput, FindProjectInput } from './inputs/project.input';
 
@@ -33,5 +33,15 @@ export class ProjectService {
   async findProject(findProjectInput: FindProjectInput): Promise<Project> {
     const project = await this.projectModel.findOne({ ...findProjectInput })
     return project
+  }
+  async findOrCreate(name: string) {
+    const doc = await this.projectModel.findOne({ name: name.toLocaleLowerCase()})
+    if (doc) {
+      return doc;
+    }
+    return this.projectModel.create({
+      uuid: genUUID(),
+      name: name.toLocaleLowerCase(),
+    });
   }
 }

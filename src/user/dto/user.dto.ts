@@ -19,16 +19,16 @@ export class UserDto {
   @Field()
   readonly userType: number;
 
-  @Field()
+  @Field(() => String, { nullable: true })
   readonly businessName: string;
 
-  @Field()
+  @Field(() => String, { nullable: true })
   readonly commercialName: string;
 
-  @Field()
+  @Field(() => String, { nullable: true })
   readonly lastName: string;
 
-  @Field()
+  @Field(() => String, { nullable: true })
   readonly name: string;
 
   @Field()

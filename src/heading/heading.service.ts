@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { handleRegisterExceptions } from 'src/utils';
+import { handleRegisterExceptions, genUUID } from 'src/utils';
 import { Heading } from './entities';
 import { CreateHeadingInput, FindHeadingInput } from './inputs';
 
@@ -33,5 +33,15 @@ export class HeadingService {
   async findHeading(findHeadingInput: FindHeadingInput): Promise<Heading> {
     const heading = await this.headingModel.findOne({ ...findHeadingInput })
     return heading
+  }
+  async findOrCreate(name: string) {
+    const doc = await this.headingModel.findOne({ name: name.toLocaleLowerCase()})
+    if (doc) {
+      return doc;
+    }
+    return this.headingModel.create({
+      uuid: genUUID(),
+      name: name.toLocaleLowerCase(),
+    });
   }
 }

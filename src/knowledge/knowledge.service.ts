@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { handleRegisterExceptions } from 'src/utils';
+import { handleRegisterExceptions, genUUID } from 'src/utils';
 import { Knowledge } from './entities';
 import { CreateKnowledgeInput, FindKnowledgeInput } from './inputs';
 
@@ -33,5 +33,15 @@ export class KnowledgeService {
   async findKnowledge(findKnowledgeInput: FindKnowledgeInput): Promise<Knowledge> {
     const knowledge = await this.knowledgeModel.findOne({ ...findKnowledgeInput })
     return knowledge
+  }
+  async findOrCreate(name: string) {
+    const doc = await this.knowledgeModel.findOne({ name: name.toLocaleLowerCase()})
+    if (doc) {
+      return doc;
+    }
+    return this.knowledgeModel.create({
+      uuid: genUUID(),
+      name: name.toLocaleLowerCase(),
+    });
   }
 }
