@@ -60,7 +60,13 @@ export class User extends Document {
   description: string;
   @Prop()
   @ApiProperty()
-  cityId: string;
+  deparmentId: string;
+  @Prop()
+  @ApiProperty()
+  provinceId: string;
+  @Prop()
+  @ApiProperty()
+  districtId: string;
   @Prop()
   @ApiProperty()
   address: string;

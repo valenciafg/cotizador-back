@@ -68,10 +68,42 @@ type ProjectDto {
 
 type CityDto {
   uuid: String!
+  idUbigeo: Float!
+  ubigeoReniec: String!
+  ubigeoInei: String!
+  departamentoInei: String!
+  departamento: String!
+  provinciaInei: String!
+  provincia: String!
+  distrito: String!
+  region: String!
+  macroregionInei: String!
+  macroregionMinsa: String!
   isoCode: String!
-  name: String!
+  fips: String!
+  superficie: Float!
+  altitud: Float!
+  latitud: Float!
+  longitud: Float!
+  frontera: String!
   createdAt: DateTime!
   updatedAt: DateTime
+}
+
+type DeparmentDto {
+  departamentoInei: String!
+  departamento: String!
+}
+
+type ProvinceDto {
+  provinciaInei: String!
+  provincia: String!
+}
+
+type DistrictDto {
+  idUbigeo: Float!
+  distrito: String!
+  uuid: String!
 }
 
 type PostDto {
@@ -101,6 +133,9 @@ type Query {
   findProject(input: FindProjectInput!): ProjectDto!
   cities: [CityDto!]!
   findCity(input: FindCityInput!): CityDto!
+  getDeparments: [DeparmentDto!]!
+  getProvinces(departamentoInei: String!): [ProvinceDto!]!
+  getDistricts(provinciaInei: String!): [DistrictDto!]!
   posts: [PostDto!]!
   findPosts(input: FindPostInput!): PostDto!
 }
@@ -132,8 +167,7 @@ input FindProjectInput {
 
 input FindCityInput {
   uuid: String
-  isoCode: String
-  name: String
+  idUbigeo: Float
 }
 
 input FindPostInput {
@@ -190,7 +224,8 @@ input CreateProjectInput {
 
 input CreateCityInput {
   isoCode: String!
-  name: String!
+  provincia: String!
+  departamento: String!
 }
 
 input CreatePostInput {

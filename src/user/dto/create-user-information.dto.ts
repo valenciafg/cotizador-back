@@ -30,7 +30,11 @@ export class CreateUserInformationDto {
   description: string;
   @IsString()
   @IsUUID()
-  cityId: string;
+  districtId: string;
+  @IsString()
+  provinceId: string;
+  @IsString()
+  deparmentId: string;
   @IsString()
   @IsOptional()
   address?: string;

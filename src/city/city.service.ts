@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { uniqBy } from 'lodash';
 import { handleRegisterExceptions } from 'src/utils';
 import { City } from './entities/city.entity';
 import { CreateCityInput, FindCityInput } from './inputs';
@@ -26,5 +27,22 @@ export class CityService {
   async findCity(findCityInput: FindCityInput): Promise<City> {
     const city = await this.cityModel.findOne({ ...findCityInput })
     return city
+  }
+  async registerMany(cities: City[]) {
+    const response = await this.cityModel.insertMany(cities);
+    return response;
+  }
+
+  async getDeparments() {
+    const response = await this.cityModel.find().select({ departamentoInei: 1, departamento: 1 })
+    return uniqBy(response, 'departamentoInei')
+  }
+  async getProvinces(departamentoInei: string) {
+    const response = await this.cityModel.find({ departamentoInei }).select({ provinciaInei: 1, provincia: 1 })
+    return uniqBy(response, 'provinciaInei')
+  }
+  async getDistricts(provinciaInei: string) {
+    const response = await this.cityModel.find({ provinciaInei }).select({ idUbigeo: 1, distrito: 1, uuid: 1 })
+    return uniqBy(response, 'idUbigeo')
   }
 }

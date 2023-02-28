@@ -13,6 +13,7 @@ import { City, CitySchema } from './entities/city.entity';
         schema: CitySchema
       }
     ])
-  ]
+  ],
+  exports: [CityService]
 })
 export class CityModule {}

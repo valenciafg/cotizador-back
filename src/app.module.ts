@@ -19,6 +19,7 @@ import { HeadingModule } from './heading/heading.module';
 import { ProjectModule } from './project/project.module';
 import { KnowledgeModule } from './knowledge/knowledge.module';
 import { PostModule } from './post/post.module'
+import { SeedModule } from './seed/seed.module';
 
 @Module({
   imports: [
@@ -53,6 +54,7 @@ import { PostModule } from './post/post.module'
     ProjectModule,
     KnowledgeModule,
     PostModule,
+    SeedModule,
   ],
   controllers: [],
   providers: [],
