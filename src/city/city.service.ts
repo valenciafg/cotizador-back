@@ -33,16 +33,34 @@ export class CityService {
     return response;
   }
 
-  async getDeparments() {
-    const response = await this.cityModel.find().select({ departamentoInei: 1, departamento: 1 })
+  async getDeparments(departamentoInei?: string) {
+    let query = {}
+    if (departamentoInei && departamentoInei !== "") {
+      query = { ...query, departamentoInei }
+    }
+    const response = await this.cityModel.find(query).select({ departamentoInei: 1, departamento: 1 })
     return uniqBy(response, 'departamentoInei')
   }
-  async getProvinces(departamentoInei: string) {
-    const response = await this.cityModel.find({ departamentoInei }).select({ provinciaInei: 1, provincia: 1 })
+  async getProvinces(departamentoInei?: string, provinciaInei?: string) {
+    let query = {}
+    if (departamentoInei && departamentoInei !== "") {
+      query = { ...query, departamentoInei }
+    }
+    if (provinciaInei && provinciaInei !== "") {
+      query = { ...query, provinciaInei }
+    }
+    const response = await this.cityModel.find(query).select({ provinciaInei: 1, provincia: 1 })
     return uniqBy(response, 'provinciaInei')
   }
-  async getDistricts(provinciaInei: string) {
-    const response = await this.cityModel.find({ provinciaInei }).select({ idUbigeo: 1, distrito: 1, uuid: 1 })
+  async getDistricts(provinciaInei?: string, uuid?: string) {
+    let query = {}
+    if (provinciaInei && provinciaInei !== "") {
+      query = { ...query, provinciaInei }
+    }
+    if (uuid && uuid !== "") {
+      query = { ...query, uuid }
+    }
+    const response = await this.cityModel.find(query).select({ idUbigeo: 1, distrito: 1, uuid: 1 })
     return uniqBy(response, 'idUbigeo')
   }
 }

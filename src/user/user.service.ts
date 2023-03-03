@@ -22,6 +22,7 @@ import { ServiceService } from 'src/service/service.service';
 import { KnowledgeService } from 'src/knowledge/knowledge.service';
 import { HeadingService } from 'src/heading/heading.service';
 import { ProjectService } from 'src/project/project.service';
+import { SearchUsersInput } from './inputs';
 
 @Injectable()
 export class UserService {
@@ -300,5 +301,33 @@ export class UserService {
       return `${uuid}`
     }
     throw new Error(`${uuid} not found`)
+  }
+
+  async getUsers(input?: SearchUsersInput) {
+    const VALID_USER_TYPES = [
+      USER_TYPE.PROFESSIONAL,
+      USER_TYPE.COMPANY,
+      USER_TYPE.CONTRACTOR_SUPPLIER
+    ];
+    let query = {}
+    if (input.serviceId) {
+      query = { ...query, services: input.serviceId }
+    }
+    if (input.deparmentId) {
+      query = { ...query, deparmentId: input.deparmentId }
+    }
+    if (input.provinceId) {
+      query = { ...query, provinceId: input.provinceId }
+    }
+    if (input.districtId) {
+      query = { ...query, districtId: input.districtId }
+    }
+    const users = await this.userModel.find({
+      userType: {
+        "$in": VALID_USER_TYPES,
+      },
+      ...query
+    });
+    return users;
   }
 }

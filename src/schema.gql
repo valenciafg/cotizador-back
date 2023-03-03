@@ -24,11 +24,34 @@ type UserDto {
   services: [CompanyDto!]!
   headings: [CompanyDto!]!
   knowledges: [CompanyDto!]!
+  departmentId: String
+  provinceId: String
+  districtId: String
+  department: DeparmentDto!
+  province: ProvinceDto!
+  district: DistrictDto!
 }
 
-type CompanyDto {
+type CityDto {
   uuid: String!
-  name: String!
+  idUbigeo: Float!
+  ubigeoReniec: String!
+  ubigeoInei: String!
+  departamentoInei: String!
+  departamento: String!
+  provinciaInei: String!
+  provincia: String!
+  distrito: String!
+  region: String!
+  macroregionInei: String!
+  macroregionMinsa: String!
+  isoCode: String!
+  fips: String!
+  superficie: Float!
+  altitud: Float!
+  latitud: Float!
+  longitud: Float!
+  frontera: String!
   createdAt: DateTime!
   updatedAt: DateTime
 }
@@ -37,6 +60,29 @@ type CompanyDto {
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
+
+type DeparmentDto {
+  departamentoInei: String!
+  departamento: String!
+}
+
+type ProvinceDto {
+  provinciaInei: String!
+  provincia: String!
+}
+
+type DistrictDto {
+  idUbigeo: Float!
+  distrito: String!
+  uuid: String!
+}
+
+type CompanyDto {
+  uuid: String!
+  name: String!
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
 
 type HeadingDto {
   uuid: String!
@@ -66,46 +112,6 @@ type ProjectDto {
   updatedAt: DateTime
 }
 
-type CityDto {
-  uuid: String!
-  idUbigeo: Float!
-  ubigeoReniec: String!
-  ubigeoInei: String!
-  departamentoInei: String!
-  departamento: String!
-  provinciaInei: String!
-  provincia: String!
-  distrito: String!
-  region: String!
-  macroregionInei: String!
-  macroregionMinsa: String!
-  isoCode: String!
-  fips: String!
-  superficie: Float!
-  altitud: Float!
-  latitud: Float!
-  longitud: Float!
-  frontera: String!
-  createdAt: DateTime!
-  updatedAt: DateTime
-}
-
-type DeparmentDto {
-  departamentoInei: String!
-  departamento: String!
-}
-
-type ProvinceDto {
-  provinciaInei: String!
-  provincia: String!
-}
-
-type DistrictDto {
-  idUbigeo: Float!
-  distrito: String!
-  uuid: String!
-}
-
 type PostDto {
   uuid: String!
   title: String!
@@ -121,6 +127,7 @@ type PostDto {
 
 type Query {
   me: UserDto!
+  users(input: SearchUsersInput!): [UserDto!]!
   companies: [CompanyDto!]!
   findCompany(input: FindCompanyInput!): CompanyDto!
   headings: [HeadingDto!]!
@@ -138,6 +145,13 @@ type Query {
   getDistricts(provinciaInei: String!): [DistrictDto!]!
   posts: [PostDto!]!
   findPosts(input: FindPostInput!): PostDto!
+}
+
+input SearchUsersInput {
+  serviceId: String
+  deparmentId: String
+  provinceId: String
+  districtId: String
 }
 
 input FindCompanyInput {

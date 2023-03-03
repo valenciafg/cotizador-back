@@ -68,4 +68,12 @@ export class UserDto {
   @Field(() => [String], { nullable: true })
   readonly knowledges: string[];
 
+  @Field(() => String, { nullable: true })
+  readonly departmentId: string;
+
+  @Field(() => String, { nullable: true })
+  readonly provinceId: string;
+
+  @Field(() => String, { nullable: true })
+  readonly districtId: string;
 }

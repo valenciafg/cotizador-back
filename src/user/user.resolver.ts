@@ -2,6 +2,8 @@ import {  UseGuards } from '@nestjs/common';
 import { Resolver, Query, ResolveField, Parent, Mutation, Args } from '@nestjs/graphql';
 import {  CurrentUser } from 'src/auth/decorators';
 import { GqlAuthGuard } from 'src/auth/guards/gql-auth.guard';
+import { CityService } from 'src/city/city.service';
+import { DeparmentDto, DistrictDto, ProvinceDto } from 'src/city/dto';
 import { CompanyService } from 'src/company/company.service';
 import { CompanyDto } from 'src/company/dto';
 import { HeadingService } from 'src/heading/heading.service';
@@ -10,6 +12,7 @@ import { ProjectService } from 'src/project/project.service';
 import { ServiceService } from 'src/service/service.service';
 import { UserDto } from './dto';
 import { User } from './entities/user.entity';
+import { SearchUsersInput } from './inputs';
 import { UserService } from './user.service'
 
 @Resolver(of => UserDto)
@@ -20,7 +23,8 @@ export class UserResolver {
     private serviceService: ServiceService,
     private knowledgeService: KnowledgeService,
     private headingService: HeadingService,
-    private projectService: ProjectService
+    private projectService: ProjectService,
+    private cityService: CityService
   ) {}
   @Query(returns => UserDto)
   @UseGuards(GqlAuthGuard)
@@ -28,6 +32,12 @@ export class UserResolver {
     @CurrentUser() user: User
   ) {
     return user
+  }
+  @Query(returns => [UserDto])
+  async users(
+    @Args('input') input: SearchUsersInput
+  ) {
+    return this.userService.getUsers(input);
   }
   @ResolveField('currentCompanies', returns => [CompanyDto])
   async getCurrentCompanies(@Parent() user: UserDto) {
@@ -65,6 +75,24 @@ export class UserResolver {
     const { headings } = user
     const result = await this.headingService.getHeadings(headings)
     return result
+  }
+  @ResolveField('department', returns => DeparmentDto)
+  async getdeparment(@Parent() user: UserDto) {
+    const { departmentId } = user
+    const [result] = await this.cityService.getDeparments(departmentId)
+    return result ? result : null
+  }
+  @ResolveField('province', returns => ProvinceDto)
+  async getProvince(@Parent() user: UserDto) {
+    const { provinceId } = user
+    const [result] = await this.cityService.getProvinces(null, provinceId)
+    return result ? result : null
+  }
+  @ResolveField('district', returns => DistrictDto)
+  async getDistrict(@Parent() user: UserDto) {
+    const { districtId } = user
+    const [result] = await this.cityService.getDistricts(null, districtId)
+    return result ? result : null
   }
   @Mutation(returns => UserDto)
   @UseGuards(GqlAuthGuard)

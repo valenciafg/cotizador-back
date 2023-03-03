@@ -10,6 +10,7 @@ import { HeadingModule } from 'src/heading/heading.module';
 import { ServiceModule } from 'src/service/service.module';
 import { KnowledgeModule } from 'src/knowledge/knowledge.module';
 import { ProjectModule } from 'src/project/project.module';
+import { CityModule } from 'src/city/city.module';
 
 @Module({
   controllers: [UserController],
@@ -25,7 +26,8 @@ import { ProjectModule } from 'src/project/project.module';
     HeadingModule,
     ServiceModule,
     KnowledgeModule,
-    ProjectModule
+    ProjectModule,
+    CityModule
   ],
 })
 export class UserModule {}
