@@ -7,6 +7,6 @@ import { UserModule } from 'src/user/user.module';
 @Module({
   controllers: [FilesController],
   providers: [FilesService],
-  imports: [ConfigModule, UserModule],
+  imports: [ConfigModule, UserModule, ConfigModule],
 })
 export class FilesModule {}

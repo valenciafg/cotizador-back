@@ -68,4 +68,16 @@ export class FilesController {
     }`;
     return { fileUrl };
   }
+
+  @Post('test-upload')
+  @UseInterceptors(FileInterceptor('file'))
+  async testUploadFile(
+    @UploadedFile()
+    file: Express.Multer.File,
+  ) {
+    console.log({ file })
+    console.log({ aaa: file.originalname, xx: file.mimetype })
+    const result = await this.filesService.uploadFile('test.png', file.buffer, file.mimetype)
+    return 'realizado'
+  }
 }
