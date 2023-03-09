@@ -21,6 +21,9 @@ export class User extends Document {
   email: string;
   @Prop()
   @ApiProperty()
+  profilePic: string;
+  @Prop()
+  @ApiProperty()
   password: string;
   @Prop()
   @ApiProperty()
@@ -138,6 +141,10 @@ export class User extends Document {
   @Prop()
   @ApiProperty()
   authProvider: string;
+  @Prop({ required: true, default: () => new Date()})
+  createdAt: Date;
+  @Prop({ required: false, default: null })
+  updatedAt: Date;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

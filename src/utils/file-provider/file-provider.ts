@@ -2,10 +2,7 @@ import { Readable } from "stream";
 import { ConnectionString } from "connection-string";
 // import { FileTypeResult, fileTypeFromBuffer, fileTypeFromStream } from "file-type";
 import * as FileType from "file-type";
-// import { fileTypeFromBuffer, fileTypeFromStream } from "file-type";
-// import * as ArchiveType from 'archive-type'
-
-// const FileType = require('file-type')
+import { extension } from 'mime-types'
 
 export interface IFileProviderOptions {
   url?: string
@@ -119,6 +116,10 @@ export class FileProvider implements IFileProviderValues {
       const bufferHeader = Buffer.from(header, 'base64');
       return FileType.fromBuffer(bufferHeader);
     }
+  }
+
+  getExtension(mimeType: string) {
+    return extension(mimeType)
   }
 
   getContentEncoding(data: Buffer | Readable | string) {

@@ -29,5 +29,6 @@ import { CityModule } from 'src/city/city.module';
     ProjectModule,
     CityModule
   ],
+  exports: [UserService]
 })
 export class UserModule {}

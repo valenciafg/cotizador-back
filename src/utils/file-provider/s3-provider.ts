@@ -13,6 +13,7 @@ import {
 // import { DeleteObjectCommand, DeleteObjectCommandInput, GetObjectCommand, GetObjectCommandInput, GetObjectCommandOutput, HeadObjectCommand, HeadObjectCommandInput, PutObjectCommand, PutObjectCommandInput } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { FileTypeResult } from "file-type/core";
+import { IUploadFileProvider } from "src/interfaces";
 import { FileProvider } from "./file-provider";
 
 
@@ -36,9 +37,7 @@ export class S3Provider extends FileProvider {
   }
 
   connect() {
-    console.log('se va connectar');
     const endpoint = this.getS3Endpoint();
-    console.log({ endpoint })
     this.bucket = this.path;
     this.client = new S3Client({
       region: this.hostname,
@@ -50,7 +49,7 @@ export class S3Provider extends FileProvider {
       }
     });
   }
-  async __upload(key: string, resource: any, contentType?: string) {
+  async __upload(key: string, resource: any, contentType?: string): Promise<IUploadFileProvider> {
     let type = contentType ? { mime: contentType } : null;
     if (!type) {
       type = await this.getFileType(resource);
@@ -66,8 +65,9 @@ export class S3Provider extends FileProvider {
     const command = new PutObjectCommand(input);
     await this.client.send(command);
     return {
-      location: this.bucket,
+      bucket: this.bucket,
       key,
+      mimeType: type.mime
     }
   };
 
@@ -115,7 +115,11 @@ export class S3Provider extends FileProvider {
     }
   }
 
-  signedUrl(key: string, fileName: string, expiresIn = 36000) {
+  async signedUrl(key: string, fileName: string, expiresIn = 36000) {
+    const exist = await this.exist(key)
+    if (!exist) {
+      throw new Error('File not exist on bucket')
+    }
     const input: GetObjectCommandInput = {
       Key: key,
       Bucket: this.bucket,

@@ -124,6 +124,14 @@ export class UserService {
     }
   }
 
+  async setProfilePic(uuid: string, profilePicUuid: string) {
+    try {
+      await this.userModel.findOneAndUpdate({ uuid }, { profilePic: profilePicUuid })
+    } catch (error) {
+      handleRegisterExceptions(error);
+    }
+  }
+
   async getUserById(id: string) {
     const user: User = await this.userModel.findById(id);
     if (!user) {

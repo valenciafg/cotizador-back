@@ -7,6 +7,7 @@ import {
   UseInterceptors,
   BadRequestException,
   Res,
+  Body,
 } from '@nestjs/common';
 import { FilesService } from './files.service';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -15,7 +16,9 @@ import { diskStorage } from 'multer';
 import { Response } from 'express';
 import { ConfigService } from '@nestjs/config';
 import { ApiTags } from '@nestjs/swagger';
-import { Auth } from 'src/auth/decorators';
+import { Auth, GetUser } from 'src/auth/decorators';
+import { User } from 'src/user/entities/user.entity';
+import { UploadFileDto } from './dto';
 
 @ApiTags('Files')
 @Controller('files')
@@ -24,60 +27,32 @@ export class FilesController {
     private readonly filesService: FilesService,
     private readonly configService: ConfigService,
   ) {}
-
-  @Get('user/:id')
-  findUserImage(@Res() res: Response, @Param('id') id: string) {
-    const path = this.filesService.getStaticUserImage(id);
-    /*
-    res.status(403).json({
-      ok: false,
-      path,
-    });
-    */
-    res.sendFile(path);
-  }
-
-  @Get('user/profile')
-  findUserProfileImage() {
-    return null;
-  }
-
   @Post('user')
   @Auth()
-  @UseInterceptors(
-    FileInterceptor('file', {
-      fileFilter,
-      storage: diskStorage({
-        destination: './static/uploads/user',
-        filename: fileNamer,
-      }),
-      limits: {
-        fileSize: 5000000,
-      },
-    }),
-  )
-  uploadUserFile(
-    @UploadedFile()
-    file: Express.Multer.File,
-  ) {
-    if (!file) {
-      throw new BadRequestException('The file is not a image');
-    }
-    const fileUrl = `${this.configService.get('HOST_API')}/files/user/${
-      file.filename
-    }`;
-    return { fileUrl };
-  }
-
-  @Post('test-upload')
   @UseInterceptors(FileInterceptor('file'))
-  async testUploadFile(
+  async uploadUserFile(
+    @GetUser() user: User,
     @UploadedFile()
     file: Express.Multer.File,
+    @Body() options: UploadFileDto,
   ) {
-    console.log({ file })
-    console.log({ aaa: file.originalname, xx: file.mimetype })
-    const result = await this.filesService.uploadFile('test.png', file.buffer, file.mimetype)
-    return 'realizado'
+    const result = await this.filesService.uploadUserFile(options, file, user)
+    return result
+  }
+  @Get('user/url/:uuid')
+  @Auth()
+  async getUserFileUrl(
+    @GetUser() user: User,
+    @Param('uuid') uuid: string
+  ) {
+    return this.filesService.getUserFileUrl(uuid, user.uuid)
+  }
+  @Get('user/:uuid')
+  @Auth()
+  async getUserFile(
+    @GetUser() user: User,
+    @Param('uuid') uuid: string
+  ) {
+    return this.filesService.getUserFile(uuid, user.uuid)
   }
 }
