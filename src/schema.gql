@@ -27,6 +27,7 @@ type UserDto {
   departmentId: String
   provinceId: String
   districtId: String
+  profilePic: FileDto!
   department: DeparmentDto!
   province: ProvinceDto!
   district: DistrictDto!
@@ -82,6 +83,12 @@ type CompanyDto {
   name: String!
   createdAt: DateTime!
   updatedAt: DateTime
+}
+
+type FileDto {
+  content: String!
+  ext: String!
+  mime: String!
 }
 
 type HeadingDto {

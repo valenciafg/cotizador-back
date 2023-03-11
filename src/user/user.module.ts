@@ -11,6 +11,7 @@ import { ServiceModule } from 'src/service/service.module';
 import { KnowledgeModule } from 'src/knowledge/knowledge.module';
 import { ProjectModule } from 'src/project/project.module';
 import { CityModule } from 'src/city/city.module';
+import { FilesModule } from 'src/files/files.module';
 
 @Module({
   controllers: [UserController],
@@ -27,7 +28,8 @@ import { CityModule } from 'src/city/city.module';
     ServiceModule,
     KnowledgeModule,
     ProjectModule,
-    CityModule
+    CityModule,
+    FilesModule,
   ],
   exports: [UserService]
 })

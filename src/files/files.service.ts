@@ -5,23 +5,18 @@ import { join } from 'path';
 import { User } from 'src/user/entities/user.entity';
 import { File } from './entities/file.entity'
 import { S3Provider } from 'src/utils/file-provider';
-import { UploadFileDto } from './dto';
-import { get } from 'lodash';
 import { genUUID } from 'src/utils'
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { ICreateFile } from './interfaces';
 import { IUploadFileProvider } from 'src/interfaces';
-import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class FilesService {
-  // fileStorageUrl: string;
   s3: S3Provider
   constructor(
     @InjectModel(File.name)
     private readonly fileModel: Model<File>,
-    private userService: UserService,
     configService: ConfigService
   ) {
     const fileStorageUrl = configService.get('FILESTORAGE_URL')
@@ -53,12 +48,12 @@ export class FilesService {
     return file
   }
 
-  async uploadUserFile(options: UploadFileDto, file: Express.Multer.File, user: User) {
+  async uploadUserFile(file: Express.Multer.File, user: User, isProfile?: boolean) {
     const extension = this.s3.getExtension(file.mimetype)
     let type = 'user-file'
     let location = `user/${user.uuid}`
     let key = genUUID()
-    if (options.isProfile) {
+    if (isProfile) {
       key = 'profile-pic'
       type = 'profile-pic'
     }
@@ -74,11 +69,8 @@ export class FilesService {
       type,
       createdBy: user.uuid
     }
-    const fileResponse = await this.createFile(createFileData)
-    console.log({ fileResponse })
-    if (options.isProfile) {
-      await this.userService.setProfilePic(user.uuid, fileResponse.uuid)
-    }
+    const fileResponse = await this.createFile(createFileData);
+    createFileData.uuid = fileResponse.uuid;    
     return createFileData
   }
 

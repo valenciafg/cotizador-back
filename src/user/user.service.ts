@@ -14,6 +14,7 @@ import {
   CreateProfileInformationDto,
   CreateUserInformationDto,
   CreateWorkInformationDto,
+  UploadFileDto,
 } from './dto';
 import { User } from './entities/user.entity';
 import { REGISTER_STEPS, USER_TYPE } from 'src/constants';
@@ -23,6 +24,7 @@ import { KnowledgeService } from 'src/knowledge/knowledge.service';
 import { HeadingService } from 'src/heading/heading.service';
 import { ProjectService } from 'src/project/project.service';
 import { SearchUsersInput } from './inputs';
+import { FilesService } from 'src/files/files.service';
 
 @Injectable()
 export class UserService {
@@ -34,7 +36,8 @@ export class UserService {
     private serviceService: ServiceService,
     private knowledgeService: KnowledgeService,
     private headingService: HeadingService,
-    private projectService: ProjectService
+    private projectService: ProjectService,
+    private fileService: FilesService
   ) {}
 
   async setType(user: User, userType: number) {
@@ -119,14 +122,6 @@ export class UserService {
         registerStep: REGISTER_STEPS.FINISHED,
       });
       return { ok: true, message: 'Profile information registered' };
-    } catch (error) {
-      handleRegisterExceptions(error);
-    }
-  }
-
-  async setProfilePic(uuid: string, profilePicUuid: string) {
-    try {
-      await this.userModel.findOneAndUpdate({ uuid }, { profilePic: profilePicUuid })
     } catch (error) {
       handleRegisterExceptions(error);
     }
@@ -337,5 +332,24 @@ export class UserService {
       ...query
     });
     return users;
+  }
+
+  async setProfilePic(uuid: string, profilePicUuid: string) {
+    try {
+      await this.userModel.findOneAndUpdate({ uuid }, { profilePic: profilePicUuid })
+    } catch (error) {
+      handleRegisterExceptions(error);
+    }
+  }
+
+  async uploadFile(options: UploadFileDto, file: Express.Multer.File, user: User) {
+    try {
+      const fileResponse = await this.fileService.uploadUserFile(file, user, options.isProfile);
+      if (options.isProfile) {
+        await this.setProfilePic(user.uuid, fileResponse.uuid)
+      }
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
   }
 }

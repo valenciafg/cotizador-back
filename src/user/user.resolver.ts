@@ -6,6 +6,8 @@ import { CityService } from 'src/city/city.service';
 import { DeparmentDto, DistrictDto, ProvinceDto } from 'src/city/dto';
 import { CompanyService } from 'src/company/company.service';
 import { CompanyDto } from 'src/company/dto';
+import { FileDto } from 'src/files/dto';
+import { FilesService } from 'src/files/files.service';
 import { HeadingService } from 'src/heading/heading.service';
 import { KnowledgeService } from 'src/knowledge/knowledge.service';
 import { ProjectService } from 'src/project/project.service';
@@ -24,7 +26,8 @@ export class UserResolver {
     private knowledgeService: KnowledgeService,
     private headingService: HeadingService,
     private projectService: ProjectService,
-    private cityService: CityService
+    private cityService: CityService,
+    private fileService: FilesService,
   ) {}
   @Query(returns => UserDto)
   @UseGuards(GqlAuthGuard)
@@ -93,6 +96,12 @@ export class UserResolver {
     const { districtId } = user
     const [result] = await this.cityService.getDistricts(null, districtId)
     return result ? result : null
+  }
+  @ResolveField('profilePic', returns => FileDto)
+  async getProfilePic(@Parent() user: UserDto) {
+    const { uuid, profilePic } = user
+    const response = await this.fileService.getUserFile(profilePic, uuid)
+    return response;
   }
   @Mutation(returns => UserDto)
   @UseGuards(GqlAuthGuard)

@@ -4,3 +4,4 @@ export * from './create-basic-information.dto';
 export * from './create-work-information.dto';
 export * from './update-user.dto';
 export * from './user.dto'
+export * from './upload-file.dto'

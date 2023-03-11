@@ -7,17 +7,21 @@ import {
   Param,
   Put,
   ParseIntPipe,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import {
   CreateBasicInformationDto,
   CreateProfileInformationDto,
   CreateUserInformationDto,
+  UploadFileDto,
 } from './dto';
 import { User } from './entities/user.entity';
 import { ApiTags } from '@nestjs/swagger';
 import { Auth, GetUser } from 'src/auth/decorators';
 import { CreateWorkInformationDto } from './dto/create-work-information.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('User')
 @Controller('user')
@@ -64,6 +68,18 @@ export class UserController {
     @Body() profileInfo: CreateProfileInformationDto,
   ) {
     return this.userService.setProfileInformation(user, profileInfo);
+  }
+  @Post('file')
+  @Auth()
+  @UseInterceptors(FileInterceptor('file'))
+  async uploadUserFile(
+    @GetUser() user: User,
+    @UploadedFile()
+    file: Express.Multer.File,
+    @Body() options: UploadFileDto,
+  ) {
+    const result = await this.userService.uploadFile(options, file, user)
+    return result
   }
   // @Post()
   // create(@Body() createUserDto: CreateBasicInformationDto) {
