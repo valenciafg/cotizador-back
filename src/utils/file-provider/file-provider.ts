@@ -1,6 +1,5 @@
 import { Readable } from "stream";
 import { ConnectionString } from "connection-string";
-// import { FileTypeResult, fileTypeFromBuffer, fileTypeFromStream } from "file-type";
 import * as FileType from "file-type";
 import { extension } from 'mime-types'
 

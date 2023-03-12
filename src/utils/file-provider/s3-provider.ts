@@ -10,7 +10,6 @@ import {
   DeleteObjectCommandInput,
   HeadObjectCommandInput
 } from "@aws-sdk/client-s3";
-// import { DeleteObjectCommand, DeleteObjectCommandInput, GetObjectCommand, GetObjectCommandInput, GetObjectCommandOutput, HeadObjectCommand, HeadObjectCommandInput, PutObjectCommand, PutObjectCommandInput } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { FileTypeResult } from "file-type/core";
 import { IUploadFileProvider } from "src/interfaces";
