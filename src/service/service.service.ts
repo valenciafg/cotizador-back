@@ -44,4 +44,12 @@ export class ServiceService {
       name: name.toLocaleLowerCase(),
     });
   }
+  async registerMany(services: Service[]) {
+    try {
+      const response = await this.serviceModel.insertMany(services);
+      return response;
+    } catch (error) {
+      this.logger.error(error)
+    }
+  }
 }

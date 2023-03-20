@@ -151,6 +151,10 @@ export class UserService {
     return this.getUserById(id);
   }
 
+  findOneByUuid(uuid: string) {
+    return this.userModel.findOne({ uuid })
+  }
+
   getUserByUUID(uuid: string) {
     return this.userModel.findOne({ uuid })
   }
@@ -346,8 +350,9 @@ export class UserService {
     try {
       const fileResponse = await this.fileService.uploadUserFile(file, user, options.isProfile);
       if (options.isProfile) {
-        await this.setProfilePic(user.uuid, fileResponse.uuid)
+        await this.setProfilePic(user.uuid, fileResponse.uuid);
       }
+      return fileResponse;
     } catch (error) {
       throw new BadRequestException(error.message);
     }

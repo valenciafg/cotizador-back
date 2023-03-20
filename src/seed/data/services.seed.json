@@ -1,0 +1,66 @@
+[
+  {
+      "name": "Albañilería",
+      "description": "Servicio de construcción de estructuras con ladrillos, bloques y mortero."
+  },
+  {
+      "name": "Carpintería",
+      "description": "Servicio de fabricación y montaje de estructuras y mobiliario de madera."
+  },
+  {
+      "name": "Pintura",
+      "description": "Servicio de aplicación de pintura y acabados en paredes y estructuras."
+  },
+  {
+      "name": "Electricidad",
+      "description": "Servicio de instalación y reparación de sistemas eléctricos en construcciones."
+  },
+  {
+      "name": "Plomería",
+      "description": "Servicio de instalación y reparación de sistemas de plomería y tuberías."
+  },
+  {
+      "name": "Techado",
+      "description": "Servicio de construcción y reparación de techos y cubiertas."
+  },
+  {
+      "name": "Cimentación",
+      "description": "Servicio de construcción de cimientos y bases para estructuras."
+  },
+  {
+      "name": "Acabados",
+      "description": "Servicio de instalación de acabados decorativos y estéticos en interiores y exteriores."
+  },
+  {
+      "name": "Diseño de interiores",
+      "description": "Servicio de diseño y decoración de interiores para construcciones."
+  },
+  {
+    "name": "Remodelación de interiores",
+    "description": "Reacondicionamiento y renovación de interiores, incluyendo pintura, diseño de interiores, instalación de suelos y otros trabajos de acabado."
+  },
+  {
+      "name": "Ingeniería estructural",
+      "description": "Servicio de diseño y cálculo de estructuras de construcciones."
+  },
+  {
+      "name": "Diseño arquitectónico",
+      "description": "Servicio de diseño y planificación de construcciones."
+  },
+  {
+      "name": "Demolición",
+      "description": "Servicio de demolición y desmantelamiento de estructuras y edificios."
+  },
+  {
+      "name": "Excavación",
+      "description": "Servicio de excavación y remoción de tierra y materiales."
+  },
+  {
+      "name": "Revestimiento",
+      "description": "Servicio de instalación de revestimientos en paredes y pisos."
+  },
+  {
+      "name": "Concreto",
+      "description": "Servicio de mezcla y vertido de concreto para construcciones."
+  }
+]

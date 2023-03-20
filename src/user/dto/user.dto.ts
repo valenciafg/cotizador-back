@@ -1,5 +1,4 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql";
-import { CompanyDto } from "src/company/dto";
 
 
 @ObjectType()

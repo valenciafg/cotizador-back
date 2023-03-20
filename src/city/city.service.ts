@@ -29,8 +29,12 @@ export class CityService {
     return city
   }
   async registerMany(cities: City[]) {
-    const response = await this.cityModel.insertMany(cities);
-    return response;
+    try {
+      const response = await this.cityModel.insertMany(cities);
+      return response;
+    } catch (error) {
+      this.logger.error(error.message)
+    }
   }
 
   async getDeparments(departamentoInei?: string) {

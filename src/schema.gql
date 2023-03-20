@@ -135,6 +135,7 @@ type PostDto {
 type Query {
   me: UserDto!
   users(input: SearchUsersInput!): [UserDto!]!
+  user(uuid: String!): UserDto!
   companies: [CompanyDto!]!
   findCompany(input: FindCompanyInput!): CompanyDto!
   headings: [HeadingDto!]!

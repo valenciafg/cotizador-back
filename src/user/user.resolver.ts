@@ -42,6 +42,20 @@ export class UserResolver {
   ) {
     return this.userService.getUsers(input);
   }
+  @Query(returns => UserDto)
+  async user(
+    @Args({
+      name: 'uuid',
+      type: () => String
+    })
+    uuid: string,
+  ) {
+    const user = await this.userService.findOneByUuid(uuid);
+    if (!user) {
+      throw new Error('User not found')
+    }
+    return user;
+  }
   @ResolveField('currentCompanies', returns => [CompanyDto])
   async getCurrentCompanies(@Parent() user: UserDto) {
     const { currentCompanies } = user

@@ -14,6 +14,9 @@ export class Service extends Document {
   @Prop()
   name: string;
 
+  @Prop({ required: false })
+  description: string;
+
   @Prop({ required: true, default: () => new Date()})
   createdAt: Date;
   @Prop({ required: false, default: null })
