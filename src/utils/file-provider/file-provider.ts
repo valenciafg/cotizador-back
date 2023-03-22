@@ -34,8 +34,6 @@ export class FileProvider implements IFileProviderValues {
 
   constructor(options: IFileProviderOptions) {
     if (options.url) {
-      const asd = new ConnectionString(options.url);
-      console.log({ asd })
       const {
         protocol,
         hostname,
