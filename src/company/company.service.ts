@@ -44,4 +44,13 @@ export class CompanyService {
       name: name.toLocaleLowerCase(),
     });
   }
+
+  async registerMany(companies: Company[]) {
+    try {
+      const response = await this.companyModel.insertMany(companies);
+      return response;
+    } catch (error) {
+      this.logger.error(error.message)
+    }
+  }
 }

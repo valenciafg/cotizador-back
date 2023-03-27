@@ -19,7 +19,11 @@ export class PostDto {
   readonly postType: string;
   
   @Field({ nullable: true })
-  mainImageUrl?: string;
+  mainImage?: string;
+
+  @Field(() => String, { nullable: true })
+  readonly mainImageUrl?: string;
+
   @Field()
   readonly createdBy: string;
   @Field()

@@ -77,5 +77,5 @@ export class UserDto {
   readonly districtId: string;
 
   @Field(() => String, { nullable: true })
-  readonly profilePic: string;
+  readonly profilePic?: string;
 }

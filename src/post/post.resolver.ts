@@ -1,12 +1,14 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, ResolveField, Parent } from '@nestjs/graphql';
 import { PostService } from './post.service'
 import { PostDto } from './dto';
 import { CreatePostInput, DeletePostInput, FindPostInput } from './inputs';
+import { FilesService } from 'src/files/files.service';
 
-@Resolver()
+@Resolver(of => PostDto)
 export class PostResolver {
   constructor(
-    private postService: PostService
+    private postService: PostService,
+    private fileService: FilesService
   ) {}
   @Mutation(() => PostDto)
   async createPost(
@@ -31,4 +33,11 @@ export class PostResolver {
   ) {
   return this.postService.findPost(input)
  }
+ 
+ @ResolveField('mainImageUrl', returns => String, { nullable: true })
+  async getImageUrl(@Parent() post: PostDto) {
+    const { mainImage, createdBy } = post
+    const { url = null } = await this.fileService.getUserFileUrl(mainImage, createdBy);
+    return url;
+  }
 }

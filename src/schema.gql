@@ -27,7 +27,7 @@ type UserDto {
   departmentId: String
   provinceId: String
   districtId: String
-  profilePic: FileDto!
+  profilePic: FileDto
   department: DeparmentDto!
   province: ProvinceDto!
   district: DistrictDto!
@@ -125,6 +125,7 @@ type PostDto {
   description: String!
   content: String!
   postType: String!
+  mainImage: String
   mainImageUrl: String
   createdBy: String!
   updatedBy: String!
@@ -255,7 +256,7 @@ input CreatePostInput {
   description: String!
   content: String!
   postType: String!
-  mainImageUrl: String
+  mainImage: String
 }
 
 input DeletePostInput {

@@ -23,7 +23,7 @@ export class CreatePostInput {
 
   @Field({ nullable: true })
   @IsOptional()
-  mainImageUrl?: string;
+  mainImage?: string;
 }
 /*
 @InputType()

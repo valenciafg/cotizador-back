@@ -80,11 +80,24 @@ export class UserService {
     }
   }
 
+  async validateMainDocument(user: User, userInfo: CreateUserInformationDto) {
+    let userFound;
+    if (user.userType === USER_TYPE.PROFESSIONAL) {
+      userFound = await this.userModel.findOne({ dni: userInfo.dni })
+    } else {
+      userFound = await this.userModel.findOne({ ruc: userInfo.ruc })
+    }
+    if (userFound && user.uuid !== userFound.uuid) {
+      throw new Error('Exist another user with this main document');
+    }
+  }
+
   async setGeneralInformation(user: User, userInfo: CreateUserInformationDto) {
     equalUserTypeValidation(user, userInfo.userType);
     userStepValidation(user, REGISTER_STEPS.USER_INFO);
     delete userInfo.userType;
     try {
+
       await user.updateOne({
         ...userInfo,
         registerStep: REGISTER_STEPS.WORK_INFO,

@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { existsSync } from 'fs';
 import { join } from 'path';
@@ -14,6 +14,7 @@ import { IUploadFileProvider } from 'src/interfaces';
 @Injectable()
 export class FilesService {
   s3: S3Provider
+  private readonly logger = new Logger(FilesService.name);
   constructor(
     @InjectModel(File.name)
     private readonly fileModel: Model<File>,
@@ -92,7 +93,9 @@ export class FilesService {
       const url = await this.s3.signedUrl(fileResponse.key, fileName)
       return { url }  
     } catch (error) {
-      throw new BadRequestException(error.message);
+      // throw new BadRequestException(error.message);
+      this.logger.warn(`${error.message}: ${uuid}`)
+      return null;
     }
   }
   async getUserFile(uuid: string, userId: string) {
@@ -101,7 +104,9 @@ export class FilesService {
       const response = await this.s3.download(file.key);
       return response;
     } catch (error) {
-      throw new BadRequestException(error.message);
+      this.logger.warn(`${error.message}: ${uuid}`)
+      return null;
+      // throw new BadRequestException(error.message);
     }
   }
 }

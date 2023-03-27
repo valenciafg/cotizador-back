@@ -111,9 +111,12 @@ export class UserResolver {
     const [result] = await this.cityService.getDistricts(null, districtId)
     return result ? result : null
   }
-  @ResolveField('profilePic', returns => FileDto)
+  @ResolveField('profilePic', returns => FileDto, { nullable: true })
   async getProfilePic(@Parent() user: UserDto) {
-    const { uuid, profilePic } = user
+    const { uuid, profilePic } = user;
+    if (!profilePic) {
+      return null;
+    }
     const response = await this.fileService.getUserFile(profilePic, uuid)
     return response;
   }
