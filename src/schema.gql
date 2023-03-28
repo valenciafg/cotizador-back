@@ -31,6 +31,7 @@ type UserDto {
   department: DeparmentDto!
   province: ProvinceDto!
   district: DistrictDto!
+  fullname: String
 }
 
 type CityDto {
@@ -127,7 +128,7 @@ type PostDto {
   postType: String!
   mainImage: String
   mainImageUrl: String
-  createdBy: String!
+  createdBy: UserDto
   updatedBy: String!
   createdAt: DateTime!
   updatedAt: DateTime
@@ -153,7 +154,7 @@ type Query {
   getProvinces(departamentoInei: String!): [ProvinceDto!]!
   getDistricts(provinciaInei: String!): [DistrictDto!]!
   posts: [PostDto!]!
-  findPosts(input: FindPostInput!): PostDto!
+  post(input: FindPostInput!): PostDto
 }
 
 input SearchUsersInput {

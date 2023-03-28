@@ -6,6 +6,7 @@ import { CityService } from 'src/city/city.service';
 import { DeparmentDto, DistrictDto, ProvinceDto } from 'src/city/dto';
 import { CompanyService } from 'src/company/company.service';
 import { CompanyDto } from 'src/company/dto';
+import { USER_TYPE } from 'src/constants';
 import { FileDto } from 'src/files/dto';
 import { FilesService } from 'src/files/files.service';
 import { HeadingService } from 'src/heading/heading.service';
@@ -287,5 +288,13 @@ export class UserResolver {
     const { uuid: userUuid } = user
     const result = await this.userService.deleteHeading(userUuid, uuid)
     return result
+  }
+  @ResolveField('fullname', returns => String, { nullable: true })
+  async getUserFullname(@Parent() user: UserDto) {
+    if (!user) {
+      return null;
+    } 
+    const fullname =  user.userType === USER_TYPE.PROFESSIONAL ? `${user.name} ${user.lastName}` : user.commercialName;
+    return fullname
   }
 }

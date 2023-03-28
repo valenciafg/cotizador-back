@@ -11,16 +11,21 @@ export class PostService {
   constructor(
     @InjectModel(Post.name) private postModel: Model<Post>
   ){}
-  async create(createPostInput: CreatePostInput): Promise<Post> {
+  async create(createPostInput: CreatePostInput, createdBy: string): Promise<Post> {
     try {
-      const post = await this.postModel.create({ ...createPostInput });
+      const data = { ...createPostInput, createdBy }
+      const post = await this.postModel.create(data);
       return post;
     } catch (error) {
       handleRegisterExceptions(error);
     }
   }
-  async getPosts(): Promise<Post[]> {
-    const posts = await this.postModel.find().sort({ createdAt: -1 })
+  async getPosts(createdBy?: string): Promise<Post[]> {
+    const filter: any = {}
+    if (createdBy) {
+      filter.createdBy = createdBy;
+    }
+    const posts = await this.postModel.find(filter).sort({ createdAt: -1 })
     return posts
   }
 

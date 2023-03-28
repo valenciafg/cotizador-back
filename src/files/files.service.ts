@@ -75,17 +75,20 @@ export class FilesService {
     return createFileData
   }
 
-  async findUserFile(uuid: string, userId: string) {
-    const fileResponse = await this.fileModel.findOne({
-      uuid,
-      userId
-    });
+  async findUserFile(uuid: string, userId?: string) {
+    const filter: any = {
+      uuid
+    };
+    if (userId) {
+      filter.userId = userId;
+    }
+    const fileResponse = await this.fileModel.findOne(filter);
     if (!fileResponse) {
       throw new Error('File not found');
     }
     return fileResponse;
   }
-  async getUserFileUrl(uuid: string, userId: string){
+  async getUserFileUrl(uuid: string, userId?: string){
     try {
       const fileResponse = await this.findUserFile(uuid, userId);
       const extension = this.s3.getExtension(fileResponse.mimeType)

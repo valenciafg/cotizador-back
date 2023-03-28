@@ -13,12 +13,12 @@ export class CreatePostInput {
 
   @Field()
   @IsString()
-  @MinLength(1)
+  @MinLength(2)
   content: string;
 
   @Field()
   @IsString()
-  @MinLength(1)
+  @MinLength(2)
   postType: string;
 
   @Field({ nullable: true })
