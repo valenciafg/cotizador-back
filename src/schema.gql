@@ -32,6 +32,7 @@ type UserDto {
   province: ProvinceDto!
   district: DistrictDto!
   fullname: String
+  fullAddress: String
 }
 
 type CityDto {

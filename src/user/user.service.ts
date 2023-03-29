@@ -15,6 +15,7 @@ import {
   CreateUserInformationDto,
   CreateWorkInformationDto,
   UploadFileDto,
+  UserDto,
 } from './dto';
 import { User } from './entities/user.entity';
 import { REGISTER_STEPS, USER_TYPE } from 'src/constants';
@@ -25,6 +26,7 @@ import { HeadingService } from 'src/heading/heading.service';
 import { ProjectService } from 'src/project/project.service';
 import { SearchUsersInput } from './inputs';
 import { FilesService } from 'src/files/files.service';
+import { CityService } from 'src/city/city.service';
 
 @Injectable()
 export class UserService {
@@ -37,7 +39,8 @@ export class UserService {
     private knowledgeService: KnowledgeService,
     private headingService: HeadingService,
     private projectService: ProjectService,
-    private fileService: FilesService
+    private fileService: FilesService,
+    private cityService: CityService,
   ) {}
 
   async setType(user: User, userType: number) {
@@ -369,5 +372,30 @@ export class UserService {
     } catch (error) {
       throw new BadRequestException(error.message);
     }
+  }
+  async getFullAddress(user: UserDto): Promise<string> {
+    let fullAddress = '';
+    if (user.address) {
+      fullAddress += `${user.address},`;
+    }
+    if (user.districtId) {
+      const [district] = await this.cityService.getDistricts(null, user.districtId)
+      if (district) {
+        fullAddress += ` ${district.distrito},`;
+      }
+    }
+    if (user.provinceId) {
+      const [province] = await this.cityService.getProvinces(null, user.provinceId)
+      if (province) {
+        fullAddress += ` ${province.provincia},`;
+      }
+    }
+    if (user.departmentId) {
+      const [department] = await this.cityService.getDeparments(user.departmentId)
+      if (department) {
+        fullAddress += ` ${department.departamento},`;
+      }
+    }
+    return fullAddress.replace(/,\s*$/, "");
   }
 }

@@ -297,4 +297,12 @@ export class UserResolver {
     const fullname =  user.userType === USER_TYPE.PROFESSIONAL ? `${user.name} ${user.lastName}` : user.commercialName;
     return fullname
   }
+  @ResolveField('fullAddress', returns => String, { nullable: true })
+  async getUserFullAddress(@Parent() user: UserDto) {
+    if (!user) {
+      return null;
+    } 
+    const fullAddress = await this.userService.getFullAddress(user);
+    return fullAddress;
+  }
 }
