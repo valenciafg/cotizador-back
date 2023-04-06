@@ -13,6 +13,7 @@ import { handleRegisterExceptions } from '../utils';
 import { LoginUserDto, RegisterOauthUserDto, RegisterUserDto } from './dto';
 import { comparePassword, generateJwtToken, hashPassword } from './helpers';
 import { IUserTokenResponse } from './interfaces';
+import { getUserFullname } from 'src/utils';
 
 @Injectable()
 export class AuthService {
@@ -117,12 +118,14 @@ export class AuthService {
       this.jwtService,
     );
     console.log({ token })
+    const fullname = getUserFullname(user)
     return {
       email,
       uuid: user.uuid,
       registerStep: user.registerStep,
       userType: user.userType,
       token,
+      fullname
     };
   }
 
