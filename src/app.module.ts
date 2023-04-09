@@ -9,9 +9,8 @@ import { AuthModule } from './auth/auth.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo';
 import { join } from 'path';
-import {
-  ApolloServerPluginLandingPageLocalDefault
- } from 'apollo-server-core';
+import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
+
 import { CityModule } from './city/city.module';
 import { CompanyModule } from './company/company.module';
 import { ServiceModule } from './service/service.module';
@@ -20,6 +19,9 @@ import { ProjectModule } from './project/project.module';
 import { KnowledgeModule } from './knowledge/knowledge.module';
 import { PostModule } from './post/post.module'
 import { SeedModule } from './seed/seed.module';
+import { MessageModule } from './message/message.module';
+import { MessageGateway } from './message/message.gateway';
+import { ChannelModule } from './channel/channel.module';
 
 @Module({
   imports: [
@@ -35,7 +37,7 @@ import { SeedModule } from './seed/seed.module';
     autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     playground: false,
     plugins: [
-      ApolloServerPluginLandingPageLocalDefault
+      ApolloServerPluginLandingPageLocalDefault()
     ]
    }),
     ConfigModule.forRoot({
@@ -55,8 +57,10 @@ import { SeedModule } from './seed/seed.module';
     KnowledgeModule,
     PostModule,
     SeedModule,
+    MessageModule,
+    ChannelModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [MessageGateway],
 })
 export class AppModule {}

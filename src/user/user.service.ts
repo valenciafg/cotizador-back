@@ -27,6 +27,8 @@ import { ProjectService } from 'src/project/project.service';
 import { SearchUsersInput } from './inputs';
 import { FilesService } from 'src/files/files.service';
 import { CityService } from 'src/city/city.service';
+import { faker } from '@faker-js/faker';
+
 
 @Injectable()
 export class UserService {
@@ -397,5 +399,16 @@ export class UserService {
       }
     }
     return fullAddress.replace(/,\s*$/, "");
+  }
+
+  async createFakeUser(limit: number, type: string) {
+    for (let i = 0; i < limit; i++) {
+      const data = {
+        email: faker.internet.email(),
+        password: '123456',
+        registerStep: REGISTER_STEPS.FINISHED,
+        description: faker.company.catchPhraseDescriptor(),
+      }
+    }
   }
 }

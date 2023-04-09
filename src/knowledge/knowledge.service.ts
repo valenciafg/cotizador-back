@@ -45,3 +45,10 @@ export class KnowledgeService {
     });
   }
 }
+/**
+ "@nestjs/graphql": "^10.1.7",
+ "@nestjs/apollo": "^10.1.7",
+ "graphql": "^16.6.0",
+ "apollo-server-core": "^3.11.1",
+    "apollo-server-express": "^3.11.1",
+ */

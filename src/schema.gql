@@ -135,6 +135,16 @@ type PostDto {
   updatedAt: DateTime
 }
 
+type ChannelDto {
+  uuid: String!
+  name: String!
+  createdBy: String!
+  users: [String!]!
+  status: String!
+  createdAt: DateTime!
+  updatedAt: DateTime
+}
+
 type Query {
   me: UserDto!
   users(input: SearchUsersInput!): [UserDto!]!
@@ -220,6 +230,7 @@ type Mutation {
   createCity(input: CreateCityInput!): CityDto!
   createPost(input: CreatePostInput!): PostDto!
   deletePost(input: DeletePostInput!): Boolean!
+  createChannel(input: CreateChannelInput!): ChannelDto!
 }
 
 input CreateCompanyInput {
@@ -263,4 +274,9 @@ input CreatePostInput {
 
 input DeletePostInput {
   uuid: String!
+}
+
+input CreateChannelInput {
+  name: String!
+  users: [String!]!
 }
