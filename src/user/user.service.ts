@@ -380,6 +380,8 @@ export class UserService {
     if (user.address) {
       fullAddress += `${user.address},`;
     }
+    // console.log({ user })
+    // if (user.cityId) 
     if (user.districtId) {
       const [district] = await this.cityService.getDistricts(null, user.districtId)
       if (district) {
