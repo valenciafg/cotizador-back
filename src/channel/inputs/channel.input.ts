@@ -9,8 +9,24 @@ export class CreateChannelInput {
   @Field()
   name: string;
 
-  @Field(() => [String])
+  @Field({ nullable: true })
+  @IsOptional()
+  createdBy: string;
+
+  @Field(() => [String], { nullable: 'itemsAndList' } )
   @IsOptional()
   @IsArray()
-  users: string[];
+  users?: string[];
+}
+
+@InputType()
+export class FindChannelInput {
+  @Field()
+  @IsUUID()
+  uuid: string;
+
+  @Field(() => [String], { nullable: 'itemsAndList' } )
+  @IsOptional()
+  @IsArray()
+  users?: string[];
 }

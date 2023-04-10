@@ -135,11 +135,21 @@ type PostDto {
   updatedAt: DateTime
 }
 
+type MessageDto {
+  uuid: String!
+  channelId: String!
+  userId: String!
+  content: String!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  createdBy: UserDto
+}
+
 type ChannelDto {
   uuid: String!
   name: String!
-  createdBy: String!
-  users: [String!]!
+  createdBy: UserDto
+  users: [UserDto]
   status: String!
   createdAt: DateTime!
   updatedAt: DateTime
@@ -166,6 +176,8 @@ type Query {
   getDistricts(provinciaInei: String!): [DistrictDto!]!
   posts: [PostDto!]!
   post(input: FindPostInput!): PostDto
+  messages(input: FindMessagesInput!): [MessageDto]
+  channels: [ChannelDto]
 }
 
 input SearchUsersInput {
@@ -209,6 +221,10 @@ input FindPostInput {
   uuid: String
 }
 
+input FindMessagesInput {
+  channelId: String!
+}
+
 type Mutation {
   addUserKnowledge(name: String!): UserDto!
   deleteUserKnowledge(uuid: String!): String!
@@ -230,6 +246,7 @@ type Mutation {
   createCity(input: CreateCityInput!): CityDto!
   createPost(input: CreatePostInput!): PostDto!
   deletePost(input: DeletePostInput!): Boolean!
+  createMessage(input: CreateMessageInput!): MessageDto!
   createChannel(input: CreateChannelInput!): ChannelDto!
 }
 
@@ -276,7 +293,13 @@ input DeletePostInput {
   uuid: String!
 }
 
+input CreateMessageInput {
+  content: String!
+  channelId: String!
+}
+
 input CreateChannelInput {
   name: String!
-  users: [String!]!
+  createdBy: String
+  users: [String]
 }

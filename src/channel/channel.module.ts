@@ -3,6 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Channel, ChannelSchema } from './entities';
 import { ChannelService } from './channel.service';
 import { ChannelResolver } from './channel.resolver';
+import { UserModule } from 'src/user/user.module';
 
 @Module({
   providers: [ChannelService, ChannelResolver],
@@ -12,7 +13,8 @@ import { ChannelResolver } from './channel.resolver';
         name: Channel.name,
         schema: ChannelSchema
       }
-    ])
+    ]),
+    UserModule
   ],
   exports: [ChannelService]
 })
