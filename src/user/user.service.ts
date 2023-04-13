@@ -7,7 +7,7 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { isValidObjectId, Model } from 'mongoose';
 import { get } from 'lodash';
-import { handleRegisterExceptions } from 'src/utils';
+import { getOffset, getPages, handleRegisterExceptions } from 'src/utils';
 import { equalUserTypeValidation, userStepValidation } from './helpers';
 import {
   CreateBasicInformationDto,
@@ -24,7 +24,7 @@ import { ServiceService } from 'src/service/service.service';
 import { KnowledgeService } from 'src/knowledge/knowledge.service';
 import { HeadingService } from 'src/heading/heading.service';
 import { ProjectService } from 'src/project/project.service';
-import { SearchUsersInput } from './inputs';
+import { SearchUsersInput, SearchUsersOptions } from './inputs';
 import { FilesService } from 'src/files/files.service';
 import { CityService } from 'src/city/city.service';
 import { faker } from '@faker-js/faker';
@@ -328,7 +328,7 @@ export class UserService {
     throw new Error(`${uuid} not found`)
   }
 
-  async getUsers(input?: SearchUsersInput) {
+  async getUsers(options: SearchUsersOptions, input?: SearchUsersInput) {
     const VALID_USER_TYPES = [
       USER_TYPE.PROFESSIONAL,
       USER_TYPE.COMPANY,
@@ -347,13 +347,24 @@ export class UserService {
     if (input.districtId) {
       query = { ...query, districtId: input.districtId }
     }
-    const users = await this.userModel.find({
+    const filter = {
       userType: {
         "$in": VALID_USER_TYPES,
       },
       ...query
-    });
-    return users;
+    };
+    const count = await this.userModel.countDocuments(filter)
+    const offset = getOffset(options.page, options.limit);
+    const pages = getPages(count, options.limit);
+    const users = await this.userModel.find(filter)
+      .limit(options.limit)
+      .skip(offset)
+      .sort({ createdAt: -1 });
+    return {
+      pages,
+      currentPage: options.page,
+      users
+    };
   }
 
   async setProfilePic(uuid: string, profilePicUuid: string) {

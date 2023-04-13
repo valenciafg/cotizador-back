@@ -47,6 +47,7 @@ export class MessageGateway
   @SubscribeMessage('event_leave')
   handleLeaveRoom(client: Socket, room: string) {
     const id = `room_${room}`;
+    console.log(`alguien se desconectó a ${id}`)
     client.leave(id)
   }
 }

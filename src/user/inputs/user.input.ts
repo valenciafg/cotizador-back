@@ -1,5 +1,5 @@
 import { Field, InputType } from "@nestjs/graphql";
-import { IsOptional, IsUUID } from "class-validator";
+import { IsNumber, IsOptional, IsUUID } from "class-validator";
 
 @InputType()
 export class SearchUsersInput {
@@ -16,4 +16,18 @@ export class SearchUsersInput {
   @IsOptional()
   @Field({ nullable: true })
   districtId: string;
+}
+
+@InputType()
+export class SearchUsersOptions {
+
+  @Field({ defaultValue: 1 })
+  @IsNumber()
+  @IsOptional()
+  page: number;
+
+  @Field({ defaultValue: 15 })
+  @IsNumber()
+  @IsOptional()
+  limit: number;
 }

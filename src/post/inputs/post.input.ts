@@ -1,5 +1,5 @@
 import { Field, InputType } from "@nestjs/graphql";
-import { IsOptional, IsString, IsUUID, MaxLength, MinLength } from "class-validator";
+import { IsNumber, IsOptional, IsString, IsUUID, MaxLength, MinLength } from "class-validator";
 
 @InputType()
 export class CreatePostInput {
@@ -40,6 +40,19 @@ export class FindPostInput {
   @IsUUID()
   @Field({ nullable: true })
   uuid: string;
+}
+
+@InputType()
+export class FindPostListInput {
+  @Field({ defaultValue: 1 })
+  @IsNumber()
+  @IsOptional()
+  page: number;
+
+  @Field({ defaultValue: 15 })
+  @IsNumber()
+  @IsOptional()
+  limit: number;
 }
 
 @InputType()

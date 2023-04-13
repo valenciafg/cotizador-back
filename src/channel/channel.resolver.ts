@@ -38,7 +38,6 @@ export class ChannelResolver {
     if (userType !== USER_TYPE.ADMINISTRATOR) {
       users = [uuid];
     }
-    console.log({ users })
     return this.channelService.getChannels(users)
   }
   @ResolveField('createdBy', returns => UserDto, { nullable: true })

@@ -13,9 +13,9 @@ import { HeadingService } from 'src/heading/heading.service';
 import { KnowledgeService } from 'src/knowledge/knowledge.service';
 import { ProjectService } from 'src/project/project.service';
 import { ServiceService } from 'src/service/service.service';
-import { UserDto } from './dto';
+import { UserDto, UserListDto } from './dto';
 import { User } from './entities/user.entity';
-import { SearchUsersInput } from './inputs';
+import { SearchUsersInput, SearchUsersOptions } from './inputs';
 import { UserService } from './user.service'
 
 @Resolver(of => UserDto)
@@ -37,11 +37,12 @@ export class UserResolver {
   ) {
     return user
   }
-  @Query(returns => [UserDto])
+  @Query(returns => UserListDto)
   async users(
-    @Args('input') input: SearchUsersInput
+    @Args('input') input: SearchUsersInput,
+    @Args('options') options: SearchUsersOptions
   ) {
-    return this.userService.getUsers(input);
+    return this.userService.getUsers(options, input);
   }
   @Query(returns => UserDto)
   async user(

@@ -1,7 +1,7 @@
 import { Resolver, Query, Mutation, Args, ResolveField, Parent } from '@nestjs/graphql';
 import { PostService } from './post.service'
-import { PostDto } from './dto';
-import { CreatePostInput, DeletePostInput, FindPostInput } from './inputs';
+import { PostDto, PostListDto } from './dto';
+import { CreatePostInput, DeletePostInput, FindPostInput, FindPostListInput } from './inputs';
 import { FilesService } from 'src/files/files.service';
 import { UseGuards } from '@nestjs/common';
 import { GqlAuthGuard } from 'src/auth/guards/gql-auth.guard';
@@ -31,12 +31,13 @@ export class PostResolver {
   ) {
     return this.postService.deletePost(input.uuid);
   }
-  @Query(() => [PostDto])
+  @Query(() => PostListDto)
   @UseGuards(GqlAuthGuard)
-  async posts(
+  async postsList(
     @CurrentUser() user: User,
+    @Args('input') input: FindPostListInput,
   ) {
-    return this.postService.getPosts(user.uuid)
+    return this.postService.getPosts(input, user.uuid)
   }
   
  @Query(() => PostDto, { nullable: true })

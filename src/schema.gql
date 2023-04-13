@@ -35,6 +35,12 @@ type UserDto {
   fullAddress: String
 }
 
+type UserListDto {
+  pages: Float!
+  currentPage: Float!
+  users: [UserDto]
+}
+
 type CityDto {
   uuid: String!
   idUbigeo: Float!
@@ -135,6 +141,12 @@ type PostDto {
   updatedAt: DateTime
 }
 
+type PostListDto {
+  pages: Float!
+  currentPage: Float!
+  posts: [PostDto]
+}
+
 type MessageDto {
   uuid: String!
   channelId: String!
@@ -157,7 +169,7 @@ type ChannelDto {
 
 type Query {
   me: UserDto!
-  users(input: SearchUsersInput!): [UserDto!]!
+  users(input: SearchUsersInput!, options: SearchUsersOptions!): UserListDto!
   user(uuid: String!): UserDto!
   companies: [CompanyDto!]!
   findCompany(input: FindCompanyInput!): CompanyDto!
@@ -174,7 +186,7 @@ type Query {
   getDeparments: [DeparmentDto!]!
   getProvinces(departamentoInei: String!): [ProvinceDto!]!
   getDistricts(provinciaInei: String!): [DistrictDto!]!
-  posts: [PostDto!]!
+  postsList(input: FindPostListInput!): PostListDto!
   post(input: FindPostInput!): PostDto
   messages(input: FindMessagesInput!): [MessageDto]
   channels: [ChannelDto]
@@ -185,6 +197,11 @@ input SearchUsersInput {
   deparmentId: String
   provinceId: String
   districtId: String
+}
+
+input SearchUsersOptions {
+  page: Float! = 1
+  limit: Float! = 15
 }
 
 input FindCompanyInput {
@@ -215,6 +232,11 @@ input FindProjectInput {
 input FindCityInput {
   uuid: String
   idUbigeo: Float
+}
+
+input FindPostListInput {
+  page: Float! = 1
+  limit: Float! = 15
 }
 
 input FindPostInput {

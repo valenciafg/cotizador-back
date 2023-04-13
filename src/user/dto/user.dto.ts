@@ -79,3 +79,13 @@ export class UserDto {
   @Field(() => String, { nullable: true })
   readonly profilePic?: string;
 }
+
+@ObjectType()
+export class UserListDto {
+  @Field()
+  pages: number;
+  @Field()
+  currentPage: number;
+  @Field(() => [UserDto], { nullable: 'itemsAndList' })
+  users: UserDto[];
+}
