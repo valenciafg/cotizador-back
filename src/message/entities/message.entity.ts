@@ -1,6 +1,6 @@
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { Document } from "mongoose";
-import { genUUID } from "src/utils";
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document } from 'mongoose';
+import { genUUID } from 'src/utils';
 
 @Schema()
 export class Message extends Document {
@@ -20,11 +20,10 @@ export class Message extends Document {
   @Prop()
   content: string;
 
-  @Prop({ required: true, default: () => new Date()})
+  @Prop({ required: true, default: () => new Date() })
   createdAt: Date;
   @Prop({ required: false, default: null })
   updatedAt: Date;
-
 }
 
 export const MessageSchema = SchemaFactory.createForClass(Message);

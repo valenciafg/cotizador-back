@@ -78,8 +78,8 @@ export class UserController {
     file: Express.Multer.File,
     @Body() options: UploadFileDto,
   ) {
-    const result = await this.userService.uploadFile(options, file, user)
-    return result
+    const result = await this.userService.uploadFile(options, file, user);
+    return result;
   }
   // @Post()
   // create(@Body() createUserDto: CreateBasicInformationDto) {

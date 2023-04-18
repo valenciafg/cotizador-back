@@ -1,5 +1,4 @@
-import { Field, ID, ObjectType } from "@nestjs/graphql";
-
+import { Field, ID, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
 export class UserDto {
@@ -11,10 +10,10 @@ export class UserDto {
 
   @Field()
   readonly status: boolean;
-  
+
   @Field()
   readonly registerStep: number;
-  
+
   @Field()
   readonly userType: number;
 
@@ -47,7 +46,6 @@ export class UserDto {
 
   @Field()
   readonly optionalPhoneCode: string;
-
 
   @Field(() => [String], { nullable: true })
   readonly currentCompanies: string[];

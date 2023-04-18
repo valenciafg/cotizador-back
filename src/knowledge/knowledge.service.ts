@@ -9,33 +9,47 @@ import { CreateKnowledgeInput, FindKnowledgeInput } from './inputs';
 export class KnowledgeService {
   private readonly logger = new Logger(KnowledgeService.name);
   constructor(
-    @InjectModel(Knowledge.name) private knowledgeModel: Model<Knowledge>
-  ){}
+    @InjectModel(Knowledge.name) private knowledgeModel: Model<Knowledge>,
+  ) {}
 
   async create(createKnowledgeInput: CreateKnowledgeInput): Promise<Knowledge> {
     try {
-      const knowledge = await this.knowledgeModel.create({ ...createKnowledgeInput });
+      const knowledge = await this.knowledgeModel.create({
+        ...createKnowledgeInput,
+      });
       return knowledge;
     } catch (error) {
       handleRegisterExceptions(error);
     }
   }
   async getKnowledges(uuidList?: string[]): Promise<Knowledge[]> {
-    if(!uuidList) {
-      const knowledges = await this.knowledgeModel.find().sort({ createdAt: -1 })
-      return knowledges
+    if (!uuidList) {
+      const knowledges = await this.knowledgeModel
+        .find()
+        .sort({ createdAt: -1 });
+      return knowledges;
     }
-    const knowledges = await this.knowledgeModel.find({ uuid: {
-      "$in": uuidList
-    }}).sort({ createdAt: -1 })
-      return knowledges
+    const knowledges = await this.knowledgeModel
+      .find({
+        uuid: {
+          $in: uuidList,
+        },
+      })
+      .sort({ createdAt: -1 });
+    return knowledges;
   }
-  async findKnowledge(findKnowledgeInput: FindKnowledgeInput): Promise<Knowledge> {
-    const knowledge = await this.knowledgeModel.findOne({ ...findKnowledgeInput })
-    return knowledge
+  async findKnowledge(
+    findKnowledgeInput: FindKnowledgeInput,
+  ): Promise<Knowledge> {
+    const knowledge = await this.knowledgeModel.findOne({
+      ...findKnowledgeInput,
+    });
+    return knowledge;
   }
   async findOrCreate(name: string) {
-    const doc = await this.knowledgeModel.findOne({ name: name.toLocaleLowerCase()})
+    const doc = await this.knowledgeModel.findOne({
+      name: name.toLocaleLowerCase(),
+    });
     if (doc) {
       return doc;
     }

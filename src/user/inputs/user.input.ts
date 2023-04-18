@@ -1,5 +1,5 @@
-import { Field, InputType } from "@nestjs/graphql";
-import { IsNumber, IsOptional, IsUUID } from "class-validator";
+import { Field, InputType } from '@nestjs/graphql';
+import { IsNumber, IsOptional, IsUUID } from 'class-validator';
 
 @InputType()
 export class SearchUsersInput {
@@ -20,7 +20,6 @@ export class SearchUsersInput {
 
 @InputType()
 export class SearchUsersOptions {
-
   @Field({ defaultValue: 1 })
   @IsNumber()
   @IsOptional()

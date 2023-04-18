@@ -1,1 +1,1 @@
-export * from './channel.input'
+export * from './channel.input';

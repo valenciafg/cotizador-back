@@ -5,24 +5,18 @@ import { CreateCompanyInput, FindCompanyInput } from './inputs';
 
 @Resolver()
 export class CompanyResolver {
-  constructor(
-    private companyService: CompanyService
-  ) {}
+  constructor(private companyService: CompanyService) {}
   @Mutation(() => CompanyDto)
-  async createCompany(
-    @Args('input') input: CreateCompanyInput,
-  ) {
+  async createCompany(@Args('input') input: CreateCompanyInput) {
     return this.companyService.create(input);
   }
   @Query(() => [CompanyDto])
   async companies() {
-    return this.companyService.getCompanies()
+    return this.companyService.getCompanies();
   }
-  
- @Query(() => CompanyDto)
- async findCompany(
-    @Args('input') input: FindCompanyInput
-  ) {
-  return this.companyService.findCompany(input)
- }
+
+  @Query(() => CompanyDto)
+  async findCompany(@Args('input') input: FindCompanyInput) {
+    return this.companyService.findCompany(input);
+  }
 }

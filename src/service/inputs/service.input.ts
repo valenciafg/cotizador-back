@@ -1,6 +1,6 @@
-import { Field, InputType } from "@nestjs/graphql";
-import { Transform } from "class-transformer";
-import { IsOptional, IsString, IsUUID, MaxLength } from "class-validator";
+import { Field, InputType } from '@nestjs/graphql';
+import { Transform } from 'class-transformer';
+import { IsOptional, IsString, IsUUID, MaxLength } from 'class-validator';
 
 @InputType()
 export class CreateServiceInput {
@@ -13,7 +13,6 @@ export class CreateServiceInput {
   @Field({ nullable: true })
   uuid: string;
 }
-
 
 @InputType()
 export class FindServiceInput {

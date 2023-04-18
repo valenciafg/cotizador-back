@@ -9,8 +9,8 @@ import { CreateProjectInput, FindProjectInput } from './inputs/project.input';
 export class ProjectService {
   private readonly logger = new Logger(ProjectService.name);
   constructor(
-    @InjectModel(Project.name) private projectModel: Model<Project>
-  ){}
+    @InjectModel(Project.name) private projectModel: Model<Project>,
+  ) {}
 
   async create(createServiceInput: CreateProjectInput): Promise<Project> {
     try {
@@ -22,20 +22,26 @@ export class ProjectService {
   }
   async getProjects(uuidList?: string[]): Promise<Project[]> {
     if (!uuidList) {
-      const projects = await this.projectModel.find().sort({ createdAt: -1 })
-      return projects
+      const projects = await this.projectModel.find().sort({ createdAt: -1 });
+      return projects;
     }
-    const projects = await this.projectModel.find({ uuid: {
-      "$in": uuidList
-    }}).sort({ createdAt: -1 })
+    const projects = await this.projectModel
+      .find({
+        uuid: {
+          $in: uuidList,
+        },
+      })
+      .sort({ createdAt: -1 });
     return projects;
   }
   async findProject(findProjectInput: FindProjectInput): Promise<Project> {
-    const project = await this.projectModel.findOne({ ...findProjectInput })
-    return project
+    const project = await this.projectModel.findOne({ ...findProjectInput });
+    return project;
   }
   async findOrCreate(name: string) {
-    const doc = await this.projectModel.findOne({ name: name.toLocaleLowerCase()})
+    const doc = await this.projectModel.findOne({
+      name: name.toLocaleLowerCase(),
+    });
     if (doc) {
       return doc;
     }

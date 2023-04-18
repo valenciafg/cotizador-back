@@ -1,7 +1,7 @@
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { ApiProperty } from "@nestjs/swagger";
-import { Document } from "mongoose";
-import { genUUID } from "src/utils";
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { ApiProperty } from '@nestjs/swagger';
+import { Document } from 'mongoose';
+import { genUUID } from 'src/utils';
 
 @Schema()
 export class Post extends Document {
@@ -27,11 +27,10 @@ export class Post extends Document {
   @Prop()
   updatedBy: string;
 
-  @Prop({ required: true, default: () => new Date()})
+  @Prop({ required: true, default: () => new Date() })
   createdAt: Date;
   @Prop({ required: false, default: null })
   updatedAt: Date;
-
 }
 
 export const PostSchema = SchemaFactory.createForClass(Post);

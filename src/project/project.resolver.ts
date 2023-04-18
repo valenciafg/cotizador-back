@@ -5,24 +5,18 @@ import { ProjectService } from './project.service';
 
 @Resolver()
 export class ProjectResolver {
-  constructor(
-    private projectService: ProjectService
-  ) {}
+  constructor(private projectService: ProjectService) {}
   @Mutation(() => ProjectDto)
-  async createProject(
-    @Args('input') input: CreateProjectInput,
-  ) {
+  async createProject(@Args('input') input: CreateProjectInput) {
     return this.projectService.create(input);
   }
   @Query(() => [ProjectDto])
   async projects() {
-    return this.projectService.getProjects()
+    return this.projectService.getProjects();
   }
-  
- @Query(() => ProjectDto)
- async findProject(
-    @Args('input') input: FindProjectInput
-  ) {
-  return this.projectService.findProject(input)
- }
+
+  @Query(() => ProjectDto)
+  async findProject(@Args('input') input: FindProjectInput) {
+    return this.projectService.findProject(input);
+  }
 }

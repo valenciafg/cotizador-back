@@ -1,1 +1,1 @@
-export * from './knowledge.input'
+export * from './knowledge.input';

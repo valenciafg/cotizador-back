@@ -1,7 +1,7 @@
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { Document } from "mongoose";
-import { genUUID } from "src/utils";
-import { ChannelStatus } from "../interface";
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document } from 'mongoose';
+import { genUUID } from 'src/utils';
+import { ChannelStatus } from '../interface';
 
 @Schema()
 export class Channel extends Document {
@@ -24,11 +24,10 @@ export class Channel extends Document {
   @Prop({ default: 'active' })
   status: ChannelStatus;
 
-  @Prop({ required: true, default: () => new Date()})
+  @Prop({ required: true, default: () => new Date() })
   createdAt: Date;
   @Prop({ required: false, default: null })
   updatedAt: Date;
-
 }
 
 export const ChannelSchema = SchemaFactory.createForClass(Channel);

@@ -10,10 +10,10 @@ import { Project, ProjectSchema } from './entities';
     MongooseModule.forFeature([
       {
         name: Project.name,
-        schema: ProjectSchema
-      }
-    ])
+        schema: ProjectSchema,
+      },
+    ]),
   ],
-  exports: [ProjectService]
+  exports: [ProjectService],
 })
 export class ProjectModule {}

@@ -1,2 +1,2 @@
-export * from './file.dto'
-export * from './update-file.dto'
+export * from './file.dto';
+export * from './update-file.dto';

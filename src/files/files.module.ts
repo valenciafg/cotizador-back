@@ -18,8 +18,8 @@ import { File, FileSchema } from './entities/file.entity';
     ]),
     ConfigModule,
     // UserModule,
-    ConfigModule
+    ConfigModule,
   ],
-  exports: [FilesService]
+  exports: [FilesService],
 })
 export class FilesModule {}

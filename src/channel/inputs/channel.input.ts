@@ -1,6 +1,12 @@
-import { Field, InputType } from "@nestjs/graphql";
-import { Transform } from "class-transformer";
-import { IsArray, IsOptional, IsString, IsUUID, MaxLength } from "class-validator";
+import { Field, InputType } from '@nestjs/graphql';
+import { Transform } from 'class-transformer';
+import {
+  IsArray,
+  IsOptional,
+  IsString,
+  IsUUID,
+  MaxLength,
+} from 'class-validator';
 
 @InputType()
 export class CreateChannelInput {
@@ -13,7 +19,7 @@ export class CreateChannelInput {
   @IsOptional()
   createdBy: string;
 
-  @Field(() => [String], { nullable: 'itemsAndList' } )
+  @Field(() => [String], { nullable: 'itemsAndList' })
   @IsOptional()
   @IsArray()
   users?: string[];
@@ -25,7 +31,7 @@ export class FindChannelInput {
   @IsUUID()
   uuid: string;
 
-  @Field(() => [String], { nullable: 'itemsAndList' } )
+  @Field(() => [String], { nullable: 'itemsAndList' })
   @IsOptional()
   @IsArray()
   users?: string[];

@@ -1,4 +1,4 @@
 export * from './handleError';
 export * from './generator';
-export * from './common'
-export * from './pagination'
+export * from './common';
+export * from './pagination';

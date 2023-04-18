@@ -1,1 +1,1 @@
-export * from './knowledge.dto'
+export * from './knowledge.dto';

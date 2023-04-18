@@ -1,1 +1,1 @@
-export * from './channel-status.interface'
+export * from './channel-status.interface';

@@ -12,11 +12,11 @@ import { UserModule } from 'src/user/user.module';
     MongooseModule.forFeature([
       {
         name: Post.name,
-        schema: PostSchema
-      }
+        schema: PostSchema,
+      },
     ]),
     FilesModule,
-    UserModule
-  ]
+    UserModule,
+  ],
 })
 export class PostModule {}

@@ -1,2 +1,1 @@
-
-export type ChannelStatus = 'archived' | 'active'
+export type ChannelStatus = 'archived' | 'active';

@@ -5,7 +5,7 @@ import { ServiceService } from 'src/service/service.service';
 import { CompanyService } from 'src/company/company.service';
 import * as citySeed from './data/citySeed.json';
 import * as serviceSeed from './data/services.seed.json';
-import * as companySeed from './data/companies.seed.json'
+import * as companySeed from './data/companies.seed.json';
 import { Company } from 'src/company/entities';
 
 @Injectable()
@@ -14,7 +14,7 @@ export class SeedService {
   constructor(
     private cityService: CityService,
     private serviceService: ServiceService,
-    private companyService: CompanyService
+    private companyService: CompanyService,
   ) {}
 
   async executeSeed() {

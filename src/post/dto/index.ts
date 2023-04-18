@@ -1,2 +1,2 @@
-export * from './post.dto'
-export * from './post-list.dto'
+export * from './post.dto';
+export * from './post-list.dto';

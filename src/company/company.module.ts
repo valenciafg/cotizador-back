@@ -10,10 +10,10 @@ import { Company, CompanySchema } from './entities';
     MongooseModule.forFeature([
       {
         name: Company.name,
-        schema: CompanySchema
-      }
-    ])
+        schema: CompanySchema,
+      },
+    ]),
   ],
-  exports: [CompanyService]
+  exports: [CompanyService],
 })
 export class CompanyModule {}

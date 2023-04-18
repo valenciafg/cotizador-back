@@ -5,24 +5,18 @@ import { KnowledgeService } from './knowledge.service';
 
 @Resolver()
 export class KnowledgeResolver {
-  constructor(
-    private knowledgeService: KnowledgeService
-  ) {}
+  constructor(private knowledgeService: KnowledgeService) {}
   @Mutation(() => KnowledgeDto)
-  async createKnowledge(
-    @Args('input') input: CreateKnowledgeInput,
-  ) {
+  async createKnowledge(@Args('input') input: CreateKnowledgeInput) {
     return this.knowledgeService.create(input);
   }
   @Query(() => [KnowledgeDto])
   async knowledges() {
-    return this.knowledgeService.getKnowledges()
+    return this.knowledgeService.getKnowledges();
   }
-  
- @Query(() => KnowledgeDto)
- async findKnowledge(
-    @Args('input') input: FindKnowledgeInput
-  ) {
-  return this.knowledgeService.findKnowledge(input)
- }
+
+  @Query(() => KnowledgeDto)
+  async findKnowledge(@Args('input') input: FindKnowledgeInput) {
+    return this.knowledgeService.findKnowledge(input);
+  }
 }

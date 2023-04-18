@@ -14,11 +14,17 @@ export class MessageService {
   constructor(
     @InjectModel(Message.name) private messageModel: Model<Message>,
     private channelService: ChannelService,
-  ){}
+  ) {}
 
-  async create(createMessageInput: CreateMessageInput, userId: string): Promise<Message> {
+  async create(
+    createMessageInput: CreateMessageInput,
+    userId: string,
+  ): Promise<Message> {
     try {
-      const message = await this.messageModel.create({ ...createMessageInput, userId });
+      const message = await this.messageModel.create({
+        ...createMessageInput,
+        userId,
+      });
       return message;
     } catch (error) {
       handleRegisterExceptions(error);
@@ -29,16 +35,16 @@ export class MessageService {
     if (user.userType !== USER_TYPE.ADMINISTRATOR) {
       const channel = await this.channelService.getChannel({
         uuid: input.channelId,
-        users: [user.uuid]
-      })
+        users: [user.uuid],
+      });
       if (!channel) {
-        throw Error('User not found in this channel')
+        throw Error('User not found in this channel');
       }
     }
     return this.messageModel
       .find({
-        ...input
+        ...input,
       })
-      .sort({ createdAt: -1 })
+      .sort({ createdAt: -1 });
   }
 }

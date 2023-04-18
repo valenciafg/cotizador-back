@@ -9,8 +9,8 @@ import { CreateServiceInput, FindServiceInput } from './inputs/service.input';
 export class ServiceService {
   private readonly logger = new Logger(ServiceService.name);
   constructor(
-    @InjectModel(Service.name) private serviceModel: Model<Service>
-  ){}
+    @InjectModel(Service.name) private serviceModel: Model<Service>,
+  ) {}
 
   async create(createServiceInput: CreateServiceInput): Promise<Service> {
     try {
@@ -21,21 +21,27 @@ export class ServiceService {
     }
   }
   async getServices(uuidList?: string[]): Promise<Service[]> {
-    if(!uuidList) {
-      const services = await this.serviceModel.find().sort({ createdAt: -1 })
-      return services
+    if (!uuidList) {
+      const services = await this.serviceModel.find().sort({ createdAt: -1 });
+      return services;
     }
-    const services = await this.serviceModel.find({ uuid: {
-      "$in": uuidList
-    }}).sort({ createdAt: -1 })
+    const services = await this.serviceModel
+      .find({
+        uuid: {
+          $in: uuidList,
+        },
+      })
+      .sort({ createdAt: -1 });
     return services;
   }
   async findService(findServiceInput: FindServiceInput): Promise<Service> {
-    const service = await this.serviceModel.findOne({ ...findServiceInput })
-    return service
+    const service = await this.serviceModel.findOne({ ...findServiceInput });
+    return service;
   }
   async findOrCreate(name: string) {
-    const doc = await this.serviceModel.findOne({ name: name.toLocaleLowerCase()})
+    const doc = await this.serviceModel.findOne({
+      name: name.toLocaleLowerCase(),
+    });
     if (doc) {
       return doc;
     }
@@ -49,7 +55,7 @@ export class ServiceService {
       const response = await this.serviceModel.insertMany(services);
       return response;
     } catch (error) {
-      this.logger.error(error)
+      this.logger.error(error);
     }
   }
 }

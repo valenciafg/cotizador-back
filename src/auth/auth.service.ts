@@ -117,15 +117,15 @@ export class AuthService {
       { email: user.email, uuid: user.uuid },
       this.jwtService,
     );
-    console.log({ token })
-    const fullname = getUserFullname(user)
+    console.log({ token });
+    const fullname = getUserFullname(user);
     return {
       email,
       uuid: user.uuid,
       registerStep: user.registerStep,
       userType: user.userType,
       token,
-      fullname
+      fullname,
     };
   }
 

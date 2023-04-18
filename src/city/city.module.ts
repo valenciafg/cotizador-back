@@ -10,10 +10,10 @@ import { City, CitySchema } from './entities/city.entity';
     MongooseModule.forFeature([
       {
         name: City.name,
-        schema: CitySchema
-      }
-    ])
+        schema: CitySchema,
+      },
+    ]),
   ],
-  exports: [CityService]
+  exports: [CityService],
 })
 export class CityModule {}

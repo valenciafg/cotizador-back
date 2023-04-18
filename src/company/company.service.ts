@@ -9,8 +9,8 @@ import { CreateCompanyInput, FindCompanyInput } from './inputs';
 export class CompanyService {
   private readonly logger = new Logger(CompanyService.name);
   constructor(
-    @InjectModel(Company.name) private companyModel: Model<Company>
-  ){}
+    @InjectModel(Company.name) private companyModel: Model<Company>,
+  ) {}
 
   async create(createCompanyInput: CreateCompanyInput): Promise<Company> {
     try {
@@ -22,20 +22,26 @@ export class CompanyService {
   }
   async getCompanies(uuidList?: string[]): Promise<Company[]> {
     if (!uuidList) {
-      const companies = await this.companyModel.find().sort({ createdAt: -1 })
-      return companies
+      const companies = await this.companyModel.find().sort({ createdAt: -1 });
+      return companies;
     }
-    const companies = await this.companyModel.find({ uuid: {
-      "$in": uuidList
-    }}).sort({ createdAt: -1 })
+    const companies = await this.companyModel
+      .find({
+        uuid: {
+          $in: uuidList,
+        },
+      })
+      .sort({ createdAt: -1 });
     return companies;
   }
   async findCompany(findCompanyInput: FindCompanyInput): Promise<Company> {
-    const company = await this.companyModel.findOne({ ...findCompanyInput })
-    return company
+    const company = await this.companyModel.findOne({ ...findCompanyInput });
+    return company;
   }
   async findOrCreate(name: string) {
-    const doc = await this.companyModel.findOne({ name: name.toLocaleLowerCase()})
+    const doc = await this.companyModel.findOne({
+      name: name.toLocaleLowerCase(),
+    });
     if (doc) {
       return doc;
     }
@@ -50,7 +56,7 @@ export class CompanyService {
       const response = await this.companyModel.insertMany(companies);
       return response;
     } catch (error) {
-      this.logger.error(error.message)
+      this.logger.error(error.message);
     }
   }
 }

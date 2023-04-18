@@ -29,7 +29,6 @@ import { FilesService } from 'src/files/files.service';
 import { CityService } from 'src/city/city.service';
 import { faker } from '@faker-js/faker';
 
-
 @Injectable()
 export class UserService {
   private readonly logger = new Logger(UserService.name);
@@ -88,9 +87,9 @@ export class UserService {
   async validateMainDocument(user: User, userInfo: CreateUserInformationDto) {
     let userFound;
     if (user.userType === USER_TYPE.PROFESSIONAL) {
-      userFound = await this.userModel.findOne({ dni: userInfo.dni })
+      userFound = await this.userModel.findOne({ dni: userInfo.dni });
     } else {
-      userFound = await this.userModel.findOne({ ruc: userInfo.ruc })
+      userFound = await this.userModel.findOne({ ruc: userInfo.ruc });
     }
     if (userFound && user.uuid !== userFound.uuid) {
       throw new Error('Exist another user with this main document');
@@ -102,7 +101,6 @@ export class UserService {
     userStepValidation(user, REGISTER_STEPS.USER_INFO);
     delete userInfo.userType;
     try {
-
       await user.updateOne({
         ...userInfo,
         registerStep: REGISTER_STEPS.WORK_INFO,
@@ -170,214 +168,256 @@ export class UserService {
   }
 
   findOneByUuid(uuid: string) {
-    return this.userModel.findOne({ uuid })
+    return this.userModel.findOne({ uuid });
   }
 
   getUserByUUID(uuid: string) {
-    return this.userModel.findOne({ uuid })
+    return this.userModel.findOne({ uuid });
   }
 
   async addKnowlege(uuid: string, name: string) {
-    const doc = await this.userModel.findOne({ uuid })
+    const doc = await this.userModel.findOne({ uuid });
     if (!doc) {
-      throw new Error('User not found')
+      throw new Error('User not found');
     }
-    const knowledge = await this.knowledgeService.findOrCreate(name)
-    const [knowledgeFound] = doc.knowledges.filter(element => element === knowledge.uuid)
+    const knowledge = await this.knowledgeService.findOrCreate(name);
+    const [knowledgeFound] = doc.knowledges.filter(
+      (element) => element === knowledge.uuid,
+    );
     if (knowledgeFound) {
-      throw new Error('Item found')
+      throw new Error('Item found');
     }
-    doc.knowledges.push(knowledge.uuid)
-    const response = await doc.save()
+    doc.knowledges.push(knowledge.uuid);
+    const response = await doc.save();
     return response;
   }
   async addWorkedProject(uuid: string, name: string) {
-    const doc = await this.userModel.findOne({ uuid })
+    const doc = await this.userModel.findOne({ uuid });
     if (!doc) {
-      throw new Error('User not found')
+      throw new Error('User not found');
     }
-    const project = await this.projectService.findOrCreate(name)
-    const [projectFound] = doc.workedProjects.filter(element => element === project.uuid)
+    const project = await this.projectService.findOrCreate(name);
+    const [projectFound] = doc.workedProjects.filter(
+      (element) => element === project.uuid,
+    );
     if (projectFound) {
-      throw new Error('Item found')
+      throw new Error('Item found');
     }
-    doc.workedProjects.push(project.uuid)
-    const response = await doc.save()
+    doc.workedProjects.push(project.uuid);
+    const response = await doc.save();
     return response;
   }
   async addCurrentCompany(uuid: string, name: string) {
-    const doc = await this.userModel.findOne({ uuid })
+    const doc = await this.userModel.findOne({ uuid });
     if (!doc) {
-      throw new Error('User not found')
+      throw new Error('User not found');
     }
-    const company = await this.companyService.findOrCreate(name)
-    const [companyFound] = doc.currentCompanies.filter(element => element === company.uuid)
+    const company = await this.companyService.findOrCreate(name);
+    const [companyFound] = doc.currentCompanies.filter(
+      (element) => element === company.uuid,
+    );
     if (companyFound) {
-      throw new Error('Item found')
+      throw new Error('Item found');
     }
-    doc.currentCompanies.push(company.uuid)
-    const response = await doc.save()
+    doc.currentCompanies.push(company.uuid);
+    const response = await doc.save();
     return response;
   }
   async addWorkedCompany(uuid: string, name: string) {
-    const doc = await this.userModel.findOne({ uuid })
+    const doc = await this.userModel.findOne({ uuid });
     if (!doc) {
-      throw new Error('User not found')
+      throw new Error('User not found');
     }
-    const company = await this.companyService.findOrCreate(name)
-    const [companyFound] = doc.workedCompanies.filter(element => element === company.uuid)
+    const company = await this.companyService.findOrCreate(name);
+    const [companyFound] = doc.workedCompanies.filter(
+      (element) => element === company.uuid,
+    );
     if (companyFound) {
-      throw new Error('Item found')
+      throw new Error('Item found');
     }
-    doc.workedCompanies.push(company.uuid)
-    const response = await doc.save()
+    doc.workedCompanies.push(company.uuid);
+    const response = await doc.save();
     return response;
   }
   async addService(uuid: string, name: string) {
-    const doc = await this.userModel.findOne({ uuid })
+    const doc = await this.userModel.findOne({ uuid });
     if (!doc) {
-      throw new Error('User not found')
+      throw new Error('User not found');
     }
-    const service = await this.serviceService.findOrCreate(name)
-    const [serviceFound] = doc.services.filter(element => element === service.uuid)
+    const service = await this.serviceService.findOrCreate(name);
+    const [serviceFound] = doc.services.filter(
+      (element) => element === service.uuid,
+    );
     if (serviceFound) {
-      throw new Error('Item found')
+      throw new Error('Item found');
     }
-    doc.services.push(service.uuid)
-    const response = await doc.save()
+    doc.services.push(service.uuid);
+    const response = await doc.save();
     return response;
   }
   async addHeading(uuid: string, name: string) {
-    const doc = await this.userModel.findOne({ uuid })
+    const doc = await this.userModel.findOne({ uuid });
     if (!doc) {
-      throw new Error('User not found')
+      throw new Error('User not found');
     }
-    const heading = await this.headingService.findOrCreate(name)
-    const [headingFound] = doc.workedCompanies.filter(element => element === heading.uuid)
+    const heading = await this.headingService.findOrCreate(name);
+    const [headingFound] = doc.workedCompanies.filter(
+      (element) => element === heading.uuid,
+    );
     if (headingFound) {
-      throw new Error('Item found')
+      throw new Error('Item found');
     }
-    doc.headings.push(heading.uuid)
-    const response = await doc.save()
+    doc.headings.push(heading.uuid);
+    const response = await doc.save();
     return response;
   }
   async deleteKnowledge(userUuid: string, uuid: string) {
-    const doc = await this.userModel.updateOne({ uuid: userUuid}, {
-      $pullAll: {
-        knowledges: [uuid]
-      }
-    })
+    const doc = await this.userModel.updateOne(
+      { uuid: userUuid },
+      {
+        $pullAll: {
+          knowledges: [uuid],
+        },
+      },
+    );
     if (doc.modifiedCount > 0) {
-      return `${uuid}`
+      return `${uuid}`;
     }
-    throw new Error(`${uuid} not found`)
+    throw new Error(`${uuid} not found`);
   }
   async deleteCurrentCompany(userUuid: string, uuid: string) {
-    const doc = await this.userModel.updateOne({ uuid: userUuid}, {
-      $pullAll: {
-        currentCompanies: [uuid]
-      }
-    })
+    const doc = await this.userModel.updateOne(
+      { uuid: userUuid },
+      {
+        $pullAll: {
+          currentCompanies: [uuid],
+        },
+      },
+    );
     if (doc.modifiedCount > 0) {
-      return `${uuid}`
+      return `${uuid}`;
     }
-    throw new Error(`${uuid} not found`)
+    throw new Error(`${uuid} not found`);
   }
   async deleteWorkedProject(userUuid: string, uuid: string) {
-    const doc = await this.userModel.updateOne({ uuid: userUuid}, {
-      $pullAll: {
-        workedProjects: [uuid]
-      }
-    })
+    const doc = await this.userModel.updateOne(
+      { uuid: userUuid },
+      {
+        $pullAll: {
+          workedProjects: [uuid],
+        },
+      },
+    );
     if (doc.modifiedCount > 0) {
-      return `${uuid}`
+      return `${uuid}`;
     }
-    throw new Error(`${uuid} not found`)
+    throw new Error(`${uuid} not found`);
   }
   async deleteWorkedCompany(userUuid: string, uuid: string) {
-    const doc = await this.userModel.updateOne({ uuid: userUuid}, {
-      $pullAll: {
-        workedCompanies: [uuid]
-      }
-    })
+    const doc = await this.userModel.updateOne(
+      { uuid: userUuid },
+      {
+        $pullAll: {
+          workedCompanies: [uuid],
+        },
+      },
+    );
     if (doc.modifiedCount > 0) {
-      return `${uuid}`
+      return `${uuid}`;
     }
-    throw new Error(`${uuid} not found`)
+    throw new Error(`${uuid} not found`);
   }
   async deleteService(userUuid: string, uuid: string) {
-    const doc = await this.userModel.updateOne({ uuid: userUuid}, {
-      $pullAll: {
-        services: [uuid]
-      }
-    })
+    const doc = await this.userModel.updateOne(
+      { uuid: userUuid },
+      {
+        $pullAll: {
+          services: [uuid],
+        },
+      },
+    );
     if (doc.modifiedCount > 0) {
-      return `${uuid}`
+      return `${uuid}`;
     }
-    throw new Error(`${uuid} not found`)
+    throw new Error(`${uuid} not found`);
   }
   async deleteHeading(userUuid: string, uuid: string) {
-    const doc = await this.userModel.updateOne({ uuid: userUuid}, {
-      $pullAll: {
-        headings: [uuid]
-      }
-    })
+    const doc = await this.userModel.updateOne(
+      { uuid: userUuid },
+      {
+        $pullAll: {
+          headings: [uuid],
+        },
+      },
+    );
     if (doc.modifiedCount > 0) {
-      return `${uuid}`
+      return `${uuid}`;
     }
-    throw new Error(`${uuid} not found`)
+    throw new Error(`${uuid} not found`);
   }
 
   async getUsers(options: SearchUsersOptions, input?: SearchUsersInput) {
     const VALID_USER_TYPES = [
       USER_TYPE.PROFESSIONAL,
       USER_TYPE.COMPANY,
-      USER_TYPE.CONTRACTOR_SUPPLIER
+      USER_TYPE.CONTRACTOR_SUPPLIER,
     ];
-    let query = {}
+    let query = {};
     if (input.serviceId) {
-      query = { ...query, services: input.serviceId }
+      query = { ...query, services: input.serviceId };
     }
     if (input.deparmentId) {
-      query = { ...query, deparmentId: input.deparmentId }
+      query = { ...query, deparmentId: input.deparmentId };
     }
     if (input.provinceId) {
-      query = { ...query, provinceId: input.provinceId }
+      query = { ...query, provinceId: input.provinceId };
     }
     if (input.districtId) {
-      query = { ...query, districtId: input.districtId }
+      query = { ...query, districtId: input.districtId };
     }
     const filter = {
       userType: {
-        "$in": VALID_USER_TYPES,
+        $in: VALID_USER_TYPES,
       },
-      ...query
+      ...query,
     };
-    const count = await this.userModel.countDocuments(filter)
+    const count = await this.userModel.countDocuments(filter);
     const offset = getOffset(options.page, options.limit);
     const pages = getPages(count, options.limit);
-    const users = await this.userModel.find(filter)
+    const users = await this.userModel
+      .find(filter)
       .limit(options.limit)
       .skip(offset)
       .sort({ createdAt: -1 });
     return {
       pages,
       currentPage: options.page,
-      users
+      users,
     };
   }
 
   async setProfilePic(uuid: string, profilePicUuid: string) {
     try {
-      await this.userModel.findOneAndUpdate({ uuid }, { profilePic: profilePicUuid })
+      await this.userModel.findOneAndUpdate(
+        { uuid },
+        { profilePic: profilePicUuid },
+      );
     } catch (error) {
       handleRegisterExceptions(error);
     }
   }
 
-  async uploadFile(options: UploadFileDto, file: Express.Multer.File, user: User) {
+  async uploadFile(
+    options: UploadFileDto,
+    file: Express.Multer.File,
+    user: User,
+  ) {
     try {
-      const fileResponse = await this.fileService.uploadUserFile(file, user, options.isProfile);
+      const fileResponse = await this.fileService.uploadUserFile(
+        file,
+        user,
+        options.isProfile,
+      );
       if (options.isProfile) {
         await this.setProfilePic(user.uuid, fileResponse.uuid);
       }
@@ -392,26 +432,34 @@ export class UserService {
       fullAddress += `${user.address},`;
     }
     // console.log({ user })
-    // if (user.cityId) 
+    // if (user.cityId)
     if (user.districtId) {
-      const [district] = await this.cityService.getDistricts(null, user.districtId)
+      const [district] = await this.cityService.getDistricts(
+        null,
+        user.districtId,
+      );
       if (district) {
         fullAddress += ` ${district.distrito},`;
       }
     }
     if (user.provinceId) {
-      const [province] = await this.cityService.getProvinces(null, user.provinceId)
+      const [province] = await this.cityService.getProvinces(
+        null,
+        user.provinceId,
+      );
       if (province) {
         fullAddress += ` ${province.provincia},`;
       }
     }
     if (user.departmentId) {
-      const [department] = await this.cityService.getDeparments(user.departmentId)
+      const [department] = await this.cityService.getDeparments(
+        user.departmentId,
+      );
       if (department) {
         fullAddress += ` ${department.departamento},`;
       }
     }
-    return fullAddress.replace(/,\s*$/, "");
+    return fullAddress.replace(/,\s*$/, '');
   }
 
   async createFakeUser(limit: number, type: string) {
@@ -421,7 +469,7 @@ export class UserService {
         password: '123456',
         registerStep: REGISTER_STEPS.FINISHED,
         description: faker.company.catchPhraseDescriptor(),
-      }
+      };
     }
   }
 }

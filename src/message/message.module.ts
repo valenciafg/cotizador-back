@@ -8,17 +8,17 @@ import { ChannelModule } from 'src/channel/channel.module';
 import { UserModule } from 'src/user/user.module';
 
 @Module({
-    providers: [MessageService, MessageResolver],
+  providers: [MessageService, MessageResolver],
   imports: [
     MongooseModule.forFeature([
       {
         name: Message.name,
-        schema: MessageSchema
-      }
+        schema: MessageSchema,
+      },
     ]),
     ChannelModule,
-    UserModule
+    UserModule,
   ],
-  exports: [MessageService]
+  exports: [MessageService],
 })
 export class MessageModule {}

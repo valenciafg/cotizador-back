@@ -1,1 +1,1 @@
-export * from './company.input'
+export * from './company.input';

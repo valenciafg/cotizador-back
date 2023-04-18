@@ -17,7 +17,7 @@ import { ServiceModule } from './service/service.module';
 import { HeadingModule } from './heading/heading.module';
 import { ProjectModule } from './project/project.module';
 import { KnowledgeModule } from './knowledge/knowledge.module';
-import { PostModule } from './post/post.module'
+import { PostModule } from './post/post.module';
 import { SeedModule } from './seed/seed.module';
 import { MessageModule } from './message/message.module';
 import { MessageGateway } from './message/message.gateway';
@@ -32,14 +32,12 @@ import { ChannelModule } from './channel/channel.module';
     }),
     MongooseModule.forRoot(process.env.URI_MONGODB),
     */
-   GraphQLModule.forRoot<ApolloDriverConfig>({
-    driver: ApolloDriver,
-    autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-    playground: false,
-    plugins: [
-      ApolloServerPluginLandingPageLocalDefault()
-    ]
-   }),
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      playground: false,
+      plugins: [ApolloServerPluginLandingPageLocalDefault()],
+    }),
     ConfigModule.forRoot({
       load: [EnvConfiguration],
       validationSchema: JoiValidationSchema,

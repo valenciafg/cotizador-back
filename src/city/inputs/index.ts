@@ -1,2 +1,1 @@
-
-export * from './city.input'
+export * from './city.input';

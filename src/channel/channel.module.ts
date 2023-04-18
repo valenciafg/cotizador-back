@@ -11,11 +11,11 @@ import { UserModule } from 'src/user/user.module';
     MongooseModule.forFeature([
       {
         name: Channel.name,
-        schema: ChannelSchema
-      }
+        schema: ChannelSchema,
+      },
     ]),
-    UserModule
+    UserModule,
   ],
-  exports: [ChannelService]
+  exports: [ChannelService],
 })
 export class ChannelModule {}

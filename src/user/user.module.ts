@@ -31,6 +31,6 @@ import { FilesModule } from 'src/files/files.module';
     CityModule,
     FilesModule,
   ],
-  exports: [UserService]
+  exports: [UserService],
 })
 export class UserModule {}

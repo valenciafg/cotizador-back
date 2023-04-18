@@ -7,11 +7,7 @@ import { CompanyModule } from 'src/company/company.module';
 
 @Module({
   controllers: [SeedController],
-  imports: [
-    CityModule,
-    ServiceModule,
-    CompanyModule,
-  ],
-  providers: [SeedService]
+  imports: [CityModule, ServiceModule, CompanyModule],
+  providers: [SeedService],
 })
 export class SeedModule {}

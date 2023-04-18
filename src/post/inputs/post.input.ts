@@ -1,5 +1,12 @@
-import { Field, InputType } from "@nestjs/graphql";
-import { IsNumber, IsOptional, IsString, IsUUID, MaxLength, MinLength } from "class-validator";
+import { Field, InputType } from '@nestjs/graphql';
+import {
+  IsNumber,
+  IsOptional,
+  IsString,
+  IsUUID,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
 
 @InputType()
 export class CreatePostInput {
@@ -60,5 +67,5 @@ export class DeletePostInput {
   @IsString()
   @IsUUID()
   @Field()
-  uuid: string
+  uuid: string;
 }

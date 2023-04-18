@@ -29,18 +29,12 @@ export class FilesController {
   ) {}
   @Get('user/url/:uuid')
   @Auth()
-  async getUserFileUrl(
-    @GetUser() user: User,
-    @Param('uuid') uuid: string
-  ) {
-    return this.filesService.getUserFileUrl(uuid, user.uuid)
+  async getUserFileUrl(@GetUser() user: User, @Param('uuid') uuid: string) {
+    return this.filesService.getUserFileUrl(uuid, user.uuid);
   }
   @Get('user/:uuid')
   @Auth()
-  async getUserFile(
-    @GetUser() user: User,
-    @Param('uuid') uuid: string
-  ) {
-    return this.filesService.getUserFile(uuid, user.uuid)
+  async getUserFile(@GetUser() user: User, @Param('uuid') uuid: string) {
+    return this.filesService.getUserFile(uuid, user.uuid);
   }
 }

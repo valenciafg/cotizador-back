@@ -1,1 +1,1 @@
-export * from './heading.input'
+export * from './heading.input';

@@ -1,1 +1,1 @@
-export * from './service.input'
+export * from './service.input';

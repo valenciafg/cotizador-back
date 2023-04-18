@@ -1,1 +1,1 @@
-export * from './heading.dto'
+export * from './heading.dto';

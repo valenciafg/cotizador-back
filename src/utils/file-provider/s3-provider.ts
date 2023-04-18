@@ -8,13 +8,12 @@ import {
   GetObjectCommandInput,
   GetObjectCommandOutput,
   DeleteObjectCommandInput,
-  HeadObjectCommandInput
-} from "@aws-sdk/client-s3";
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import { FileTypeResult } from "file-type/core";
-import { IUploadFileProvider } from "src/interfaces";
-import { FileProvider } from "./file-provider";
-
+  HeadObjectCommandInput,
+} from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import { FileTypeResult } from 'file-type/core';
+import { IUploadFileProvider } from 'src/interfaces';
+import { FileProvider } from './file-provider';
 
 export class S3Provider extends FileProvider {
   bucket: string;
@@ -44,11 +43,15 @@ export class S3Provider extends FileProvider {
       forcePathStyle: true,
       credentials: {
         accessKeyId: this.user,
-        secretAccessKey: this.password
-      }
+        secretAccessKey: this.password,
+      },
     });
   }
-  async __upload(key: string, resource: any, contentType?: string): Promise<IUploadFileProvider> {
+  async __upload(
+    key: string,
+    resource: any,
+    contentType?: string,
+  ): Promise<IUploadFileProvider> {
     let type = contentType ? { mime: contentType } : null;
     if (!type) {
       type = await this.getFileType(resource);
@@ -59,21 +62,21 @@ export class S3Provider extends FileProvider {
       Key: key,
       Body: resource,
       ContentType: type.mime,
-      ContentEncoding: contentCodification
+      ContentEncoding: contentCodification,
     };
     const command = new PutObjectCommand(input);
     await this.client.send(command);
     return {
       bucket: this.bucket,
       key,
-      mimeType: type.mime
-    }
-  };
+      mimeType: type.mime,
+    };
+  }
 
   async download(key: string) {
     const input: GetObjectCommandInput = {
       Key: key,
-      Bucket: this.bucket
+      Bucket: this.bucket,
     };
     const command = new GetObjectCommand(input);
     const response: GetObjectCommandOutput = await this.client.send(command);
@@ -83,31 +86,31 @@ export class S3Provider extends FileProvider {
     const type: FileTypeResult = await this.getFileType(content);
     return {
       ...type,
-      content
-    }
+      content,
+    };
   }
 
   async delete(key) {
-    const exist = await this.exist(key)
+    const exist = await this.exist(key);
     if (!exist) {
-      throw new Error('File not found')
+      throw new Error('File not found');
     }
     const input: DeleteObjectCommandInput = {
       Key: key,
-      Bucket: this.bucket
+      Bucket: this.bucket,
     };
-    const command = new DeleteObjectCommand(input)
+    const command = new DeleteObjectCommand(input);
     return this.client.send(command);
   }
 
   async exist(key: string): Promise<boolean> {
     const input: HeadObjectCommandInput = {
       Key: key,
-      Bucket: this.bucket
+      Bucket: this.bucket,
     };
     const command = new HeadObjectCommand(input);
     try {
-      await this.client.send(command)
+      await this.client.send(command);
       return true;
     } catch (error) {
       return false;
@@ -115,18 +118,18 @@ export class S3Provider extends FileProvider {
   }
 
   async signedUrl(key: string, fileName: string, expiresIn = 36000) {
-    const exist = await this.exist(key)
+    const exist = await this.exist(key);
     if (!exist) {
-      throw new Error('File not exist on bucket')
+      throw new Error('File not exist on bucket');
     }
     const input: GetObjectCommandInput = {
       Key: key,
       Bucket: this.bucket,
     };
     if (fileName) {
-      input.ResponseContentDisposition = `attachment; filename="${fileName}"`
+      input.ResponseContentDisposition = `attachment; filename="${fileName}"`;
     }
-    const command = new GetObjectCommand(input)
-    return getSignedUrl(this.client, command, { expiresIn })
+    const command = new GetObjectCommand(input);
+    return getSignedUrl(this.client, command, { expiresIn });
   }
 }

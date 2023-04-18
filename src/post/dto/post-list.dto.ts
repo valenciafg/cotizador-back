@@ -1,6 +1,5 @@
-import { Field, ID, ObjectType } from "@nestjs/graphql";
-import { PostDto } from "./post.dto";
-
+import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { PostDto } from './post.dto';
 
 @ObjectType()
 export class PostListDto {

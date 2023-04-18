@@ -10,10 +10,10 @@ import { Service, ServiceSchema } from './entities';
     MongooseModule.forFeature([
       {
         name: Service.name,
-        schema: ServiceSchema
-      }
-    ])
+        schema: ServiceSchema,
+      },
+    ]),
   ],
-  exports: [ServiceService]
+  exports: [ServiceService],
 })
 export class ServiceModule {}

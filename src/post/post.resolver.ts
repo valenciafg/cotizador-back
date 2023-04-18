@@ -1,7 +1,19 @@
-import { Resolver, Query, Mutation, Args, ResolveField, Parent } from '@nestjs/graphql';
-import { PostService } from './post.service'
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  ResolveField,
+  Parent,
+} from '@nestjs/graphql';
+import { PostService } from './post.service';
 import { PostDto, PostListDto } from './dto';
-import { CreatePostInput, DeletePostInput, FindPostInput, FindPostListInput } from './inputs';
+import {
+  CreatePostInput,
+  DeletePostInput,
+  FindPostInput,
+  FindPostListInput,
+} from './inputs';
 import { FilesService } from 'src/files/files.service';
 import { UseGuards } from '@nestjs/common';
 import { GqlAuthGuard } from 'src/auth/guards/gql-auth.guard';
@@ -10,12 +22,12 @@ import { User } from 'src/user/entities/user.entity';
 import { UserDto } from 'src/user/dto';
 import { UserService } from 'src/user/user.service';
 
-@Resolver(of => PostDto)
+@Resolver((of) => PostDto)
 export class PostResolver {
   constructor(
     private postService: PostService,
     private fileService: FilesService,
-    private userService: UserService
+    private userService: UserService,
   ) {}
   @Mutation(() => PostDto)
   @UseGuards(GqlAuthGuard)
@@ -26,9 +38,7 @@ export class PostResolver {
     return this.postService.create(input, user.uuid);
   }
   @Mutation(() => Boolean)
-  async deletePost(
-    @Args('input') input: DeletePostInput,
-  ) {
+  async deletePost(@Args('input') input: DeletePostInput) {
     return this.postService.deletePost(input.uuid);
   }
   @Query(() => PostListDto)
@@ -37,17 +47,15 @@ export class PostResolver {
     @CurrentUser() user: User,
     @Args('input') input: FindPostListInput,
   ) {
-    return this.postService.getPosts(input, user.uuid)
+    return this.postService.getPosts(input, user.uuid);
   }
-  
- @Query(() => PostDto, { nullable: true })
- async post(
-    @Args('input') input: FindPostInput
-  ) {
-  return this.postService.findPost(input)
- }
- 
- @ResolveField('mainImageUrl', returns => String, { nullable: true })
+
+  @Query(() => PostDto, { nullable: true })
+  async post(@Args('input') input: FindPostInput) {
+    return this.postService.findPost(input);
+  }
+
+  @ResolveField('mainImageUrl', (returns) => String, { nullable: true })
   async getImageUrl(@Parent() post: PostDto) {
     const { mainImage } = post;
     if (!mainImage) {
@@ -56,7 +64,7 @@ export class PostResolver {
     const { url = null } = await this.fileService.getUserFileUrl(mainImage);
     return url;
   }
-  @ResolveField('createdBy', returns => UserDto, { nullable: true })
+  @ResolveField('createdBy', (returns) => UserDto, { nullable: true })
   async getdeparment(@Parent() post: PostDto) {
     const { createdBy } = post;
     const result = await this.userService.findOneByUuid(createdBy);

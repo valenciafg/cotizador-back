@@ -9,8 +9,8 @@ import { CreateHeadingInput, FindHeadingInput } from './inputs';
 export class HeadingService {
   private readonly logger = new Logger(HeadingService.name);
   constructor(
-    @InjectModel(Heading.name) private headingModel: Model<Heading>
-  ){}
+    @InjectModel(Heading.name) private headingModel: Model<Heading>,
+  ) {}
 
   async create(createHeadingInput: CreateHeadingInput): Promise<Heading> {
     try {
@@ -22,20 +22,26 @@ export class HeadingService {
   }
   async getHeadings(uuidList?: string[]): Promise<Heading[]> {
     if (!uuidList) {
-      const headings = await this.headingModel.find().sort({ createdAt: -1 })
-      return headings
+      const headings = await this.headingModel.find().sort({ createdAt: -1 });
+      return headings;
     }
-    const headings = await this.headingModel.find({ uuid: {
-      "$in": uuidList
-    }}).sort({ createdAt: -1 })
-      return headings
+    const headings = await this.headingModel
+      .find({
+        uuid: {
+          $in: uuidList,
+        },
+      })
+      .sort({ createdAt: -1 });
+    return headings;
   }
   async findHeading(findHeadingInput: FindHeadingInput): Promise<Heading> {
-    const heading = await this.headingModel.findOne({ ...findHeadingInput })
-    return heading
+    const heading = await this.headingModel.findOne({ ...findHeadingInput });
+    return heading;
   }
   async findOrCreate(name: string) {
-    const doc = await this.headingModel.findOne({ name: name.toLocaleLowerCase()})
+    const doc = await this.headingModel.findOne({
+      name: name.toLocaleLowerCase(),
+    });
     if (doc) {
       return doc;
     }

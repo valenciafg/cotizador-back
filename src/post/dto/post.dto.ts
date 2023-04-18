@@ -1,5 +1,4 @@
-import { Field, ID, ObjectType } from "@nestjs/graphql";
-
+import { Field, ID, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
 export class PostDto {
@@ -11,13 +10,13 @@ export class PostDto {
 
   @Field()
   readonly description: string;
-  
+
   @Field()
   readonly content: string;
-  
+
   @Field()
   readonly postType: string;
-  
+
   @Field({ nullable: true })
   mainImage?: string;
 
@@ -31,7 +30,7 @@ export class PostDto {
 
   @Field()
   readonly createdAt: Date;
-  
+
   @Field({ nullable: true })
   readonly updatedAt: Date;
 }

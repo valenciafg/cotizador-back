@@ -141,7 +141,7 @@ export class User extends Document {
   @Prop()
   @ApiProperty()
   authProvider: string;
-  @Prop({ required: true, default: () => new Date()})
+  @Prop({ required: true, default: () => new Date() })
   createdAt: Date;
   @Prop({ required: false, default: null })
   updatedAt: Date;

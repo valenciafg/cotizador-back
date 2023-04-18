@@ -1,6 +1,12 @@
-import { Field, InputType } from "@nestjs/graphql";
-import { Transform } from "class-transformer";
-import { IsArray, IsOptional, IsString, IsUUID, MaxLength } from "class-validator";
+import { Field, InputType } from '@nestjs/graphql';
+import { Transform } from 'class-transformer';
+import {
+  IsArray,
+  IsOptional,
+  IsString,
+  IsUUID,
+  MaxLength,
+} from 'class-validator';
 
 @InputType()
 export class CreateMessageInput {

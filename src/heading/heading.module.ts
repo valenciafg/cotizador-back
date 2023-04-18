@@ -10,10 +10,10 @@ import { Heading, HeadingSchema } from './entities';
     MongooseModule.forFeature([
       {
         name: Heading.name,
-        schema: HeadingSchema
-      }
-    ])
+        schema: HeadingSchema,
+      },
+    ]),
   ],
-  exports: [HeadingService]
+  exports: [HeadingService],
 })
 export class HeadingModule {}

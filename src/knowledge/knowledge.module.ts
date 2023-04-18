@@ -10,10 +10,10 @@ import { Knowledge, KnowledgeSchema } from './entities';
     MongooseModule.forFeature([
       {
         name: Knowledge.name,
-        schema: KnowledgeSchema
-      }
-    ])
+        schema: KnowledgeSchema,
+      },
+    ]),
   ],
-  exports: [KnowledgeService]
+  exports: [KnowledgeService],
 })
 export class KnowledgeModule {}

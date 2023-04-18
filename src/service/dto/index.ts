@@ -1,1 +1,1 @@
-export * from './service.dto'
+export * from './service.dto';

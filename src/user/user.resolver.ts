@@ -1,6 +1,13 @@
-import {  UseGuards } from '@nestjs/common';
-import { Resolver, Query, ResolveField, Parent, Mutation, Args } from '@nestjs/graphql';
-import {  CurrentUser } from 'src/auth/decorators';
+import { UseGuards } from '@nestjs/common';
+import {
+  Resolver,
+  Query,
+  ResolveField,
+  Parent,
+  Mutation,
+  Args,
+} from '@nestjs/graphql';
+import { CurrentUser } from 'src/auth/decorators';
 import { GqlAuthGuard } from 'src/auth/guards/gql-auth.guard';
 import { CityService } from 'src/city/city.service';
 import { DeparmentDto, DistrictDto, ProvinceDto } from 'src/city/dto';
@@ -16,9 +23,9 @@ import { ServiceService } from 'src/service/service.service';
 import { UserDto, UserListDto } from './dto';
 import { User } from './entities/user.entity';
 import { SearchUsersInput, SearchUsersOptions } from './inputs';
-import { UserService } from './user.service'
+import { UserService } from './user.service';
 
-@Resolver(of => UserDto)
+@Resolver((of) => UserDto)
 export class UserResolver {
   constructor(
     private userService: UserService,
@@ -30,279 +37,280 @@ export class UserResolver {
     private cityService: CityService,
     private fileService: FilesService,
   ) {}
-  @Query(returns => UserDto)
+  @Query((returns) => UserDto)
   @UseGuards(GqlAuthGuard)
-  async me(
-    @CurrentUser() user: User
-  ) {
-    return user
+  async me(@CurrentUser() user: User) {
+    return user;
   }
-  @Query(returns => UserListDto)
+  @Query((returns) => UserListDto)
   async users(
     @Args('input') input: SearchUsersInput,
-    @Args('options') options: SearchUsersOptions
+    @Args('options') options: SearchUsersOptions,
   ) {
     return this.userService.getUsers(options, input);
   }
-  @Query(returns => UserDto)
+  @Query((returns) => UserDto)
   async user(
     @Args({
       name: 'uuid',
-      type: () => String
+      type: () => String,
     })
     uuid: string,
   ) {
     const user = await this.userService.findOneByUuid(uuid);
     if (!user) {
-      throw new Error('User not found')
+      throw new Error('User not found');
     }
     return user;
   }
-  @ResolveField('currentCompanies', returns => [CompanyDto])
+  @ResolveField('currentCompanies', (returns) => [CompanyDto])
   async getCurrentCompanies(@Parent() user: UserDto) {
-    const { currentCompanies } = user
-    const result = await this.companyService.getCompanies(currentCompanies)
-    return result
+    const { currentCompanies } = user;
+    const result = await this.companyService.getCompanies(currentCompanies);
+    return result;
   }
-  @ResolveField('workedCompanies', returns => [CompanyDto])
+  @ResolveField('workedCompanies', (returns) => [CompanyDto])
   async getWorkedCompanies(@Parent() user: UserDto) {
-    const { workedCompanies } = user
-    const result = await this.companyService.getCompanies(workedCompanies)
-    return result
+    const { workedCompanies } = user;
+    const result = await this.companyService.getCompanies(workedCompanies);
+    return result;
   }
-  @ResolveField('workedProjects', returns => [CompanyDto])
+  @ResolveField('workedProjects', (returns) => [CompanyDto])
   async getWorkedProjects(@Parent() user: UserDto) {
-    const { workedProjects } = user
-    const result = await this.projectService.getProjects(workedProjects)
-    return result
+    const { workedProjects } = user;
+    const result = await this.projectService.getProjects(workedProjects);
+    return result;
   }
 
-  @ResolveField('services', returns => [CompanyDto])
+  @ResolveField('services', (returns) => [CompanyDto])
   async getServices(@Parent() user: UserDto) {
-    const { services } = user
-    const result = await this.serviceService.getServices(services)
-    return result
+    const { services } = user;
+    const result = await this.serviceService.getServices(services);
+    return result;
   }
-  @ResolveField('knowledges', returns => [CompanyDto])
+  @ResolveField('knowledges', (returns) => [CompanyDto])
   async getKnowledges(@Parent() user: UserDto) {
-    const { knowledges } = user
-    const result = await this.knowledgeService.getKnowledges(knowledges)
-    return result
+    const { knowledges } = user;
+    const result = await this.knowledgeService.getKnowledges(knowledges);
+    return result;
   }
-  @ResolveField('headings', returns => [CompanyDto])
+  @ResolveField('headings', (returns) => [CompanyDto])
   async getHeadings(@Parent() user: UserDto) {
-    const { headings } = user
-    const result = await this.headingService.getHeadings(headings)
-    return result
+    const { headings } = user;
+    const result = await this.headingService.getHeadings(headings);
+    return result;
   }
-  @ResolveField('department', returns => DeparmentDto)
+  @ResolveField('department', (returns) => DeparmentDto)
   async getdeparment(@Parent() user: UserDto) {
-    const { departmentId } = user
-    const [result] = await this.cityService.getDeparments(departmentId)
-    return result ? result : null
+    const { departmentId } = user;
+    const [result] = await this.cityService.getDeparments(departmentId);
+    return result ? result : null;
   }
-  @ResolveField('province', returns => ProvinceDto)
+  @ResolveField('province', (returns) => ProvinceDto)
   async getProvince(@Parent() user: UserDto) {
-    const { provinceId } = user
-    const [result] = await this.cityService.getProvinces(null, provinceId)
-    return result ? result : null
+    const { provinceId } = user;
+    const [result] = await this.cityService.getProvinces(null, provinceId);
+    return result ? result : null;
   }
-  @ResolveField('district', returns => DistrictDto)
+  @ResolveField('district', (returns) => DistrictDto)
   async getDistrict(@Parent() user: UserDto) {
-    const { districtId } = user
-    const [result] = await this.cityService.getDistricts(null, districtId)
-    return result ? result : null
+    const { districtId } = user;
+    const [result] = await this.cityService.getDistricts(null, districtId);
+    return result ? result : null;
   }
-  @ResolveField('profilePic', returns => FileDto, { nullable: true })
+  @ResolveField('profilePic', (returns) => FileDto, { nullable: true })
   async getProfilePic(@Parent() user: UserDto) {
     const { uuid, profilePic } = user;
     if (!profilePic) {
       return null;
     }
-    const response = await this.fileService.getUserFile(profilePic, uuid)
+    const response = await this.fileService.getUserFile(profilePic, uuid);
     return response;
   }
-  @Mutation(returns => UserDto)
+  @Mutation((returns) => UserDto)
   @UseGuards(GqlAuthGuard)
   async addUserKnowledge(
     @CurrentUser() user: User,
     @Args({
       name: 'name',
-      type: () => String
+      type: () => String,
     })
     name: string,
   ) {
-    const { uuid } = user
-    const result = await this.userService.addKnowlege(uuid, name)
-    return result
+    const { uuid } = user;
+    const result = await this.userService.addKnowlege(uuid, name);
+    return result;
   }
-  @Mutation(returns => String)
+  @Mutation((returns) => String)
   @UseGuards(GqlAuthGuard)
   async deleteUserKnowledge(
     @CurrentUser() user: User,
     @Args({
       name: 'uuid',
-      type: () => String
+      type: () => String,
     })
     uuid: string,
   ) {
-    const { uuid: userUuid } = user
-    const result = await this.userService.deleteKnowledge(userUuid, uuid)
-    return result
+    const { uuid: userUuid } = user;
+    const result = await this.userService.deleteKnowledge(userUuid, uuid);
+    return result;
   }
-  @Mutation(returns => UserDto)
+  @Mutation((returns) => UserDto)
   @UseGuards(GqlAuthGuard)
   async addUserWorkedProject(
     @CurrentUser() user: User,
     @Args({
       name: 'name',
-      type: () => String
+      type: () => String,
     })
     name: string,
   ) {
-    const { uuid } = user
-    const result = await this.userService.addWorkedProject(uuid, name)
-    return result
+    const { uuid } = user;
+    const result = await this.userService.addWorkedProject(uuid, name);
+    return result;
   }
-  @Mutation(returns => String)
+  @Mutation((returns) => String)
   @UseGuards(GqlAuthGuard)
   async deleteUserWorkedProject(
     @CurrentUser() user: User,
     @Args({
       name: 'uuid',
-      type: () => String
+      type: () => String,
     })
     uuid: string,
   ) {
-    const { uuid: userUuid } = user
-    const result = await this.userService.deleteWorkedProject(userUuid, uuid)
-    return result
+    const { uuid: userUuid } = user;
+    const result = await this.userService.deleteWorkedProject(userUuid, uuid);
+    return result;
   }
-  @Mutation(returns => UserDto)
+  @Mutation((returns) => UserDto)
   @UseGuards(GqlAuthGuard)
   async addUserCurrentCompany(
     @CurrentUser() user: User,
     @Args({
       name: 'name',
-      type: () => String
+      type: () => String,
     })
     name: string,
   ) {
-    const { uuid } = user
-    const result = await this.userService.addCurrentCompany(uuid, name)
-    return result
+    const { uuid } = user;
+    const result = await this.userService.addCurrentCompany(uuid, name);
+    return result;
   }
-  @Mutation(returns => String)
+  @Mutation((returns) => String)
   @UseGuards(GqlAuthGuard)
   async deleteUserCurrentCompany(
     @CurrentUser() user: User,
     @Args({
       name: 'uuid',
-      type: () => String
+      type: () => String,
     })
     uuid: string,
   ) {
-    const { uuid: userUuid } = user
-    const result = await this.userService.deleteCurrentCompany(userUuid, uuid)
-    return result
+    const { uuid: userUuid } = user;
+    const result = await this.userService.deleteCurrentCompany(userUuid, uuid);
+    return result;
   }
-  @Mutation(returns => UserDto)
+  @Mutation((returns) => UserDto)
   @UseGuards(GqlAuthGuard)
   async addUserWorkedCompany(
     @CurrentUser() user: User,
     @Args({
       name: 'name',
-      type: () => String
+      type: () => String,
     })
     name: string,
   ) {
-    const { uuid } = user
-    const result = await this.userService.addWorkedCompany(uuid, name)
-    return result
+    const { uuid } = user;
+    const result = await this.userService.addWorkedCompany(uuid, name);
+    return result;
   }
-  @Mutation(returns => String)
+  @Mutation((returns) => String)
   @UseGuards(GqlAuthGuard)
   async deleteUserWorkedCompany(
     @CurrentUser() user: User,
     @Args({
       name: 'uuid',
-      type: () => String
+      type: () => String,
     })
     uuid: string,
   ) {
-    const { uuid: userUuid } = user
-    const result = await this.userService.deleteWorkedCompany(userUuid, uuid)
-    return result
+    const { uuid: userUuid } = user;
+    const result = await this.userService.deleteWorkedCompany(userUuid, uuid);
+    return result;
   }
-  @Mutation(returns => UserDto)
+  @Mutation((returns) => UserDto)
   @UseGuards(GqlAuthGuard)
   async addUserService(
     @CurrentUser() user: User,
     @Args({
       name: 'name',
-      type: () => String
+      type: () => String,
     })
     name: string,
   ) {
-    const { uuid } = user
-    const result = await this.userService.addService(uuid, name)
-    return result
+    const { uuid } = user;
+    const result = await this.userService.addService(uuid, name);
+    return result;
   }
-  @Mutation(returns => String)
+  @Mutation((returns) => String)
   @UseGuards(GqlAuthGuard)
   async deleteUserService(
     @CurrentUser() user: User,
     @Args({
       name: 'uuid',
-      type: () => String
+      type: () => String,
     })
     uuid: string,
   ) {
-    const { uuid: userUuid } = user
-    const result = await this.userService.deleteService(userUuid, uuid)
-    return result
+    const { uuid: userUuid } = user;
+    const result = await this.userService.deleteService(userUuid, uuid);
+    return result;
   }
-  @Mutation(returns => UserDto)
+  @Mutation((returns) => UserDto)
   @UseGuards(GqlAuthGuard)
   async addUserHeading(
     @CurrentUser() user: User,
     @Args({
       name: 'name',
-      type: () => String
+      type: () => String,
     })
     name: string,
   ) {
-    const { uuid } = user
-    const result = await this.userService.addHeading(uuid, name)
-    return result
+    const { uuid } = user;
+    const result = await this.userService.addHeading(uuid, name);
+    return result;
   }
-  @Mutation(returns => String)
+  @Mutation((returns) => String)
   @UseGuards(GqlAuthGuard)
   async deleteUserHeading(
     @CurrentUser() user: User,
     @Args({
       name: 'uuid',
-      type: () => String
+      type: () => String,
     })
     uuid: string,
   ) {
-    const { uuid: userUuid } = user
-    const result = await this.userService.deleteHeading(userUuid, uuid)
-    return result
+    const { uuid: userUuid } = user;
+    const result = await this.userService.deleteHeading(userUuid, uuid);
+    return result;
   }
-  @ResolveField('fullname', returns => String, { nullable: true })
+  @ResolveField('fullname', (returns) => String, { nullable: true })
   async getUserFullname(@Parent() user: UserDto) {
     if (!user) {
       return null;
-    } 
-    const fullname =  user.userType === USER_TYPE.PROFESSIONAL ? `${user.name} ${user.lastName}` : user.commercialName;
-    return fullname
+    }
+    const fullname =
+      user.userType === USER_TYPE.PROFESSIONAL
+        ? `${user.name} ${user.lastName}`
+        : user.commercialName;
+    return fullname;
   }
-  @ResolveField('fullAddress', returns => String, { nullable: true })
+  @ResolveField('fullAddress', (returns) => String, { nullable: true })
   async getUserFullAddress(@Parent() user: UserDto) {
     if (!user) {
       return null;
-    } 
+    }
     const fullAddress = await this.userService.getFullAddress(user);
     return fullAddress;
   }

@@ -1,5 +1,4 @@
-import { Field, ObjectType } from "@nestjs/graphql";
-
+import { Field, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
 export class CompanyDto {
@@ -11,7 +10,7 @@ export class CompanyDto {
 
   @Field()
   readonly createdAt: Date;
-  
+
   @Field({ nullable: true })
   readonly updatedAt: Date;
 }
