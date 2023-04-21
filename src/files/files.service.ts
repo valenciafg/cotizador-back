@@ -2,14 +2,14 @@ import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { existsSync } from 'fs';
 import { join } from 'path';
-import { User } from 'src/user/entities/user.entity';
+import { User } from '../user/entities/user.entity';
 import { File } from './entities/file.entity';
-import { S3Provider } from 'src/utils/file-provider';
-import { genUUID } from 'src/utils';
+import { S3Provider } from '../utils/file-provider';
+import { genUUID } from '../utils';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { ICreateFile } from './interfaces';
-import { IUploadFileProvider } from 'src/interfaces';
+import { IUploadFileProvider } from '../interfaces';
 
 @Injectable()
 export class FilesService {

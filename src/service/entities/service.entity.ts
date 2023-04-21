@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { genUUID } from 'src/utils';
+import { genUUID } from '../../utils';
 
 @Schema()
 export class Service extends Document {

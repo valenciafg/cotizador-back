@@ -2,7 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { uniqBy } from 'lodash';
-import { handleRegisterExceptions } from 'src/utils';
+import { handleRegisterExceptions } from '../utils';
 import { City } from './entities/city.entity';
 import { CreateCityInput, FindCityInput } from './inputs';
 

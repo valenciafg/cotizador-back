@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { handleRegisterExceptions, genUUID } from 'src/utils';
+import { handleRegisterExceptions, genUUID } from '../utils';
 import { Heading } from './entities';
 import { CreateHeadingInput, FindHeadingInput } from './inputs';
 

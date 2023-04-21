@@ -1,6 +1,6 @@
 import { BadRequestException } from '@nestjs/common';
 import { get, has } from 'lodash';
-import { USER_TYPE } from 'src/constants';
+import { USER_TYPE } from '../../constants';
 import { CreateBasicInformationDto } from '../dto';
 import { User } from '../entities/user.entity';
 

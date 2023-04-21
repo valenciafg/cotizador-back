@@ -6,12 +6,12 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from './entities/user.entity';
 import { UserResolver } from './user.resolver';
 import { CompanyModule } from '../company/company.module';
-import { HeadingModule } from 'src/heading/heading.module';
-import { ServiceModule } from 'src/service/service.module';
-import { KnowledgeModule } from 'src/knowledge/knowledge.module';
-import { ProjectModule } from 'src/project/project.module';
-import { CityModule } from 'src/city/city.module';
-import { FilesModule } from 'src/files/files.module';
+import { HeadingModule } from '../heading/heading.module';
+import { ServiceModule } from '../service/service.module';
+import { KnowledgeModule } from '../knowledge/knowledge.module';
+import { ProjectModule } from '../project/project.module';
+import { CityModule } from '../city/city.module';
+import { FilesModule } from '../files/files.module';
 
 @Module({
   controllers: [UserController],

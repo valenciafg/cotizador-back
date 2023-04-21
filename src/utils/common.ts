@@ -1,4 +1,4 @@
-import { USER_TYPE } from 'src/constants';
+import { USER_TYPE } from '../constants';
 
 export const getUserFullname = (user) => {
   return user.userType === USER_TYPE.PROFESSIONAL

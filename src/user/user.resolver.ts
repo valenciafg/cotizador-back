@@ -7,19 +7,19 @@ import {
   Mutation,
   Args,
 } from '@nestjs/graphql';
-import { CurrentUser } from 'src/auth/decorators';
-import { GqlAuthGuard } from 'src/auth/guards/gql-auth.guard';
-import { CityService } from 'src/city/city.service';
-import { DeparmentDto, DistrictDto, ProvinceDto } from 'src/city/dto';
-import { CompanyService } from 'src/company/company.service';
-import { CompanyDto } from 'src/company/dto';
-import { USER_TYPE } from 'src/constants';
-import { FileDto } from 'src/files/dto';
-import { FilesService } from 'src/files/files.service';
-import { HeadingService } from 'src/heading/heading.service';
-import { KnowledgeService } from 'src/knowledge/knowledge.service';
-import { ProjectService } from 'src/project/project.service';
-import { ServiceService } from 'src/service/service.service';
+import { CurrentUser } from '../auth/decorators';
+import { GqlAuthGuard } from '../auth/guards/gql-auth.guard';
+import { CityService } from '../city/city.service';
+import { DeparmentDto, DistrictDto, ProvinceDto } from '../city/dto';
+import { CompanyService } from '../company/company.service';
+import { CompanyDto } from '../company/dto';
+import { USER_TYPE } from '../constants';
+import { FileDto } from '../files/dto';
+import { FilesService } from '../files/files.service';
+import { HeadingService } from '../heading/heading.service';
+import { KnowledgeService } from '../knowledge/knowledge.service';
+import { ProjectService } from '../project/project.service';
+import { ServiceService } from '../service/service.service';
 import { UserDto, UserListDto } from './dto';
 import { User } from './entities/user.entity';
 import { SearchUsersInput, SearchUsersOptions } from './inputs';

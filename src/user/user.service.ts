@@ -7,7 +7,7 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { isValidObjectId, Model } from 'mongoose';
 import { get } from 'lodash';
-import { getOffset, getPages, handleRegisterExceptions } from 'src/utils';
+import { getOffset, getPages, handleRegisterExceptions } from '../utils';
 import { equalUserTypeValidation, userStepValidation } from './helpers';
 import {
   CreateBasicInformationDto,
@@ -18,15 +18,15 @@ import {
   UserDto,
 } from './dto';
 import { User } from './entities/user.entity';
-import { REGISTER_STEPS, USER_TYPE } from 'src/constants';
-import { CompanyService } from 'src/company/company.service';
-import { ServiceService } from 'src/service/service.service';
-import { KnowledgeService } from 'src/knowledge/knowledge.service';
-import { HeadingService } from 'src/heading/heading.service';
-import { ProjectService } from 'src/project/project.service';
+import { REGISTER_STEPS, USER_TYPE } from '../constants';
+import { CompanyService } from '../company/company.service';
+import { ServiceService } from '../service/service.service';
+import { KnowledgeService } from '../knowledge/knowledge.service';
+import { HeadingService } from '../heading/heading.service';
+import { ProjectService } from '../project/project.service';
 import { SearchUsersInput, SearchUsersOptions } from './inputs';
-import { FilesService } from 'src/files/files.service';
-import { CityService } from 'src/city/city.service';
+import { FilesService } from '../files/files.service';
+import { CityService } from '../city/city.service';
 import { faker } from '@faker-js/faker';
 
 @Injectable()

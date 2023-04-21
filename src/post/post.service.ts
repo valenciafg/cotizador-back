@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { getOffset, getPages, handleRegisterExceptions } from 'src/utils';
+import { getOffset, getPages, handleRegisterExceptions } from '../utils';
 import { Post } from './entities/post.entity';
 import { CreatePostInput, FindPostInput, FindPostListInput } from './inputs';
 import { PostListDto } from './dto';

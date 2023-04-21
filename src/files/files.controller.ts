@@ -16,8 +16,8 @@ import { diskStorage } from 'multer';
 import { Response } from 'express';
 import { ConfigService } from '@nestjs/config';
 import { ApiTags } from '@nestjs/swagger';
-import { Auth, GetUser } from 'src/auth/decorators';
-import { User } from 'src/user/entities/user.entity';
+import { Auth, GetUser } from '../auth/decorators';
+import { User } from '../user/entities/user.entity';
 // import { UploadFileDto } from './dto';
 
 @ApiTags('Files')

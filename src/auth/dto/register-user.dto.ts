@@ -1,6 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
-import { IsEmail, IsString, MaxLength, MinLength } from 'class-validator';
+import {
+  IsEmail,
+  IsNumber,
+  IsOptional,
+  IsString,
+  Max,
+  MaxLength,
+  Min,
+  MinLength,
+} from 'class-validator';
 import { Match } from '../../common/decorators';
 
 export class RegisterUserDto {
@@ -26,5 +35,10 @@ export class RegisterUserDto {
   passwordConfirm: string;
   // @IsNumber()
   // @Min(0)
+  @ApiProperty({ nullable: true })
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  @Max(4)
   userType?: number;
 }

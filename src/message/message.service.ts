@@ -2,11 +2,11 @@ import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Message } from './entities';
-import { handleRegisterExceptions, genUUID } from 'src/utils';
+import { handleRegisterExceptions } from '../utils';
 import { CreateMessageInput, FindMessagesInput } from './inputs';
 import { User } from 'src/user/entities/user.entity';
-import { USER_TYPE } from 'src/constants';
-import { ChannelService } from 'src/channel/channel.service';
+import { USER_TYPE } from '../constants';
+import { ChannelService } from '../channel/channel.service';
 
 @Injectable()
 export class MessageService {

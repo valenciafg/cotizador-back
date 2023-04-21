@@ -19,7 +19,7 @@ import {
 } from './dto';
 import { User } from './entities/user.entity';
 import { ApiTags } from '@nestjs/swagger';
-import { Auth, GetUser } from 'src/auth/decorators';
+import { Auth, GetUser } from '../auth/decorators';
 import { CreateWorkInformationDto } from './dto/create-work-information.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 

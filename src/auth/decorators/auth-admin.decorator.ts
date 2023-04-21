@@ -1,6 +1,6 @@
 import { applyDecorators, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { USER_TYPE } from 'src/constants';
+import { USER_TYPE } from '../../constants';
 import { UserTypeGuard } from '../guards/user-type.guard';
 import { TypeProtected } from './type-protected.decorator';
 

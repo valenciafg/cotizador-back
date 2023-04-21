@@ -1,12 +1,12 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { CityService } from 'src/city/city.service';
-import { Service } from 'src/service/entities';
-import { ServiceService } from 'src/service/service.service';
-import { CompanyService } from 'src/company/company.service';
+import { CityService } from '../city/city.service';
+import { Service } from '../service/entities';
+import { ServiceService } from '../service/service.service';
+import { CompanyService } from '../company/company.service';
 import * as citySeed from './data/citySeed.json';
 import * as serviceSeed from './data/services.seed.json';
 import * as companySeed from './data/companies.seed.json';
-import { Company } from 'src/company/entities';
+import { Company } from '../company/entities';
 
 @Injectable()
 export class SeedService {

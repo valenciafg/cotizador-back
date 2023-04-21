@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { get } from 'lodash';
 import { Channel } from './entities';
-import { handleRegisterExceptions, genUUID } from 'src/utils';
+import { handleRegisterExceptions } from '../utils';
 import { CreateChannelInput, FindChannelInput } from './inputs';
 
 @Injectable()

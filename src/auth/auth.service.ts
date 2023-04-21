@@ -7,13 +7,12 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { USER_TYPE } from 'src/constants';
+import { USER_TYPE } from '../constants';
 import { User } from 'src/user/entities/user.entity';
-import { handleRegisterExceptions } from '../utils';
+import { handleRegisterExceptions, getUserFullname } from '../utils';
 import { LoginUserDto, RegisterOauthUserDto, RegisterUserDto } from './dto';
 import { comparePassword, generateJwtToken, hashPassword } from './helpers';
 import { IUserTokenResponse } from './interfaces';
-import { getUserFullname } from 'src/utils';
 
 @Injectable()
 export class AuthService {
