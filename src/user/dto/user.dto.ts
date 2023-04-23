@@ -1,4 +1,4 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
 export class UserDto {
@@ -76,6 +76,12 @@ export class UserDto {
 
   @Field(() => String, { nullable: true })
   readonly profilePic?: string;
+
+  @Field(() => String, { nullable: true })
+  readonly profilePicSrc?: string;
+
+  @Field(() => Date, { nullable: true })
+  readonly createdAt: Date;
 }
 
 @ObjectType()
